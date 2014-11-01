@@ -1,4 +1,5 @@
 using System;
+using MathNet.Numerics;
 
 namespace Engine
 {
@@ -31,26 +32,18 @@ namespace Engine
 
 		public double yawVelocity()
 		{
-			//Calculate Total mass of Inertia divided by moment of inertia
-			double n1 = MzTotal / I;
-			double n2 = PreviousMzTotal / I;
-			double dm = n1 - n2;
-			double dt = (currentTime - previousTime).Ticks;
-			double result = dm / dt;
-			return result;
+			return Integrate.OnClosedInterval((MzTotal / I), previousTime, currentTime);
 		}
 
 		public double accelerationY()
 		{
 			//TO CHECK if lateralVelocity is the value here
-			double result = (this.FyTotal / mass) - (yawVelocity() * lateralVelocity());
-			return result;
+			return (this.FyTotal / mass) - (yawVelocity() * lateralVelocity());
 		}
 		
 		public double lateralVelocity()
 		{
-			double result = accelerationY() * time;
-			return result;
+			return Integrate.OnClosedInterval(accelerationY(), previousTime, currentTime);
 		}
 	}
 }
