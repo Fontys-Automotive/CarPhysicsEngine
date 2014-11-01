@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "CarPhysicsEngine\Engine.csproj", "{BDC38F0B-1D48-4141-8156-52AAEE5D572E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Numerics", "MathNet-Numerics\Numerics.csproj", "{B7CAE5F4-A23F-4438-B5BE-41226618B695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{BDC38F0B-1D48-4141-8156-52AAEE5D572E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		{BDC38F0B-1D48-4141-8156-52AAEE5D572E}.Release-Signed|Any CPU.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = CarPhysicsEngine\Engine.csproj
+		StartupItem = Engine\Engine.csproj
 	EndGlobalSection
 EndGlobal
