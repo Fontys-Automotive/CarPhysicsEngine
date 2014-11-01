@@ -1,6 +1,6 @@
 using System;
 
-namespace CarPhysicsEngine
+namespace Engine
 {
 	class MainClass
 	{

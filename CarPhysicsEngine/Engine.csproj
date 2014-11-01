@@ -37,6 +37,10 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="CarBehaviour.cs" />
+    <Compile Include="Forces.cs" />
+    <Compile Include="Movement.cs" />
+    <Compile Include="Tyre.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
