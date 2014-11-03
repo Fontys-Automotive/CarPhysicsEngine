@@ -1,49 +1,87 @@
 using System;
-using MathNet.Numerics;
 
 namespace Engine
 {
 	public class Movement
 	{
-		private double time;
-		private double I; //Moment of Inertia
-		private double forwardVelocity;
-		private double mass;
-		public double FyTotal{ get; set; }
-		public double MzTotal{ get; set; }
+        /// <summary>
+        /// Movement of Inertia
+        /// </summary>
+	    private readonly double I;
+
+        /// <summary>
+        /// Mass of vehicle
+        /// </summary>
+	    private readonly double mass;
+
+        /// <summary>
+        /// Current total force of wheels
+        /// </summary>
+		public double CurrentFyTotal{ get; set; }
+
+        /// <summary>
+        /// Current total torque (moment)
+        /// </summary>
+		public double CurrentMzTotal{ get; set; }
+
+        /// <summary>
+        /// Force on wheels as of previous iteration
+        /// </summary>
 		public double PreviousFyTotal{ get; set; }
+
+        /// <summary>
+        /// Torque as of previous iteration
+        /// </summary>
 		public double PreviousMzTotal{ get; set; }
-		private DateTime currentTime;
-		private DateTime previousTime;
+
+        /// <summary>
+        /// Time step 
+        /// </summary>
+	    public double dt { get; set; }
 		
-		public Movement (double FyTotal, double MzTotal, double I, double forwardVelocity, double mass, double previousFyTotal, double previousMzTotal, DateTime previousTime)
+        public Movement (double currentFyTotal, double currentMzTotal, double I, double mass, double previousFyTotal, double previousMzTotal, double dt)
 		{
-			this.PreviousMzTotal = previousMzTotal;
-			this.PreviousFyTotal = previousFyTotal;
-			this.forwardVelocity = forwardVelocity;
-			this.MzTotal = MzTotal;
-			this.FyTotal = FyTotal;
+			PreviousMzTotal = previousMzTotal;
+			PreviousFyTotal = previousFyTotal;
+		    CurrentMzTotal = currentMzTotal;
+			CurrentFyTotal = currentFyTotal;
 			this.I = I;
 			this.mass = mass;
-			this.previousTime = previousTime;
-			this.currentTime = DateTime.Now;
-			
 		}
 
+        /// <summary>
+        /// Calculate the yawVelocity
+        /// </summary>
 		public double yawVelocity()
 		{
-			return Integrate.OnClosedInterval((MzTotal / I), previousTime, currentTime);
+		    double dx = (CurrentMzTotal/I) - (PreviousMzTotal/I);
+		    return dx / dt;
 		}
 
-		public double accelerationY()
+        /// <summary>
+        /// Calculate accelerationY.
+        /// </summary>
+	    public double accelerationY()
 		{
-			//TO CHECK if lateralVelocity is the value here
-			return (this.FyTotal / mass) - (yawVelocity() * lateralVelocity());
+	        return (CurrentFyTotal / mass) - (yawVelocity() * lateralVelocity());
 		}
+
+        /// <summary>
+        /// Calculate acceleration from last iteration. It is used to calculate the lateral velocity.
+        /// </summary>
+        public double previousAccelerationY()
+        {
+            return (PreviousFyTotal / mass) - (yawVelocity() * lateralVelocity());
+        }
 		
+        /// <summary>
+        /// Calculate the lateral velocity
+        /// </summary>
 		public double lateralVelocity()
 		{
-			return Integrate.OnClosedInterval(accelerationY(), previousTime, currentTime);
-		}
+		    double dx = accelerationY() - previousAccelerationY();
+
+		    return dx/dt;
+        }
 	}
 }

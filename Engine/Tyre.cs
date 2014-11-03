@@ -28,12 +28,12 @@ namespace Engine
 			this.SteerAngle = steerAngle;
 			this.YawVelocity = yawVelocity;
 			this.LateralVelocity = lateralVelocity;
+            this.length = length;
 			this.a = a;
-			this.b = b;
+			this.b = length-a;
 			this.C1 = this.C2 = 1.19;
 			this.mass = mass;
 			this.gravity = gravity;
-			this.length = length;
 			this.Fz0 = Fz0;
 			this.Fz1 = (mass * gravity * b) / length;
 			this.Fz2 = (mass * gravity * a) / length;
