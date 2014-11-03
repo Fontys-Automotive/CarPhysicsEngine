@@ -105,7 +105,7 @@ namespace Engine
             // Initialized to zero because values are unknown at first iteration
             previousFyTotal = previousMzTotal = previousYawVelocity = previousLateralVelocity = 0;
 
-            / /Object creation initialization
+            // Object creation initialization
 
             tyre = new Tyre(mass, gravity, length, steerAngleRadians, yawVelocityRadians, lateralVelocity, a, fz0);
             forces = new Forces(tyre.tyreForceFront(), tyre.tyreForceRear(), a, b);
