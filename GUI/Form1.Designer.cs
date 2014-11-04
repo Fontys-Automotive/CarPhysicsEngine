@@ -120,7 +120,6 @@
             this.Controls.Add(this.labelSteerAngle);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.onKeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();

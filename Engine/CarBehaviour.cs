@@ -62,17 +62,18 @@ namespace CarPhysicsEngine
         /// <summary>
         ///     Steer angle in radians. Input from steering wheel
         /// </summary>
-        public double SteerAngleRadians
-        {
-            get;
-            set;
-        }
+        public double SteerAngleRadians { get; set; }
 
+        /// <summary>
+        ///     Current X-coordinate of vehicle
+        /// </summary>
         public double xCoordinate { get; private set; }
 
+        /// <summary>
+        ///     Current Y-coordinate of vehicle
+        /// </summary>
         public double yCoordinate { get; private set; }
 
-        /// <param name="steerAngleRadians">Steering wheel angle in radians</param>
         public CarBehaviour()
         {
             SteerAngleRadians = 0;
@@ -114,7 +115,6 @@ namespace CarPhysicsEngine
             previousFyTotal = previousMzTotal = previousYawVelocity = lateralVelocity = previousLateralVelocity = 0;
 
             // Object creation initialization
-
             tyre = new Tyre(mass, gravity, length, SteerAngleRadians, yawVelocityRadians, lateralVelocity, a, b, fz0, forwardVelocity);
             forces = new Forces(tyre.tyreForceFront(), tyre.tyreForceRear(), a, b);
             movement = new Movement(forces.FyTotal(), forces.MzMoment(), I, mass, previousFyTotal, previousMzTotal, dt,
@@ -159,9 +159,8 @@ namespace CarPhysicsEngine
             tyre.YawVelocity = movement.yawVelocity();
             tyre.LateralVelocity = movement.lateralVelocity();
 
-            // !TODO: Rename Fy1/2 to front/rear
-            forces.Fy1 = tyre.tyreForceFront();
-            forces.Fy2 = tyre.tyreForceRear();
+            forces.TyreForceFront = tyre.tyreForceFront();
+            forces.TyreForceRear = tyre.tyreForceRear();
 
             movement.CurrentFyTotal = forces.FyTotal();
             movement.CurrentMzTotal = forces.MzMoment();
@@ -170,25 +169,23 @@ namespace CarPhysicsEngine
             previousFyTotal = movement.CurrentFyTotal;
             previousMzTotal = movement.CurrentMzTotal;
 
-
-            var position = new Position(forwardVelocity, previousForwardVelocity, yawVelocity(), previousYawVelocity,
-                lateralVelocity, previousLateralVelocity, dt);
+            // Initialized here because we need output 
+            var position = new Position(forwardVelocity, previousForwardVelocity, movement.yawVelocity(), 
+                previousYawVelocity, lateralVelocity, previousLateralVelocity, dt);
 
             //Save the current values for future iterations (needed for integration)
             previousForwardVelocity = position.CurrentForwardVelocity;
             previousLateralVelocity = position.CurrentLateralVelocity;
             previousYawVelocity = position.CurrentYawVelocity;
 
+            // Update X and Y coordinates based on calculated displacement
             xCoordinate += position.displacementX();
             yCoordinate += position.displacementY();
 
             // ---
-
-            Console.WriteLine("displacementX: " + xCoordinate);
-            Console.WriteLine("displacementY: " + yCoordinate);
-
-            Console.WriteLine("Previous Time: " + previousTime.Ticks);
-            Console.WriteLine("Current Time : " + currentTime.Ticks);
+            // Output for testing purposes
+            Console.WriteLine("X: " + xCoordinate);
+            Console.WriteLine("Y: " + yCoordinate);
             
             Console.WriteLine();
         }

@@ -4,13 +4,13 @@ namespace CarPhysicsEngine
 	{
 		private double a, b;
 		
-		public double Fy1 { get; set; } //Front wheel force
-		public double Fy2 { get; set; } // Rear wheel force
+		public double TyreForceFront { get; set; } //Front wheel force
+		public double TyreForceRear { get; set; } // Rear wheel force
 		
-		public Forces (double Fy1, double Fy2, double a, double b)
+		public Forces (double tyreForceFront, double tyreForceRear, double a, double b)
 		{
-			this.Fy1 = Fy1;
-			this.Fy2 = Fy2;
+			TyreForceFront = tyreForceFront;
+			TyreForceRear = tyreForceRear;
 			this.a = a;
 			this.b = b;
 			
@@ -18,13 +18,13 @@ namespace CarPhysicsEngine
 
 		public double FyTotal()
 		{
-			return Fy1 + Fy2;
+			return TyreForceFront + TyreForceRear;
 		}
 
 		public double MzMoment()
 		{
-			var n1 = Fy1 * a;
-			var n2 = Fy2 * b;
+			var n1 = TyreForceFront * a;
+			var n2 = TyreForceRear * b;
 			return n1 - n2;
 		}
 	}

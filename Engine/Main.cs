@@ -8,10 +8,9 @@ namespace CarPhysicsEngine
 		{
             while(true)
             {
-                CarBehaviour carBehaviour = new CarBehaviour();
+                new CarBehaviour().Run();
 
-                carBehaviour.Run();
-
+                // Wait for user input before continuing execution
                 Console.ReadLine();
             }
 		}

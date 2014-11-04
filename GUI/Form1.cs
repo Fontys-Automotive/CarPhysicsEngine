@@ -24,11 +24,6 @@ namespace GUI
             timer1.Start();
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void onKeyPress(object sender, KeyPressEventArgs e)
         {
             switch (e.KeyChar)
@@ -42,26 +37,16 @@ namespace GUI
                     break;
             }
 
-            displaySteerAngle();
-        }
-
-        private void displaySteerAngle()
-        {
             labelSteerAngle.Text = steerAngleRadians.ToString();
         }
 
         private void panel_Paint(object sender, PaintEventArgs e)
         {
-            drawItself(e.Graphics);
-        }
+            var x = (float)carBehaviour.xCoordinate;
+            var y = (float)carBehaviour.yCoordinate;
+            var pen = new Pen(Color.Black, 5);
 
-        public void drawItself(Graphics gr)
-        {
-            double x = carBehaviour.xCoordinate;
-            double y = carBehaviour.yCoordinate;
-            Pen blackPen = new Pen(Color.Black, 3);
-
-            gr.DrawEllipse(blackPen, (float)x, (float)y, 2, 2);
+            e.Graphics.DrawEllipse(pen, x, y, 5, 5);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
