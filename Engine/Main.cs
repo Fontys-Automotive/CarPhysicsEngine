@@ -6,7 +6,14 @@ namespace CarPhysicsEngine
 	{
 		public static void Main (string[] args)
 		{
-			Console.WriteLine ("Hello World!");
+            while(true)
+            {
+                CarBehaviour carBehaviour = new CarBehaviour(0);
+
+                carBehaviour.Run();
+
+                Console.ReadLine();
+            }
 		}
 	}
 }

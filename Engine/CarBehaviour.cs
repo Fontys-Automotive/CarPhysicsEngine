@@ -99,14 +99,15 @@ namespace CarPhysicsEngine
             currentTime = DateTime.Now;
 
             // Initialized to a small number greater than zero for first iteration
-            double yawVelocityRadians = lateralVelocity = 0.0000001;
+            var yawVelocityRadians = 0;
+            lateralVelocity = 0;
 
             // Initialized to zero because values are unknown at first iteration
-            previousFyTotal = previousMzTotal = previousYawVelocity = previousLateralVelocity = 0;
+            previousFyTotal = previousMzTotal = previousYawVelocity = lateralVelocity = previousLateralVelocity = 0;
 
             // Object creation initialization
 
-            tyre = new Tyre(mass, gravity, length, steerAngleRadians, yawVelocityRadians, lateralVelocity, a, b, fz0);
+            tyre = new Tyre(mass, gravity, length, this.steerAngleRadians, yawVelocityRadians, lateralVelocity, a, b, fz0, forwardVelocity);
             forces = new Forces(tyre.tyreForceFront(), tyre.tyreForceRear(), a, b);
             movement = new Movement(forces.FyTotal(), forces.MzMoment(), I, mass, previousFyTotal, previousMzTotal, dt,
                 forwardVelocity);
@@ -120,7 +121,7 @@ namespace CarPhysicsEngine
         /// </summary>
         private double dt
         {
-            get { return currentTime.Subtract(previousTime).TotalSeconds; }
+            get { return 0.01; }
         }
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace CarPhysicsEngine
             else
             {
                 previousTime = currentTime;
-                currentTime = DateTime.Now;
+                currentTime = previousTime.AddSeconds(dt);
             }
 
             // Update time in movement to ensure it always has the latest values
@@ -146,7 +147,6 @@ namespace CarPhysicsEngine
 
             tyre.YawVelocity = movement.yawVelocity();
             tyre.LateralVelocity = movement.lateralVelocity();
-            //tyre.SteerAngle = Wheel Axis Input in radians
 
             // !TODO: Rename Fy1/2 to front/rear
             forces.Fy1 = tyre.tyreForceFront();
@@ -167,6 +167,16 @@ namespace CarPhysicsEngine
             previousForwardVelocity = position.CurrentForwardVelocity;
             previousLateralVelocity = position.CurrentLateralVelocity;
             previousYawVelocity = position.CurrentYawVelocity;
+
+            // ---
+
+            Console.WriteLine("displacementX: " + position.displacementX());
+            Console.WriteLine("displacementY: " + position.displacementY());
+
+            Console.WriteLine("Previous Time: " + previousTime.Ticks);
+            Console.WriteLine("Current Time : " + currentTime.Ticks);
+            
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -175,7 +185,7 @@ namespace CarPhysicsEngine
         /// <returns>Acceleration</returns>
         public double acceleration()
         {
-            double n1 = movement.accelerationY() + (movement.yawVelocity()*forwardVelocity);
+            var n1 = movement.accelerationY() + (movement.yawVelocity()*forwardVelocity);
 
             return n1/gravity;
         }
@@ -195,7 +205,7 @@ namespace CarPhysicsEngine
         /// <returns>Steer angle in degrees</returns>
         public double steerAngleDegrees()
         {
-            double n1 = Math.Atan(movement.lateralVelocity()/forwardVelocity);
+            var n1 = Math.Atan(movement.lateralVelocity()/forwardVelocity);
             return n1*(180/Math.PI);
         }
     }

@@ -55,7 +55,7 @@ namespace CarPhysicsEngine
         /// </summary>
 		public double yawVelocity()
 		{
-		    double dx = (CurrentMzTotal/I) - (PreviousMzTotal/I);
+		    var dx = (CurrentMzTotal/I) - (PreviousMzTotal/I);
 		    return dx * dt;
 		}
 
@@ -80,7 +80,7 @@ namespace CarPhysicsEngine
         /// </summary>
 		public double lateralVelocity()
 		{
-		    double dx = accelerationY() - previousAccelerationY();
+		    var dx = accelerationY() - previousAccelerationY();
 
 		    return dx * dt;
         }

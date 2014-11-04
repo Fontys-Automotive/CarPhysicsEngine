@@ -31,11 +31,12 @@ namespace CarPhysicsEngine
         ///     Forward velocity
         ///     !TODO: Pass this value from CarBehaviour
         /// </summary>
-        private double u; // forward velocity
+        private double forwardVelocity; // forward velocity
 
         public Tyre(double mass, double gravity, double length, double steerAngle, double yawVelocity,
-            double lateralVelocity, double a, double b, double Fz0)
+            double lateralVelocity, double a, double b, double Fz0, double forwardVelocity)
         {
+            this.forwardVelocity = forwardVelocity;
             SteerAngle = steerAngle;
             YawVelocity = yawVelocity;
             LateralVelocity = lateralVelocity;
@@ -65,28 +66,26 @@ namespace CarPhysicsEngine
         //TYRE FORCE
         public double tyreForceFront()
         {
-            return alphaFront()*Cy1;
+            return alphaFront() * Cy1;
         }
 
         public double tyreForceRear()
         {
-            return alphaRear()*Cy2;
+            return alphaRear() * Cy2;
         }
 
         // SLIP ANGLE
         private double alphaFront()
         {
-            double n1 = (YawVelocity*a) + LateralVelocity;
-            double n2 = n1/u;
-            double n3 = SteerAngle - n2;
-
-            return n3;
+            var n1 = (YawVelocity*a) + LateralVelocity;
+            var n2 = n1/forwardVelocity;
+            return SteerAngle - n2;
         }
 
         private double alphaRear()
         {
-            double n1 = (YawVelocity*b) + (LateralVelocity*(-1));
-            double n2 = n1/u;
+            var n1 = (YawVelocity*b) + (LateralVelocity*(-1));
+            var n2 = n1/forwardVelocity;
 
             return n2;
         }

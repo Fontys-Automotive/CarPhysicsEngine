@@ -31,37 +31,39 @@ namespace CarPhysicsEngine
         }
 
         /// <summary>
-        ///     Calculation of the new X position
+        ///     Calculation of the new displacementX position
         /// </summary>
         /// <returns></returns>
-        public double X()
+        public double displacementX()
         {
             var n1 = Math.Cos(yawVelocityIntegral) * CurrentForwardVelocity;
             var n2 = CurrentLateralVelocity * Math.Sin(yawVelocityIntegral);
             var n3 = n1 - n2;
 
-            var m1 = Math.Cos(yawVelocityIntegral) * PreviousForwardVelocity;
-            var m2 = PreviousLateralVelocity * Math.Sin(yawVelocityIntegral);
-            var m3 = m1 - m2;
+            // !TODO: Modify for variable acceleration
+            //var m1 = Math.Cos(yawVelocityIntegral) * PreviousForwardVelocity;
+            //var m2 = PreviousLateralVelocity * Math.Sin(yawVelocityIntegral);
+            //var m3 = m1 - m2;
 
-            return (n3 - m3) * dt;
+            return (n3) * dt;
         }
 
         /// <summary>
-        ///     Calculation of the new Y position
+        ///     Calculation of the new displacementY position
         /// </summary>
         /// <returns></returns>
-        public double Y()
+        public double displacementY()
         {
             var n1 = CurrentForwardVelocity * Math.Sin(yawVelocityIntegral);
             var n2 = CurrentLateralVelocity * Math.Cos(yawVelocityIntegral);
             var n3 = n1 + n2;
 
-            var m1 = PreviousForwardVelocity * Math.Sin(yawVelocityIntegral);
-            var m2 = PreviousLateralVelocity * Math.Cos(yawVelocityIntegral);
-            var m3 = m1 + m2;
+            // !TODO: Modify for variable acceleration
+            //var m1 = PreviousForwardVelocity * Math.Sin(yawVelocityIntegral);
+            //var m2 = PreviousLateralVelocity * Math.Cos(yawVelocityIntegral);
+            //var m3 = m1 + m2;
 
-            return (n3 - m3) * dt;
+            return (n3) * dt;
         }
     }
 }

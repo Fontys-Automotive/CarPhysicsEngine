@@ -23,8 +23,8 @@ namespace CarPhysicsEngine
 
 		public double MzMoment()
 		{
-			double n1 = Fy1 * a;
-			double n2 = Fy2 * b;
+			var n1 = Fy1 * a;
+			var n2 = Fy2 * b;
 			return n1 - n2;
 		}
 	}
