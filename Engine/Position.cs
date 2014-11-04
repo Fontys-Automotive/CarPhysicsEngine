@@ -27,7 +27,7 @@ namespace CarPhysicsEngine
 
         private double yawVelocityIntegral
         {
-            get { return (CurrentYawVelocity - PreviousYawVelocity)/dt; }
+            get { return (CurrentYawVelocity - PreviousYawVelocity) * dt; }
         }
 
         /// <summary>
@@ -36,16 +36,15 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double X()
         {
-            double n1 = Math.Cos(yawVelocityIntegral)*CurrentForwardVelocity;
-            double n2 = CurrentLateralVelocity*Math.Sin(yawVelocityIntegral);
-            double n3 = n1 - n2;
+            var n1 = Math.Cos(yawVelocityIntegral) * CurrentForwardVelocity;
+            var n2 = CurrentLateralVelocity * Math.Sin(yawVelocityIntegral);
+            var n3 = n1 - n2;
 
-            double m1 = Math.Cos(yawVelocityIntegral)*PreviousForwardVelocity;
-            double m2 = PreviousLateralVelocity*Math.Sin(yawVelocityIntegral);
-            double m3 = m1 - m2;
+            var m1 = Math.Cos(yawVelocityIntegral) * PreviousForwardVelocity;
+            var m2 = PreviousLateralVelocity * Math.Sin(yawVelocityIntegral);
+            var m3 = m1 - m2;
 
-            double xRes = (n3 - m3)/dt;
-            return xRes;
+            return (n3 - m3) * dt;
         }
 
         /// <summary>
@@ -54,16 +53,15 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double Y()
         {
-            double n1 = CurrentForwardVelocity*Math.Sin(yawVelocityIntegral);
-            double n2 = CurrentLateralVelocity*Math.Cos(yawVelocityIntegral);
-            double n3 = n1 + n2;
+            var n1 = CurrentForwardVelocity * Math.Sin(yawVelocityIntegral);
+            var n2 = CurrentLateralVelocity * Math.Cos(yawVelocityIntegral);
+            var n3 = n1 + n2;
 
-            double m1 = PreviousForwardVelocity*Math.Sin(yawVelocityIntegral);
-            double m2 = PreviousLateralVelocity*Math.Cos(yawVelocityIntegral);
-            double m3 = m1 + m2;
+            var m1 = PreviousForwardVelocity * Math.Sin(yawVelocityIntegral);
+            var m2 = PreviousLateralVelocity * Math.Cos(yawVelocityIntegral);
+            var m3 = m1 + m2;
 
-            double yRes = (n3 - m3)/dt;
-            return yRes;
+            return (n3 - m3) * dt;
         }
     }
 }

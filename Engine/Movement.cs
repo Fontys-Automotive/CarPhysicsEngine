@@ -5,16 +5,18 @@ namespace Engine
 	public class Movement
 	{
         /// <summary>
-        /// Movement of Inertia
+        /// Moment of Inertia
         /// </summary>
 	    private readonly double I;
 
         /// <summary>
-        /// Mass of vehicle
+        /// Mass of vehicle  
         /// </summary>
 	    private readonly double mass;
 
-        /// <summary>
+	    private readonly double forwardVelocity;
+
+	    /// <summary>
         /// Current total force of wheels
         /// </summary>
 		public double CurrentFyTotal{ get; set; }
@@ -39,7 +41,7 @@ namespace Engine
         /// </summary>
 	    public double dt { get; set; }
 		
-        public Movement (double currentFyTotal, double currentMzTotal, double I, double mass, double previousFyTotal, double previousMzTotal, double dt)
+        public Movement (double currentFyTotal, double currentMzTotal, double I, double mass, double previousFyTotal, double previousMzTotal, double dt, double forwardVelocity)
 		{
 			PreviousMzTotal = previousMzTotal;
 			PreviousFyTotal = previousFyTotal;
@@ -47,6 +49,7 @@ namespace Engine
 			CurrentFyTotal = currentFyTotal;
 			this.I = I;
 			this.mass = mass;
+            this.forwardVelocity = forwardVelocity;
 		}
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace Engine
 		public double yawVelocity()
 		{
 		    double dx = (CurrentMzTotal/I) - (PreviousMzTotal/I);
-		    return dx / dt;
+		    return dx * dt;
 		}
 
         /// <summary>
@@ -63,15 +66,15 @@ namespace Engine
         /// </summary>
 	    public double accelerationY()
 		{
-	        return (CurrentFyTotal / mass) - (yawVelocity() * lateralVelocity());
+	        return (CurrentFyTotal / mass) - (yawVelocity() * forwardVelocity);
 		}
 
         /// <summary>
         /// Calculate acceleration from last iteration. It is used to calculate the lateral velocity.
         /// </summary>
-        public double previousAccelerationY()
+        private double previousAccelerationY()
         {
-            return (PreviousFyTotal / mass) - (yawVelocity() * lateralVelocity());
+            return (PreviousFyTotal / mass) - (yawVelocity() * forwardVelocity);
         }
 		
         /// <summary>
@@ -81,7 +84,7 @@ namespace Engine
 		{
 		    double dx = accelerationY() - previousAccelerationY();
 
-		    return dx/dt;
+		    return dx * dt;
         }
 	}
 }

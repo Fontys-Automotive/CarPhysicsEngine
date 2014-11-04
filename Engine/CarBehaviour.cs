@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using CarPhysicsEngine;
 
 namespace Engine
@@ -7,63 +6,64 @@ namespace Engine
     public class CarBehaviour
     {
         /// <summary>
-        /// Acceleration due to gravity
+        ///     Acceleration due to gravity
         /// </summary>
         private static double gravity;
 
+        private readonly Forces forces;
+
         /// <summary>
-        /// Forward Velocity for current iteration
+        ///     Forward Velocity for current iteration
         /// </summary>
         private readonly double forwardVelocity;
 
         /// <summary>
-        /// Forward velocity for previous iteration
-        /// </summary>
-        private double previousForwardVelocity;
-
-        /// <summary>
-        /// Lateral velocity for current iteration
+        ///     Lateral velocity for current iteration
         /// </summary>
         private readonly double lateralVelocity;
 
-        /// <summary>
-        /// Lateral velocity for previous iteration
-        /// </summary>
-        private double previousLateralVelocity;
+        private readonly Movement movement;
+        private readonly Tyre tyre;
 
         /// <summary>
-        /// Time step for current interation (for use with integration)
+        ///     Time step for current interation (for use with integration)
         /// </summary>
         private DateTime currentTime;
 
         /// <summary>
-        /// Time step for previous iteration (for use with integration)
+        ///     Forward velocity for previous iteration
         /// </summary>
-        private DateTime previousTime;
+        private double previousForwardVelocity;
 
         /// <summary>
-        /// Tyre force for previous iteration
+        ///     Tyre force for previous iteration
         /// </summary>
         private double previousFyTotal;
-        
+
         /// <summary>
-        /// Torque (moment) for previous iteration
+        ///     Lateral velocity for previous iteration
+        /// </summary>
+        private double previousLateralVelocity;
+
+        /// <summary>
+        ///     Torque (moment) for previous iteration
         /// </summary>
         private double previousMzTotal;
 
         /// <summary>
-        /// Yaw velocity for previous iteration
+        ///     Time step for previous iteration (for use with integration)
+        /// </summary>
+        private DateTime previousTime;
+
+        /// <summary>
+        ///     Yaw velocity for previous iteration
         /// </summary>
         private double previousYawVelocity;
 
         /// <summary>
-        /// Steer angle in radians. Input from steering wheel
+        ///     Steer angle in radians. Input from steering wheel
         /// </summary>
         private double steerAngleRadians;
-
-        private readonly Forces forces;
-        private readonly Movement movement;
-        private readonly Tyre tyre;
 
         /// <param name="steerAngleRadians">Steering wheel angle in radians</param>
         public CarBehaviour(double steerAngleRadians)
@@ -92,7 +92,7 @@ namespace Engine
             const double fz0 = 8000;
 
             // Forward velocity in m/s for 80km/h
-            forwardVelocity = 80 / 3.6;
+            forwardVelocity = 80/3.6;
 
             // !TODO: Why is previous forward velocity initialized to the current forward velocity?
             previousForwardVelocity = forwardVelocity;
@@ -107,13 +107,17 @@ namespace Engine
 
             // Object creation initialization
 
-            tyre = new Tyre(mass, gravity, length, steerAngleRadians, yawVelocityRadians, lateralVelocity, a, fz0);
+            tyre = new Tyre(mass, gravity, length, steerAngleRadians, yawVelocityRadians, lateralVelocity, a, b, fz0);
             forces = new Forces(tyre.tyreForceFront(), tyre.tyreForceRear(), a, b);
-            movement = new Movement(forces.FyTotal(), forces.MzMoment(), I, mass, previousFyTotal, previousMzTotal, dt);
+            movement = new Movement(forces.FyTotal(), forces.MzMoment(), I, mass, previousFyTotal, previousMzTotal, dt,
+                forwardVelocity);
         }
 
         /// <summary>
-        /// Calculate time step in seconds
+        ///     Calculate time step in seconds
+        ///     (currentTime - previousTime) in seconds
+        ///     !TODO: Time should be provided externally because we shouldn't take into account time taken for execution of this
+        ///     class
         /// </summary>
         private double dt
         {
@@ -121,7 +125,7 @@ namespace Engine
         }
 
         /// <summary>
-        /// This method is executed when the frame is updated
+        ///     This method is executed when the frame is updated
         /// </summary>
         public void Run()
         {
@@ -145,6 +149,7 @@ namespace Engine
             tyre.LateralVelocity = movement.lateralVelocity();
             //tyre.SteerAngle = Wheel Axis Input in radians
 
+            // !TODO: Rename Fy1/2 to front/rear
             forces.Fy1 = tyre.tyreForceFront();
             forces.Fy2 = tyre.tyreForceRear();
 
@@ -163,37 +168,36 @@ namespace Engine
             previousForwardVelocity = position.CurrentForwardVelocity;
             previousLateralVelocity = position.CurrentLateralVelocity;
             previousYawVelocity = position.CurrentYawVelocity;
-
         }
 
         /// <summary>
-        /// Calculate the acceleration for the car
+        ///     Calculate the acceleration for the car
         /// </summary>
         /// <returns>Acceleration</returns>
         public double acceleration()
         {
-            var n1 = movement.accelerationY() + (movement.yawVelocity() * forwardVelocity);
-            
-            return n1 / gravity;
+            double n1 = movement.accelerationY() + (movement.yawVelocity()*forwardVelocity);
+
+            return n1/gravity;
         }
 
         /// <summary>
-        /// Calculate the yaw velocity
+        ///     Calculate the yaw velocity
         /// </summary>
         /// <returns>Yaw Velocity</returns>
         public double yawVelocity()
         {
-            return movement.yawVelocity() * (180 / Math.PI);
+            return movement.yawVelocity()*(180/Math.PI);
         }
 
         /// <summary>
-        /// Calculate the steer angle in degrees
+        ///     Calculate the steer angle in degrees
         /// </summary>
         /// <returns>Steer angle in degrees</returns>
         public double steerAngleDegrees()
         {
-            var n1 = Math.Atan(movement.lateralVelocity() / forwardVelocity);
-            return n1 * (180 / Math.PI);
+            double n1 = Math.Atan(movement.lateralVelocity()/forwardVelocity);
+            return n1*(180/Math.PI);
         }
     }
 }
