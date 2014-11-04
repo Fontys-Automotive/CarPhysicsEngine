@@ -1,7 +1,6 @@
 using System;
-using CarPhysicsEngine;
 
-namespace Engine
+namespace CarPhysicsEngine
 {
     public class CarBehaviour
     {
