@@ -62,12 +62,20 @@ namespace CarPhysicsEngine
         /// <summary>
         ///     Steer angle in radians. Input from steering wheel
         /// </summary>
-        private double steerAngleRadians;
+        public double SteerAngleRadians
+        {
+            get;
+            set;
+        }
+
+        public double xCoordinate { get; private set; }
+
+        public double yCoordinate { get; private set; }
 
         /// <param name="steerAngleRadians">Steering wheel angle in radians</param>
-        public CarBehaviour(double steerAngleRadians)
+        public CarBehaviour()
         {
-            this.steerAngleRadians = steerAngleRadians;
+            SteerAngleRadians = 0;
 
             // Mass of the car
             const int mass = 1150;
@@ -107,10 +115,12 @@ namespace CarPhysicsEngine
 
             // Object creation initialization
 
-            tyre = new Tyre(mass, gravity, length, this.steerAngleRadians, yawVelocityRadians, lateralVelocity, a, b, fz0, forwardVelocity);
+            tyre = new Tyre(mass, gravity, length, SteerAngleRadians, yawVelocityRadians, lateralVelocity, a, b, fz0, forwardVelocity);
             forces = new Forces(tyre.tyreForceFront(), tyre.tyreForceRear(), a, b);
             movement = new Movement(forces.FyTotal(), forces.MzMoment(), I, mass, previousFyTotal, previousMzTotal, dt,
                 forwardVelocity);
+
+            xCoordinate = yCoordinate = 0;
         }
 
         /// <summary>
@@ -145,6 +155,7 @@ namespace CarPhysicsEngine
             // Update time in movement to ensure it always has the latest values
             movement.dt = dt;
 
+            tyre.SteerAngle = SteerAngleRadians;
             tyre.YawVelocity = movement.yawVelocity();
             tyre.LateralVelocity = movement.lateralVelocity();
 
@@ -168,10 +179,13 @@ namespace CarPhysicsEngine
             previousLateralVelocity = position.CurrentLateralVelocity;
             previousYawVelocity = position.CurrentYawVelocity;
 
+            xCoordinate += position.displacementX();
+            yCoordinate += position.displacementY();
+
             // ---
 
-            Console.WriteLine("displacementX: " + position.displacementX());
-            Console.WriteLine("displacementY: " + position.displacementY());
+            Console.WriteLine("displacementX: " + xCoordinate);
+            Console.WriteLine("displacementY: " + yCoordinate);
 
             Console.WriteLine("Previous Time: " + previousTime.Ticks);
             Console.WriteLine("Current Time : " + currentTime.Ticks);

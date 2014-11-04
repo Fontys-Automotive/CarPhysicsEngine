@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{BDC38F0B-1D48-4141-8156-52AAEE5D572E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{61674E97-5B8A-473E-8438-DD039055582B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,21 @@ Global
 		{BDC38F0B-1D48-4141-8156-52AAEE5D572E}.Release-Signed|Mixed Platforms.Build.0 = Release|x86
 		{BDC38F0B-1D48-4141-8156-52AAEE5D572E}.Release-Signed|x86.ActiveCfg = Release|x86
 		{BDC38F0B-1D48-4141-8156-52AAEE5D572E}.Release-Signed|x86.Build.0 = Release|x86
+		{61674E97-5B8A-473E-8438-DD039055582B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release|x86.ActiveCfg = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release-Signed|Any CPU.ActiveCfg = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release-Signed|Any CPU.Build.0 = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release-Signed|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release-Signed|Mixed Platforms.Build.0 = Release|Any CPU
+		{61674E97-5B8A-473E-8438-DD039055582B}.Release-Signed|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

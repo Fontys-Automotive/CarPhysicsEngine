@@ -8,7 +8,7 @@ namespace CarPhysicsEngine
 		{
             while(true)
             {
-                CarBehaviour carBehaviour = new CarBehaviour(0);
+                CarBehaviour carBehaviour = new CarBehaviour();
 
                 carBehaviour.Run();
 
