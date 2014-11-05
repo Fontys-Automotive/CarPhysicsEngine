@@ -2,7 +2,7 @@
 
 namespace CarPhysicsEngine
 {
-    internal class Position
+    public class Position
     {
         private readonly double dt;
 
@@ -45,7 +45,7 @@ namespace CarPhysicsEngine
             //var m2 = PreviousLateralVelocity * Math.Sin(yawVelocityIntegral);
             //var m3 = m1 - m2;
 
-            return (n3) * dt;
+            return n3 * dt;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace CarPhysicsEngine
             //var m2 = PreviousLateralVelocity * Math.Cos(yawVelocityIntegral);
             //var m3 = m1 + m2;
 
-            return (n3) * dt;
+            return n3 * dt;
         }
     }
 }

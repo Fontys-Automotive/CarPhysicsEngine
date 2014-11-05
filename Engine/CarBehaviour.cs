@@ -9,20 +9,20 @@ namespace CarPhysicsEngine
         /// </summary>
         private static double gravity;
 
-        private readonly Forces forces;
-
+        public readonly Forces forces;
+        public Position position;
         /// <summary>
         ///     Forward Velocity for current iteration
         /// </summary>
-        private readonly double forwardVelocity;
+        public readonly double forwardVelocity;
 
         /// <summary>
         ///     Lateral velocity for current iteration
         /// </summary>
         private readonly double lateralVelocity;
 
-        private readonly Movement movement;
-        private readonly Tyre tyre;
+        public readonly Movement movement;
+        public readonly Tyre tyre;
 
         /// <summary>
         ///     Time step for current interation (for use with integration)
@@ -61,8 +61,18 @@ namespace CarPhysicsEngine
 
         /// <summary>
         ///     Steer angle in radians. Input from steering wheel
+        ///     Should not be greater than 30 degrees = Pi/6
         /// </summary>
-        public double SteerAngleRadians { get; set; }
+        private double steerAngleRadians;
+        public double SteerAngleRadians { 
+            get { return steerAngleRadians; }
+            
+            set
+            {
+                if (value <= Math.PI/6 && value >= -(Math.PI/6))
+                    steerAngleRadians = value;
+            }
+        }
 
         /// <summary>
         ///     Current X-coordinate of vehicle
@@ -109,7 +119,6 @@ namespace CarPhysicsEngine
 
             // Initialized to a small number greater than zero for first iteration
             var yawVelocityRadians = 0;
-            lateralVelocity = 0;
 
             // Initialized to zero because values are unknown at first iteration
             previousFyTotal = previousMzTotal = previousYawVelocity = lateralVelocity = previousLateralVelocity = 0;
@@ -170,7 +179,7 @@ namespace CarPhysicsEngine
             previousMzTotal = movement.CurrentMzTotal;
 
             // Initialized here because we need output 
-            var position = new Position(forwardVelocity, previousForwardVelocity, movement.yawVelocity(), 
+            position = new Position(forwardVelocity, previousForwardVelocity, yawVelocity(), 
                 previousYawVelocity, lateralVelocity, previousLateralVelocity, dt);
 
             //Save the current values for future iterations (needed for integration)
@@ -179,8 +188,10 @@ namespace CarPhysicsEngine
             previousYawVelocity = position.CurrentYawVelocity;
 
             // Update X and Y coordinates based on calculated displacement
-            xCoordinate += position.displacementX();
-            yCoordinate += position.displacementY();
+            double vehicleDisplacementX = position.displacementX();
+            double vehicleDisplacementY = position.displacementY();
+            xCoordinate += Math.Cos(steerAngleDegrees()) * vehicleDisplacementX + Math.Sin(steerAngleDegrees())*vehicleDisplacementY;
+            yCoordinate += Math.Sin(steerAngleDegrees())*vehicleDisplacementX - Math.Cos(steerAngleDegrees())*vehicleDisplacementY;
 
             // ---
             // Output for testing purposes

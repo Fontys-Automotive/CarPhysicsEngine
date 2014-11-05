@@ -84,8 +84,8 @@ namespace CarPhysicsEngine
 
         private double alphaRear()
         {
-            var n1 = (YawVelocity*b) + (LateralVelocity*(-1));
-            var n2 = n1/forwardVelocity;
+            var n1 = (LateralVelocity) - (YawVelocity * b);
+            var n2 = -n1/forwardVelocity;
 
             return n2;
         }
