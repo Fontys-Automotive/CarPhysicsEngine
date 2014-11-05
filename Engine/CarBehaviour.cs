@@ -59,10 +59,13 @@ namespace CarPhysicsEngine
         /// </summary>
         private double previousYawVelocity;
 
+        private double previousDisplacementY;
+
         /// <summary>
         ///     Steer angle in radians. Input from steering wheel
         ///     Should not be greater than 30 degrees = Pi/6
         /// </summary>
+        /// 
         private double steerAngleRadians;
         public double SteerAngleRadians { 
             get { return steerAngleRadians; }
@@ -86,7 +89,7 @@ namespace CarPhysicsEngine
 
         public CarBehaviour()
         {
-            SteerAngleRadians = 0;
+            SteerAngleRadians = 0.00;
 
             // Mass of the car
             const int mass = 1150;
@@ -121,14 +124,15 @@ namespace CarPhysicsEngine
             var yawVelocityRadians = 0;
 
             // Initialized to zero because values are unknown at first iteration
-            previousFyTotal = previousMzTotal = previousYawVelocity = lateralVelocity = previousLateralVelocity = 0;
+            previousFyTotal = previousMzTotal = previousYawVelocity = lateralVelocity = previousLateralVelocity = previousDisplacementY=  0;
 
             // Object creation initialization
             tyre = new Tyre(mass, gravity, length, SteerAngleRadians, yawVelocityRadians, lateralVelocity, a, b, fz0, forwardVelocity);
             forces = new Forces(tyre.tyreForceFront(), tyre.tyreForceRear(), a, b);
             movement = new Movement(forces.FyTotal(), forces.MzMoment(), I, mass, previousFyTotal, previousMzTotal, dt,
-                forwardVelocity);
-
+                forwardVelocity, previousYawVelocity, previousLateralVelocity);
+            position = new Position(forwardVelocity, previousForwardVelocity, yawVelocity(), 
+            previousYawVelocity, lateralVelocity, previousLateralVelocity, dt, previousDisplacementY);
             xCoordinate = yCoordinate = 0;
         }
 
@@ -163,6 +167,7 @@ namespace CarPhysicsEngine
 
             // Update time in movement to ensure it always has the latest values
             movement.dt = dt;
+            
 
             tyre.SteerAngle = SteerAngleRadians;
             tyre.YawVelocity = movement.yawVelocity();
@@ -174,25 +179,29 @@ namespace CarPhysicsEngine
             movement.CurrentFyTotal = forces.FyTotal();
             movement.CurrentMzTotal = forces.MzMoment();
 
+            movement.PreviousLateralVelocity = previousLateralVelocity;
+            movement.PreviousYawVelocity = previousYawVelocity;
             // Save the current values for future iterations (needed for integration)
             previousFyTotal = movement.CurrentFyTotal;
             previousMzTotal = movement.CurrentMzTotal;
 
             // Initialized here because we need output 
-            position = new Position(forwardVelocity, previousForwardVelocity, yawVelocity(), 
-                previousYawVelocity, lateralVelocity, previousLateralVelocity, dt);
+            position.CurrentYawVelocity = yawVelocity();
+            position.CurrentLateralVelocity = lateralVelocity;
+            position.PreviousDisplacementY = previousDisplacementY;
 
             //Save the current values for future iterations (needed for integration)
             previousForwardVelocity = position.CurrentForwardVelocity;
-            previousLateralVelocity = position.CurrentLateralVelocity;
-            previousYawVelocity = position.CurrentYawVelocity;
+            previousLateralVelocity = movement.lateralVelocity();
+            previousYawVelocity = movement.yawVelocity();
 
             // Update X and Y coordinates based on calculated displacement
             double vehicleDisplacementX = position.displacementX();
             double vehicleDisplacementY = position.displacementY();
             xCoordinate += Math.Cos(steerAngleDegrees()) * vehicleDisplacementX + Math.Sin(steerAngleDegrees())*vehicleDisplacementY;
-            yCoordinate += Math.Sin(steerAngleDegrees())*vehicleDisplacementX - Math.Cos(steerAngleDegrees())*vehicleDisplacementY;
+            yCoordinate += Math.Sin(steerAngleDegrees())* vehicleDisplacementX - Math.Cos(steerAngleDegrees())*vehicleDisplacementY;
 
+            previousDisplacementY = position.displacementY();
             // ---
             // Output for testing purposes
             Console.WriteLine("X: " + xCoordinate);

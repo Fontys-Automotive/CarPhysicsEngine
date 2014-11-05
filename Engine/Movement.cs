@@ -34,15 +34,21 @@ namespace CarPhysicsEngine
         /// </summary>
 		public double PreviousMzTotal{ get; set; }
 
-        /// <summary>
+	    public double PreviousYawVelocity { get; set; }
+
+	    public double PreviousLateralVelocity { get; set; }
+
+	    /// <summary>
         /// Time step 
         /// </summary>
 	    public double dt { get; set; }
 		
-        public Movement (double currentFyTotal, double currentMzTotal, double I, double mass, double previousFyTotal, double previousMzTotal, double dt, double forwardVelocity)
+        public Movement (double currentFyTotal, double currentMzTotal, double I, double mass, double previousFyTotal, double previousMzTotal, double dt, double forwardVelocity, double previousYawVelocity, double previousLateralVelocity)
 		{
 			PreviousMzTotal = previousMzTotal;
-			PreviousFyTotal = previousFyTotal;
+            PreviousYawVelocity = previousYawVelocity;
+            PreviousLateralVelocity = previousLateralVelocity;
+            PreviousFyTotal = previousFyTotal;
 		    CurrentMzTotal = currentMzTotal;
 			CurrentFyTotal = currentFyTotal;
 			this.I = I;
@@ -56,7 +62,7 @@ namespace CarPhysicsEngine
 		public double yawVelocity()
 		{
 		    var dx = (CurrentMzTotal/I) - (PreviousMzTotal/I);
-		    return dx * dt;
+		    return PreviousYawVelocity+ (dx * dt);
 		}
 
         /// <summary>
@@ -82,7 +88,7 @@ namespace CarPhysicsEngine
 		{
 		    var dx = accelerationY() - previousAccelerationY();
 
-		    return dx * dt;
+		    return PreviousLateralVelocity+(dx * dt);
         }
 	}
 }

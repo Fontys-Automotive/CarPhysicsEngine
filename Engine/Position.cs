@@ -7,7 +7,7 @@ namespace CarPhysicsEngine
         private readonly double dt;
 
         public Position(double currentForwardVelocity, double previousForwardVelocity, double currentYawVelocity,
-            double previousYawVelocity, double currentLateralVelocity, double previousLateralVelocity, double dt)
+            double previousYawVelocity, double currentLateralVelocity, double previousLateralVelocity, double dt, double previousDisplacementY)
         {
             CurrentForwardVelocity = currentForwardVelocity;
             PreviousForwardVelocity = previousForwardVelocity;
@@ -15,15 +15,17 @@ namespace CarPhysicsEngine
             PreviousYawVelocity = previousYawVelocity;
             CurrentLateralVelocity = currentLateralVelocity;
             PreviousLateralVelocity = previousLateralVelocity;
+            PreviousDisplacementY = previousDisplacementY;
             this.dt = dt;
         }
 
-        public double CurrentForwardVelocity { get; private set; }
+        public double CurrentForwardVelocity { get;  set; }
         public double PreviousForwardVelocity { get; private set; }
-        public double CurrentYawVelocity { get; private set; }
+        public double CurrentYawVelocity { get;  set; }
         public double PreviousYawVelocity { get; private set; }
-        public double CurrentLateralVelocity { get; private set; }
+        public double CurrentLateralVelocity { get;  set; }
         public double PreviousLateralVelocity { get; private set; }
+        public double PreviousDisplacementY { get; set; }
 
         private double yawVelocityIntegral
         {
@@ -63,7 +65,7 @@ namespace CarPhysicsEngine
             //var m2 = PreviousLateralVelocity * Math.Cos(yawVelocityIntegral);
             //var m3 = m1 + m2;
 
-            return n3 * dt;
+            return (n3 * dt);
         }
     }
 }
