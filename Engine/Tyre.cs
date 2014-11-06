@@ -8,7 +8,7 @@ namespace CarPhysicsEngine
         private readonly double _lengthFront;
         private readonly double _lengthRear;
 
-        public Tyre(double lengthRear, double lengthFront, double forwardVelocity, double cy1, double cy2)
+        public Tyre(double lengthFront, double lengthRear, double forwardVelocity, double cy1, double cy2)
         {
             _lengthRear = lengthRear;
             _lengthFront = lengthFront;
