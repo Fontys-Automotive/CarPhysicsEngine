@@ -4,68 +4,40 @@ namespace CarPhysicsEngine
 {
     public class Position
     {
-        private readonly double dt;
+        private readonly double _deltaT;
+        private readonly double _forwardVelocity;
 
-        public Position(double currentForwardVelocity, double previousForwardVelocity, double currentYawVelocity,
-            double previousYawVelocity, double currentLateralVelocity, double previousLateralVelocity, double dt, double previousDisplacementY)
+        public Position(double forwardVelocity, double deltaT)
         {
-            CurrentForwardVelocity = currentForwardVelocity;
-            PreviousForwardVelocity = previousForwardVelocity;
-            CurrentYawVelocity = currentYawVelocity;
-            PreviousYawVelocity = previousYawVelocity;
-            CurrentLateralVelocity = currentLateralVelocity;
-            PreviousLateralVelocity = previousLateralVelocity;
-            PreviousDisplacementY = previousDisplacementY;
-            this.dt = dt;
+            _forwardVelocity = forwardVelocity;
+            _deltaT = deltaT;
         }
 
-        public double CurrentForwardVelocity { get;  set; }
-        public double PreviousForwardVelocity { get; private set; }
-        public double CurrentYawVelocity { get;  set; }
-        public double PreviousYawVelocity { get; private set; }
-        public double CurrentLateralVelocity { get;  set; }
-        public double PreviousLateralVelocity { get; private set; }
-        public double PreviousDisplacementY { get; set; }
+        public double LateralVelocity { get; set; }
+        public double YawVelocity { get; set; }
+        public double PreviousYawVelocity { get; set; }
 
-        private double yawVelocityIntegral
+        private double YawVelocityIntegral()
         {
-            get { return (CurrentYawVelocity - PreviousYawVelocity) * dt; }
+            return (YawVelocity - PreviousYawVelocity) * _deltaT;
         }
 
-        /// <summary>
-        ///     Calculation of the new displacementX position
-        /// </summary>
-        /// <returns></returns>
-        public double displacementX()
+        public double VehicleDisplacementX()
         {
-            var n1 = Math.Cos(yawVelocityIntegral) * CurrentForwardVelocity;
-            var n2 = CurrentLateralVelocity * Math.Sin(yawVelocityIntegral);
-            var n3 = n1 - n2;
+            double n1 = _forwardVelocity * Math.Cos(YawVelocityIntegral());
+            double n2 = LateralVelocity * Math.Sin(YawVelocityIntegral());
+            double n3 = n1 - n2;
 
-            // !TODO: Modify for variable acceleration
-            //var m1 = Math.Cos(yawVelocityIntegral) * PreviousForwardVelocity;
-            //var m2 = PreviousLateralVelocity * Math.Sin(yawVelocityIntegral);
-            //var m3 = m1 - m2;
-
-            return n3 * dt;
+            return n3 * _deltaT;
         }
 
-        /// <summary>
-        ///     Calculation of the new displacementY position
-        /// </summary>
-        /// <returns></returns>
-        public double displacementY()
+        public double VehicleDisplacementY()
         {
-            var n1 = CurrentForwardVelocity * Math.Sin(yawVelocityIntegral);
-            var n2 = CurrentLateralVelocity * Math.Cos(yawVelocityIntegral);
-            var n3 = n1 + n2;
+            double n1 = _forwardVelocity * Math.Sin(YawVelocityIntegral());
+            double n2 = LateralVelocity * Math.Cos(YawVelocityIntegral());
+            double n3 = n1 + n2;
 
-            // !TODO: Modify for variable acceleration
-            //var m1 = PreviousForwardVelocity * Math.Sin(yawVelocityIntegral);
-            //var m2 = PreviousLateralVelocity * Math.Cos(yawVelocityIntegral);
-            //var m3 = m1 + m2;
-
-            return (n3 * dt);
+            return n3 * _deltaT;
         }
     }
 }
