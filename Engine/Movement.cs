@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace CarPhysicsEngine
 {
     public class Movement
@@ -24,22 +26,30 @@ namespace CarPhysicsEngine
 
         public double YawVelocity()
         {
-            return PreviousYawVelocity + _deltaT * YawAcceleration();
+            //var n1 = (MzTotal / _inertiaMoment) - (PreviousMzTotal / _inertiaMoment);
+            //return n1 * _deltaT;
+            return PreviousYawVelocity + _deltaT * ((MzTotal / _inertiaMoment) - (PreviousMzTotal/_inertiaMoment));
         }
 
-        public double LateralAcceleration()
+        /// <summary>
+        /// Lateral Acceleration
+        /// </summary>
+        public double AccelerationY()
         {
-            return (FyTotal / _mass) - _forwardVelocity * PreviousLateralVelocity;
+            return (FyTotal / _mass) - (YawVelocity() * _forwardVelocity);
         }
 
-        public double YawAcceleration()
+        private double PreviousAccelerationY()
         {
-            return MzTotal / _inertiaMoment;
+            return (PreviousFyTotal / _mass) - (YawVelocity() * _forwardVelocity);
         }
 
         public double LateralVelocity()
         {
-            return PreviousLateralVelocity + _deltaT * LateralAcceleration();
+            //return (AccelerationY() - PreviousAccelerationY()) * _deltaT;
+
+            return PreviousLateralVelocity + _deltaT * (AccelerationY() - PreviousAccelerationY());
+
         }
     }
 }

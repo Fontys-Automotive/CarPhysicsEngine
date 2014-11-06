@@ -27,14 +27,14 @@ namespace CarPhysicsEngine
             var angle = Console.ReadLine();
 
             if (angle.Equals(""))
-                CarBehaviour.SteerAngle = 0;
+                CarBehaviour.YawAngle = 0;
             else
-                CarBehaviour.SteerAngle = Convert.ToDouble(angle) * Math.PI / 180;
+                CarBehaviour.YawAngle = Convert.ToDouble(angle) * Math.PI / 180;
 
             Console.WriteLine("\nTimestamp: " + DateTime.Now);
 
             Console.WriteLine("\n========== SCREEN ==========");
-            Console.WriteLine("Steer Angle (rad): " + CarBehaviour.SteerAngle);
+            Console.WriteLine("Steer Angle (rad): " + CarBehaviour.YawAngle);
             Console.WriteLine("X:                 " + CarBehaviour.XCoordinate);
             Console.WriteLine("Y:                 " + CarBehaviour.YCoordinate);
 
@@ -48,11 +48,11 @@ namespace CarPhysicsEngine
             Console.WriteLine("Forward Velocity:  " + CarBehaviour.ForwardVelocity);
             Console.WriteLine("Yaw Velocity:      " + CarBehaviour.Movement.YawVelocity());
             Console.WriteLine("Lateral Velocity:  " + CarBehaviour.Movement.LateralVelocity());
-       //     Console.WriteLine("Lateral Acc.:      " + CarBehaviour.Movement.AccelerationY());
+            Console.WriteLine("Lateral Acc.:      " + CarBehaviour.Movement.AccelerationY());
 
             Console.WriteLine("\n========== VEHICLE =========");
-            Console.WriteLine("Displacement X:    " + CarBehaviour.Position.CarPositionX());
-            Console.WriteLine("Displacement Y:    " + CarBehaviour.Position.CarPositionY());
+            Console.WriteLine("Displacement X:    " + CarBehaviour.Position.VehicleDisplacementX());
+            Console.WriteLine("Displacement Y:    " + CarBehaviour.Position.VehicleDisplacementY());
         }
     }
 }

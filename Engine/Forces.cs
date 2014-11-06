@@ -21,7 +21,8 @@ namespace CarPhysicsEngine
 
         public double MzMoment()
         {
-            return (TyreForceFront * _lengthFront) - (TyreForceRear * _lengthRear);
+            var result = (TyreForceFront * _lengthFront) - (TyreForceRear * _lengthRear);
+            return result;
         }
     }
 }

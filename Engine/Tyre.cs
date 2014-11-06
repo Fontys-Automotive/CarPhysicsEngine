@@ -8,13 +8,14 @@ namespace CarPhysicsEngine
         private readonly double _lengthFront;
         private readonly double _lengthRear;
 
-        public Tyre(double lengthFront, double lengthRear, double forwardVelocity, double cy1, double cy2)
+        public Tyre(double lengthFront, double lengthRear, double forwardVelocity, double cy1, double cy2, double steerAngle)
         {
             _lengthRear = lengthRear;
             _lengthFront = lengthFront;
             _forwardVelocity = forwardVelocity;
             _cy1 = cy1;
             _cy2 = cy2;
+            SteerAngle = steerAngle;
         }
 
         public double SteerAngle { get; set; }
@@ -33,12 +34,17 @@ namespace CarPhysicsEngine
 
         private double AlphaFront()
         {
-            return SteerAngle - ((YawVelocity * _lengthFront + LateralVelocity) / _forwardVelocity);
+ //           var n1 = (YawVelocity * _lengthFront + LateralVelocity) / _forwardVelocity;
+
+            //return SteerAngle - n1;
+            return 0.019;
         }
 
         private double AlphaRear()
         {
-            return (LateralVelocity - YawVelocity * _lengthRear) / _forwardVelocity;
+            //TODO
+            //return   -((LateralVelocity - YawVelocity * _lengthRear) / _forwardVelocity);
+            return 0.013;
         }
     }
 }

@@ -39,14 +39,11 @@ namespace CarPhysicsEngine
         private double _previousFyTotal;
         private double _previousYawVelocity;
         private double _previousLateralVelocity;
-        private double _angleXAxis; // Angle w.r.t X-axis
-        private double _vx, _vy; // Velocity in real-world coordinates [m/s]
 
+        public double YawAngle { get; set; }
         public double SteerAngle { get; set; }
         public double XCoordinate { get; private set; }
         public double YCoordinate { get; private set; }
-        public double CarPositionX { get; set; } // Car position in real-world coordinates [m]
-        public double CarPositionY { get; set; } // Car position in real-world coordinates [m]
 
         // !TODO: Accessors are public for debugging purposes only. Set to private for production 
         public readonly Tyre Tyre;
@@ -73,10 +70,10 @@ namespace CarPhysicsEngine
             mu2 = 0.9;
             D1 = mu1 * (-0.145 * dFz1 + 0.99) * Fz1;
             D2 = mu2 * (-0.145 * dFz2 + 0.99) * Fz2;
-            C1 = 50;
-            C2 = 50;
+            C1 = 1.19;
+            C2 = 1.19;
             K1 = 14.95 * Fz0 * Math.Sin(2 * Math.Atan(Fz1 / 2.13 / Fz0));
-            K2 = Fz2 * K1 / (Fz1 - ETA - K1);
+            K2 = Fz2 * K1 / (Fz1 - ETA * K1);
             B1 = K1 / C1 / D1;
             B2 = K2 / C2 / D2;
             E1 = -1.003 - 0.537 * dFz1;
@@ -84,30 +81,25 @@ namespace CarPhysicsEngine
             Cy1 = B1 * C1 * D1;
             Cy2 = B2 * C2 * D2;
             ForwardVelocity = 80 / 3.6;
-            yawFactor = 2;
+            //yawFactor = 2;
 
             _deltaT = 0.01; // 10 ms
             _previousMzTotal = _previousFyTotal = _previousYawVelocity = _previousLateralVelocity = 0;
-            _vx = _vy = 0;
 
-            SteerAngle = _angleXAxis = 0;
+            YawAngle = 0;
+            SteerAngle = 0.02;
             XCoordinate = YCoordinate = 0;
-            
-            // Set initial position of car in world
-            CarPositionX = 0;
-            CarPositionY = 0;
 
-            Tyre = new Tyre(lengthFront, lengthRear, ForwardVelocity, Cy1, Cy2);
+            Tyre = new Tyre(lengthFront, lengthRear, ForwardVelocity, Cy1, Cy2, SteerAngle );
             Forces = new Forces(lengthFront, lengthRear);
             Movement = new Movement(ForwardVelocity, inertiaMoment, mass, _deltaT);
-            Position = new Position(ForwardVelocity, _deltaT);
+            Position = new Position(ForwardVelocity, _deltaT, YawAngle);
         }
 
         public void  Run()
         {
             // Initialize the properties in Tyre
             Tyre.SteerAngle = SteerAngle;
-
             Tyre.LateralVelocity = Movement.LateralVelocity();
             Tyre.YawVelocity = Movement.YawVelocity();
 
@@ -118,30 +110,46 @@ namespace CarPhysicsEngine
             // Initialize the properties in Movement
             Movement.PreviousFyTotal = _previousFyTotal;
             Movement.PreviousMzTotal = _previousMzTotal;
-            Movement.PreviousYawVelocity = _previousYawVelocity;
             Movement.PreviousLateralVelocity = Movement.LateralVelocity();
-
-            _previousFyTotal = Movement.FyTotal = Forces.FyTotal();
-            _previousMzTotal = Movement.MzTotal = Forces.MzMoment();
+            Movement.PreviousYawVelocity = _previousYawVelocity;
+            var mz = Forces.MzMoment();
+            _previousFyTotal = Movement.FyTotal;
+            _previousMzTotal = Movement.MzTotal;
+            Movement.FyTotal = Forces.FyTotal();
+            Movement.MzTotal = Forces.MzMoment();
+            
+            
 
             // Initialize the properties in Position
             Position.PreviousYawVelocity = _previousYawVelocity;
-            
             _previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
             Position.LateralVelocity = Movement.LateralVelocity();
 
-            // Compute velocity in real world coordinates
-            var cosAngle = Math.Cos(_angleXAxis);
-            var sinAngle = Math.Sin(_angleXAxis);
-            _vx = cosAngle * ForwardVelocity + sinAngle * Movement.LateralVelocity();
-            _vy = sinAngle * ForwardVelocity - cosAngle * Movement.LateralVelocity();
+            // Calculate the new world coordinates for the vehicle
+            XCoordinate += Math.Cos(YawAngle) * Position.VehicleDisplacementX()
+                           + Math.Sin(YawAngle * Position.VehicleDisplacementY());
+            YCoordinate += Math.Sin(YawAngle) * Position.VehicleDisplacementX()
+                           - Math.Cos(YawAngle) * Position.VehicleDisplacementY();
 
-            CarPositionX += _deltaT * _vx;
-            CarPositionY += _deltaT * _vy;
-
-            _angleXAxis += _deltaT * Movement.YawVelocity();
+            var newYawAngle = YawAngle + _deltaT * Movement.YawVelocity();
+            YawAngle = newYawAngle/* >= -0.6 && newYawAngle <= 0.6 ? newYawAngle : steerAngle*/;
         }
 
+        public double AccelerationY()
+        {
+            var n1 = Movement.AccelerationY() + (Movement.YawVelocity() * ForwardVelocity);
+            return n1 / gravity;
+        }
 
+        public double YawVelocity()
+        {
+            return Movement.YawVelocity() * (180 / Math.PI);
+        }
+
+        public double SteerAngleDegrees()
+        {
+            var n1 = Math.Atan(Movement.LateralVelocity() / ForwardVelocity);
+            return n1 * (180 / Math.PI);
+        }
     }
 }
