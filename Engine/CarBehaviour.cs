@@ -39,10 +39,14 @@ namespace CarPhysicsEngine
         private double _previousFyTotal;
         private double _previousYawVelocity;
         private double _previousLateralVelocity;
+        private double _angleXAxis; // Angle w.r.t X-axis
+        private double _vx, _vy; // Velocity in real-world coordinates [m/s]
 
         public double SteerAngle { get; set; }
         public double XCoordinate { get; private set; }
         public double YCoordinate { get; private set; }
+        public double CarPositionX { get; set; } // Car position in real-world coordinates [m]
+        public double CarPositionY { get; set; } // Car position in real-world coordinates [m]
 
         // !TODO: Accessors are public for debugging purposes only. Set to private for production 
         public readonly Tyre Tyre;
@@ -84,9 +88,14 @@ namespace CarPhysicsEngine
 
             _deltaT = 0.01; // 10 ms
             _previousMzTotal = _previousFyTotal = _previousYawVelocity = _previousLateralVelocity = 0;
+            _vx = _vy = 0;
 
-            SteerAngle = 0;
+            SteerAngle = _angleXAxis = 0;
             XCoordinate = YCoordinate = 0;
+            
+            // Set initial position of car in world
+            CarPositionX = 0;
+            CarPositionY = 0;
 
             Tyre = new Tyre(lengthFront, lengthRear, ForwardVelocity, Cy1, Cy2);
             Forces = new Forces(lengthFront, lengthRear);
@@ -98,6 +107,7 @@ namespace CarPhysicsEngine
         {
             // Initialize the properties in Tyre
             Tyre.SteerAngle = SteerAngle;
+
             Tyre.LateralVelocity = Movement.LateralVelocity();
             Tyre.YawVelocity = Movement.YawVelocity();
 
@@ -108,41 +118,30 @@ namespace CarPhysicsEngine
             // Initialize the properties in Movement
             Movement.PreviousFyTotal = _previousFyTotal;
             Movement.PreviousMzTotal = _previousMzTotal;
-            Movement.PreviousLateralVelocity = Movement.LateralVelocity();
             Movement.PreviousYawVelocity = _previousYawVelocity;
+            Movement.PreviousLateralVelocity = Movement.LateralVelocity();
+
             _previousFyTotal = Movement.FyTotal = Forces.FyTotal();
             _previousMzTotal = Movement.MzTotal = Forces.MzMoment();
 
             // Initialize the properties in Position
             Position.PreviousYawVelocity = _previousYawVelocity;
+            
             _previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
             Position.LateralVelocity = Movement.LateralVelocity();
 
-            // Calculate the new world coordinates for the vehicle
-            XCoordinate += Math.Cos(SteerAngle) * Position.VehicleDisplacementX()
-                           + Math.Sin(SteerAngle * Position.VehicleDisplacementY());
-            YCoordinate += Math.Sin(SteerAngle) * Position.VehicleDisplacementX()
-                           - Math.Cos(SteerAngle) * Position.VehicleDisplacementY();
+            // Compute velocity in real world coordinates
+            var cosAngle = Math.Cos(_angleXAxis);
+            var sinAngle = Math.Sin(_angleXAxis);
+            _vx = cosAngle * ForwardVelocity + sinAngle * Movement.LateralVelocity();
+            _vy = sinAngle * ForwardVelocity - cosAngle * Movement.LateralVelocity();
 
-            var newSteerAngle = SteerAngle + _deltaT * Movement.YawVelocity();
-            SteerAngle = newSteerAngle >= -30 && newSteerAngle <= 30 ? newSteerAngle : SteerAngle;
+            CarPositionX += _deltaT * _vx;
+            CarPositionY += _deltaT * _vy;
+
+            _angleXAxis += _deltaT * Movement.YawVelocity();
         }
 
-        public double AccelerationY()
-        {
-            var n1 = Movement.AccelerationY() + (Movement.YawVelocity() * ForwardVelocity);
-            return n1 / gravity;
-        }
 
-        public double YawVelocity()
-        {
-            return Movement.YawVelocity() * (180 / Math.PI);
-        }
-
-        public double SteerAngleDegrees()
-        {
-            var n1 = Math.Atan(Movement.LateralVelocity() / ForwardVelocity);
-            return n1 * (180 / Math.PI);
-        }
     }
 }

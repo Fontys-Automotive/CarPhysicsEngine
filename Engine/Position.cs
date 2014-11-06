@@ -22,20 +22,20 @@ namespace CarPhysicsEngine
             return (YawVelocity - PreviousYawVelocity) * _deltaT;
         }
 
-        public double VehicleDisplacementX()
+        public double CarPositionX()
         {
-            double n1 = _forwardVelocity * Math.Cos(YawVelocityIntegral());
-            double n2 = LateralVelocity * Math.Sin(YawVelocityIntegral());
-            double n3 = n1 - n2;
+            var n1 = _forwardVelocity * Math.Cos(YawVelocityIntegral());
+            var n2 = LateralVelocity * Math.Sin(YawVelocityIntegral());
+            var n3 = n1 - n2;
 
             return n3 * _deltaT;
         }
 
-        public double VehicleDisplacementY()
+        public double CarPositionY()
         {
-            double n1 = _forwardVelocity * Math.Sin(YawVelocityIntegral());
-            double n2 = LateralVelocity * Math.Cos(YawVelocityIntegral());
-            double n3 = n1 + n2;
+            var n1 = _forwardVelocity * Math.Sin(YawVelocityIntegral());
+            var n2 = LateralVelocity * Math.Cos(YawVelocityIntegral());
+            var n3 = n1 + n2;
 
             return n3 * _deltaT;
         }

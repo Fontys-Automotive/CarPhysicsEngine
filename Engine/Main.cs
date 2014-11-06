@@ -48,11 +48,11 @@ namespace CarPhysicsEngine
             Console.WriteLine("Forward Velocity:  " + CarBehaviour.ForwardVelocity);
             Console.WriteLine("Yaw Velocity:      " + CarBehaviour.Movement.YawVelocity());
             Console.WriteLine("Lateral Velocity:  " + CarBehaviour.Movement.LateralVelocity());
-            Console.WriteLine("Lateral Acc.:      " + CarBehaviour.Movement.AccelerationY());
+       //     Console.WriteLine("Lateral Acc.:      " + CarBehaviour.Movement.AccelerationY());
 
             Console.WriteLine("\n========== VEHICLE =========");
-            Console.WriteLine("Displacement X:    " + CarBehaviour.Position.VehicleDisplacementX());
-            Console.WriteLine("Displacement Y:    " + CarBehaviour.Position.VehicleDisplacementY());
+            Console.WriteLine("Displacement X:    " + CarBehaviour.Position.CarPositionX());
+            Console.WriteLine("Displacement Y:    " + CarBehaviour.Position.CarPositionY());
         }
     }
 }

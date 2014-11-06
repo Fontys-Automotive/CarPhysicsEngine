@@ -24,28 +24,22 @@ namespace CarPhysicsEngine
 
         public double YawVelocity()
         {
-            //var n1 = (MzTotal / _inertiaMoment) - (PreviousMzTotal / _inertiaMoment);
-            //return n1 * _deltaT;
-            return PreviousYawVelocity + _deltaT * MzTotal / _inertiaMoment;
+            return PreviousYawVelocity + _deltaT * YawAcceleration();
         }
 
-        /// <summary>
-        /// Lateral Acceleration
-        /// </summary>
-        public double AccelerationY()
+        public double LateralAcceleration()
         {
-            return (FyTotal / _mass) - (YawVelocity() * _forwardVelocity);
+            return (FyTotal / _mass) - _forwardVelocity * PreviousLateralVelocity;
         }
 
-        private double PreviousAccelerationY()
+        public double YawAcceleration()
         {
-            return (PreviousFyTotal / _mass) - (YawVelocity() * _forwardVelocity);
+            return MzTotal / _inertiaMoment;
         }
 
         public double LateralVelocity()
         {
-            //return (AccelerationY() - PreviousAccelerationY()) * _deltaT;
-            return PreviousLateralVelocity + _deltaT * AccelerationY();
+            return PreviousLateralVelocity + _deltaT * LateralAcceleration();
         }
     }
 }

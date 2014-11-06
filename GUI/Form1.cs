@@ -12,7 +12,6 @@ namespace GUI
         private readonly CarBehaviour carBehaviour;
         private readonly GraphicsPath path;
         private readonly Pen pathPen;
-        private Point carStartPoint;
         private DateTime startTime;
         private bool startedOnce;
 
@@ -22,12 +21,15 @@ namespace GUI
             carBehaviour = new CarBehaviour();
             pathPen = new Pen(Color.Red, 2);
             path = new GraphicsPath();
-            carStartPoint = new Point(0, 150);
+
+            carBehaviour.CarPositionX = 200;
+            carBehaviour.CarPositionY = 150;
+
         }
 
         private void onKeyPress(object sender, KeyPressEventArgs e)
         {
-            const int deltaAngle = 30;
+            const double deltaAngle = 0.087;
 
             switch (e.KeyChar)
             {
@@ -43,12 +45,12 @@ namespace GUI
 
         private void panel_Paint(object sender, PaintEventArgs e)
         {
-            var x = (float) carBehaviour.XCoordinate;
-            var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
+            var x = (float)carBehaviour.CarPositionX;
+            var y = (float)carBehaviour.CarPositionY; // negative to invert axis
 
             var pen = new Pen(Color.Black, 5);
 
-            e.Graphics.DrawEllipse(pen, carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
+            e.Graphics.DrawEllipse(pen, x, y, 5, 5);
             e.Graphics.DrawPath(pathPen, path);
         }
 
@@ -56,9 +58,9 @@ namespace GUI
         {
             carBehaviour.Run();
 
-            var x = (float) carBehaviour.XCoordinate;
-            var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
-            path.AddEllipse(carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
+            var x = (float)carBehaviour.CarPositionX;
+            var y = (float)carBehaviour.CarPositionY; // negative to invert axi
+            path.AddEllipse(x, y, 5, 5);
 
             //SCREEN
             labelSteerAngle.Text = carBehaviour.SteerAngle.ToString();
@@ -75,11 +77,11 @@ namespace GUI
             labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString();
             labelYawVelocity.Text = carBehaviour.Movement.YawVelocity().ToString();
             labelLateralVelocity.Text = carBehaviour.Movement.LateralVelocity().ToString();
-            labelAcceleration.Text = carBehaviour.Movement.AccelerationY().ToString();
+            //labelAcceleration.Text = carBehaviour.Movement.AccelerationY().ToString();
 
             //POSITION
-            labelVehicleDisplacementX.Text = carBehaviour.Position.VehicleDisplacementX().ToString();
-            labelVehicleDisplacementY.Text = carBehaviour.Position.VehicleDisplacementY().ToString();
+            labelVehicleDisplacementX.Text = carBehaviour.Position.CarPositionX().ToString();
+            labelVehicleDisplacementY.Text = carBehaviour.Position.CarPositionY().ToString();
 
             //UPDATE TIMER DISPLAY
             DateTime t = DateTime.Now;
