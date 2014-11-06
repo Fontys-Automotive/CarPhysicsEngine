@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CarPhysicsEngine;
 
@@ -26,14 +27,16 @@ namespace GUI
 
         private void onKeyPress(object sender, KeyPressEventArgs e)
         {
+            const int deltaAngle = 30;
+
             switch (e.KeyChar)
             {
                 case 'a':
-                    carBehaviour.SteerAngle -= 0.01;
+                    carBehaviour.SteerAngle -= deltaAngle;
                     break;
 
                 case 'd':
-                    carBehaviour.SteerAngle += 0.01;
+                    carBehaviour.SteerAngle += deltaAngle;
                     break;
             }
         }
@@ -44,7 +47,6 @@ namespace GUI
             var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
 
             var pen = new Pen(Color.Black, 5);
-
 
             e.Graphics.DrawEllipse(pen, carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
             e.Graphics.DrawPath(pathPen, path);

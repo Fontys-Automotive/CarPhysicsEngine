@@ -40,7 +40,7 @@ namespace CarPhysicsEngine
 
         private double AlphaRear()
         {
-            return (YawVelocity * _lengthRear - LateralVelocity) / _forwardVelocity;
+            return (LateralVelocity - YawVelocity * _lengthRear) / _forwardVelocity;
         }
     }
 }

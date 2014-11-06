@@ -19,13 +19,19 @@ namespace CarPhysicsEngine
         public double PreviousFyTotal { get; set; }
         public double MzTotal { get; set; }
         public double PreviousMzTotal { get; set; }
+        public double PreviousLateralVelocity { get; set; }
+        public double PreviousYawVelocity { get; set; }
 
         public double YawVelocity()
         {
-            var n1 = (MzTotal / _inertiaMoment) - (PreviousMzTotal / _inertiaMoment);
-            return n1 * _deltaT;
+            //var n1 = (MzTotal / _inertiaMoment) - (PreviousMzTotal / _inertiaMoment);
+            //return n1 * _deltaT;
+            return PreviousYawVelocity + _deltaT * MzTotal / _inertiaMoment;
         }
 
+        /// <summary>
+        /// Lateral Acceleration
+        /// </summary>
         public double AccelerationY()
         {
             return (FyTotal / _mass) - (YawVelocity() * _forwardVelocity);
@@ -38,7 +44,8 @@ namespace CarPhysicsEngine
 
         public double LateralVelocity()
         {
-            return (AccelerationY() - PreviousAccelerationY()) * _deltaT;
+            //return (AccelerationY() - PreviousAccelerationY()) * _deltaT;
+            return PreviousLateralVelocity + _deltaT * AccelerationY();
         }
     }
 }

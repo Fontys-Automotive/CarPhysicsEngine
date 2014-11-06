@@ -38,6 +38,7 @@ namespace CarPhysicsEngine
         private double _previousMzTotal;
         private double _previousFyTotal;
         private double _previousYawVelocity;
+        private double _previousLateralVelocity;
 
         public double SteerAngle { get; set; }
         public double XCoordinate { get; private set; }
@@ -68,8 +69,8 @@ namespace CarPhysicsEngine
             mu2 = 0.9;
             D1 = mu1 * (-0.145 * dFz1 + 0.99) * Fz1;
             D2 = mu2 * (-0.145 * dFz2 + 0.99) * Fz2;
-            C1 = 1.19;
-            C2 = 1.19;
+            C1 = 50;
+            C2 = 50;
             K1 = 14.95 * Fz0 * Math.Sin(2 * Math.Atan(Fz1 / 2.13 / Fz0));
             K2 = Fz2 * K1 / (Fz1 - ETA - K1);
             B1 = K1 / C1 / D1;
@@ -81,8 +82,8 @@ namespace CarPhysicsEngine
             ForwardVelocity = 80 / 3.6;
             yawFactor = 2;
 
-            _deltaT = 0.03; // 30 ms
-            _previousMzTotal = _previousFyTotal = _previousYawVelocity = 0;
+            _deltaT = 0.01; // 10 ms
+            _previousMzTotal = _previousFyTotal = _previousYawVelocity = _previousLateralVelocity = 0;
 
             SteerAngle = 0;
             XCoordinate = YCoordinate = 0;
@@ -107,6 +108,8 @@ namespace CarPhysicsEngine
             // Initialize the properties in Movement
             Movement.PreviousFyTotal = _previousFyTotal;
             Movement.PreviousMzTotal = _previousMzTotal;
+            Movement.PreviousLateralVelocity = Movement.LateralVelocity();
+            Movement.PreviousYawVelocity = _previousYawVelocity;
             _previousFyTotal = Movement.FyTotal = Forces.FyTotal();
             _previousMzTotal = Movement.MzTotal = Forces.MzMoment();
 
@@ -116,10 +119,13 @@ namespace CarPhysicsEngine
             Position.LateralVelocity = Movement.LateralVelocity();
 
             // Calculate the new world coordinates for the vehicle
-            XCoordinate += Math.Cos(SteerAngleDegrees()) * Position.VehicleDisplacementX()
-                           + Math.Sin(SteerAngleDegrees() * Position.VehicleDisplacementY());
-            YCoordinate += Math.Sin(SteerAngleDegrees()) * Position.VehicleDisplacementX()
-                           - Math.Cos(SteerAngleDegrees()) * Position.VehicleDisplacementY();
+            XCoordinate += Math.Cos(SteerAngle) * Position.VehicleDisplacementX()
+                           + Math.Sin(SteerAngle * Position.VehicleDisplacementY());
+            YCoordinate += Math.Sin(SteerAngle) * Position.VehicleDisplacementX()
+                           - Math.Cos(SteerAngle) * Position.VehicleDisplacementY();
+
+            var newSteerAngle = SteerAngle + _deltaT * Movement.YawVelocity();
+            SteerAngle = newSteerAngle >= -30 && newSteerAngle <= 30 ? newSteerAngle : SteerAngle;
         }
 
         public double AccelerationY()
