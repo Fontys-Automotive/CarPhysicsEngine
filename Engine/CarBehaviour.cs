@@ -33,6 +33,7 @@ namespace CarPhysicsEngine
         private readonly double Cy2; // Tyre stiffness rear [N/rad]
         public readonly double ForwardVelocity; // [m/s]
         private readonly double yawFactor; // steering factor [deg]
+        private double steerAngle; // steering angle in radians
 
         private readonly double _deltaT; // time-step in seconds
         private double _previousMzTotal;
@@ -41,7 +42,14 @@ namespace CarPhysicsEngine
         private double _previousLateralVelocity;
 
         public double YawAngle { get; set; }
-        public double SteerAngle { get; set; }
+        public double SteerAngle {
+            get { return steerAngle; }
+            set
+            {
+                if (value <= 0.6 && value >= -0.6)
+                    steerAngle = value;
+            }
+        }
         public double XCoordinate { get; private set; }
         public double YCoordinate { get; private set; }
 
@@ -83,7 +91,7 @@ namespace CarPhysicsEngine
             ForwardVelocity = 140 / 3.6;
             //yawFactor = 2;
 
-            _deltaT = 0.01; // 10 ms
+            _deltaT = 0.03; // 10 ms
             _previousMzTotal = _previousFyTotal = _previousYawVelocity = _previousLateralVelocity = 0;
 
             YawAngle = 0;
