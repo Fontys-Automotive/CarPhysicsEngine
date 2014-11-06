@@ -80,7 +80,7 @@ namespace CarPhysicsEngine
             E2 = -1.003 - 0.537 * dFz2;
             Cy1 = B1 * C1 * D1;
             Cy2 = B2 * C2 * D2;
-            ForwardVelocity = 80 / 3.6;
+            ForwardVelocity = 140 / 3.6;
             //yawFactor = 2;
 
             _deltaT = 0.01; // 10 ms

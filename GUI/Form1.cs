@@ -23,6 +23,8 @@ namespace GUI
             pathPen = new Pen(Color.Red, 2);
             path = new GraphicsPath();
             carStartPoint = new Point(150, 150);
+            
+
         }
 
         private void onKeyPress(object sender, KeyPressEventArgs e)
@@ -45,7 +47,7 @@ namespace GUI
         {
             var x = (float) carBehaviour.XCoordinate;
             var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
-
+            
             var pen = new Pen(Color.Black, 5);
 
             e.Graphics.DrawEllipse(pen, carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
@@ -55,37 +57,43 @@ namespace GUI
         private void timer1_Tick(object sender, EventArgs e)
         {
             carBehaviour.Run();
+            
 
             var x = (float) carBehaviour.XCoordinate;
             var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
             path.AddEllipse(carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
+            var carX = labelRaceCar.Location.X;
+            var carY = labelRaceCar.Location.Y;
+            labelRaceCar.Location = new Point(carStartPoint.X + (int)x - 5, carStartPoint.Y + (int)y - 30);
+
 
             //SCREEN
-            labelSteerAngle.Text = carBehaviour.SteerAngle.ToString();
-            labelXCoordinate.Text = carBehaviour.XCoordinate.ToString();
-            labelYCoordinate.Text = carBehaviour.YCoordinate.ToString();
+            labelSteerAngle.Text = carBehaviour.SteerAngle.ToString("0.000");
+            labelXCoordinate.Text = carBehaviour.XCoordinate.ToString("0.000");
+            labelYCoordinate.Text = carBehaviour.YCoordinate.ToString("0.000");
 
             //FORCES
-            labelFyFront.Text = carBehaviour.Forces.TyreForceFront.ToString();
-            labelFyRear.Text = carBehaviour.Forces.TyreForceRear.ToString();
-            labelFyTotal.Text = carBehaviour.Forces.FyTotal().ToString();
-            labelMzMoment.Text = carBehaviour.Movement.MzTotal.ToString();
+            labelFyFront.Text = carBehaviour.Forces.TyreForceFront.ToString("0.000");
+            labelFyRear.Text = carBehaviour.Forces.TyreForceRear.ToString("0.000");
+            labelFyTotal.Text = carBehaviour.Forces.FyTotal().ToString("0.000");
+            labelMzMoment.Text = carBehaviour.Movement.MzTotal.ToString("0.000");
 
             //MOVEMENT
-            labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString();
-            labelYawVelocity.Text = carBehaviour.Movement.YawVelocity().ToString();
-            labelLateralVelocity.Text = carBehaviour.Movement.LateralVelocity().ToString();
-            labelAcceleration.Text = carBehaviour.Movement.AccelerationY().ToString();
+            labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString("0.000");
+            labelYawVelocity.Text = carBehaviour.Movement.YawVelocity().ToString("0.000");
+            labelLateralVelocity.Text = carBehaviour.Movement.LateralVelocity().ToString("0.000");
+            labelAcceleration.Text = carBehaviour.Movement.AccelerationY().ToString("0.000");
 
             //POSITION
-            labelVehicleDisplacementX.Text = carBehaviour.Position.VehicleDisplacementX().ToString();
-            labelVehicleDisplacementY.Text = carBehaviour.Position.VehicleDisplacementY().ToString();
+            labelVehicleDisplacementX.Text = carBehaviour.Position.VehicleDisplacementX().ToString("0.000");
+            labelVehicleDisplacementY.Text = carBehaviour.Position.VehicleDisplacementY().ToString("0.000");
 
             //UPDATE TIMER DISPLAY
             DateTime t = DateTime.Now;
             var timespan = new TimeSpan();
             timespan = t - startTime;
-            labelTimer.Text = timespan.Seconds.ToString();
+            labelTimer.Text = timespan.Minutes.ToString() +  " : " + timespan.Seconds.ToString();
+
 
             // Refesh panel
             panel.Refresh();
