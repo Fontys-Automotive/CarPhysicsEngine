@@ -153,7 +153,6 @@
             this.groupBoxScreen.TabIndex = 7;
             this.groupBoxScreen.TabStop = false;
             this.groupBoxScreen.Text = "Screen";
-            this.groupBoxScreen.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // labelTimer
             // 
