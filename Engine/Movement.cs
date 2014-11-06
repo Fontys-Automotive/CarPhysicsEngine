@@ -1,94 +1,44 @@
 namespace CarPhysicsEngine
 {
-	public class Movement
-	{
-        /// <summary>
-        /// Moment of Inertia
-        /// </summary>
-	    private readonly double I;
+    public class Movement
+    {
+        private readonly double _deltaT;
+        private readonly double _forwardVelocity;
+        private readonly double _inertiaMoment;
+        private readonly double _mass;
 
-        /// <summary>
-        /// Mass of vehicle  
-        /// </summary>
-	    private readonly double mass;
-
-	    private readonly double forwardVelocity;
-
-	    /// <summary>
-        /// Current total force of wheels
-        /// </summary>
-		public double CurrentFyTotal{ get; set; }
-
-        /// <summary>
-        /// Current total torque (moment)
-        /// </summary>
-		public double CurrentMzTotal{ get; set; }
-
-        /// <summary>
-        /// Force on wheels as of previous iteration
-        /// </summary>
-		public double PreviousFyTotal{ get; set; }
-
-        /// <summary>
-        /// Torque as of previous iteration
-        /// </summary>
-		public double PreviousMzTotal{ get; set; }
-
-	    public double PreviousYawVelocity { get; set; }
-
-	    public double PreviousLateralVelocity { get; set; }
-
-	    /// <summary>
-        /// Time step 
-        /// </summary>
-	    public double dt { get; set; }
-		
-        public Movement (double currentFyTotal, double currentMzTotal, double I, double mass, double previousFyTotal, double previousMzTotal, double dt, double forwardVelocity, double previousYawVelocity, double previousLateralVelocity)
-		{
-			PreviousMzTotal = previousMzTotal;
-            PreviousYawVelocity = previousYawVelocity;
-            PreviousLateralVelocity = previousLateralVelocity;
-            PreviousFyTotal = previousFyTotal;
-		    CurrentMzTotal = currentMzTotal;
-			CurrentFyTotal = currentFyTotal;
-			this.I = I;
-			this.mass = mass;
-            this.forwardVelocity = forwardVelocity;
-		}
-
-        /// <summary>
-        /// Calculate the yawVelocity
-        /// </summary>
-		public double yawVelocity()
-		{
-		    var dx = (CurrentMzTotal/I) - (PreviousMzTotal/I);
-		    return PreviousYawVelocity+ (dx * dt);
-		}
-
-        /// <summary>
-        /// Calculate accelerationY.
-        /// </summary>
-	    public double accelerationY()
-		{
-	        return (CurrentFyTotal / mass) - (yawVelocity() * forwardVelocity);
-		}
-
-        /// <summary>
-        /// Calculate acceleration from last iteration. It is used to calculate the lateral velocity.
-        /// </summary>
-        private double previousAccelerationY()
+        public Movement(double forwardVelocity, double inertiaMoment, double mass, double deltaT)
         {
-            return (PreviousFyTotal / mass) - (yawVelocity() * forwardVelocity);
+            _forwardVelocity = forwardVelocity;
+            _inertiaMoment = inertiaMoment;
+            _mass = mass;
+            _deltaT = deltaT;
         }
-		
-        /// <summary>
-        /// Calculate the lateral velocity
-        /// </summary>
-		public double lateralVelocity()
-		{
-		    var dx = accelerationY() - previousAccelerationY();
 
-		    return PreviousLateralVelocity+(dx * dt);
+        public double FyTotal { get; set; }
+        public double PreviousFyTotal { get; set; }
+        public double MzTotal { get; set; }
+        public double PreviousMzTotal { get; set; }
+
+        public double YawVelocity()
+        {
+            var n1 = (MzTotal / _inertiaMoment) - (PreviousMzTotal / _inertiaMoment);
+            return n1 * _deltaT;
         }
-	}
+
+        public double AccelerationY()
+        {
+            return (FyTotal / _mass) - (YawVelocity() * _forwardVelocity);
+        }
+
+        private double PreviousAccelerationY()
+        {
+            return (PreviousFyTotal / _mass) - (YawVelocity() * _forwardVelocity);
+        }
+
+        public double LateralVelocity()
+        {
+            return (AccelerationY() - PreviousAccelerationY()) * _deltaT;
+        }
+    }
 }
