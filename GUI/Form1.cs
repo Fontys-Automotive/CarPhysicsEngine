@@ -23,8 +23,6 @@ namespace GUI
             pathPen = new Pen(Color.Red, 2);
             path = new GraphicsPath();
             carStartPoint = new Point(150, 150);
-            
-
         }
 
         private void onKeyPress(object sender, KeyPressEventArgs e)
@@ -40,7 +38,14 @@ namespace GUI
                 case 'd':
                     carBehaviour.SteerAngle += deltaAngle;
                     break;
+
             }
+            if (carBehaviour.SteerAngle > 0)
+                labelSteerAngle.BackColor = Color.LawnGreen;
+            else if (carBehaviour.SteerAngle < 0)
+                labelSteerAngle.BackColor = Color.Red;
+            else if (carBehaviour.SteerAngle.Equals(0))
+                labelSteerAngle.BackColor = Color.White;
         }
 
         private void panel_Paint(object sender, PaintEventArgs e)
@@ -79,7 +84,7 @@ namespace GUI
             labelMzMoment.Text = carBehaviour.Movement.MzTotal.ToString("0.000");
 
             //MOVEMENT
-            labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString("0.000");
+            labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString("0.0") + " m/s";
             labelYawVelocity.Text = carBehaviour.Movement.YawVelocity().ToString("0.000");
             labelLateralVelocity.Text = carBehaviour.Movement.LateralVelocity().ToString("0.000");
             labelAcceleration.Text = carBehaviour.Movement.AccelerationY().ToString("0.000");
@@ -105,6 +110,7 @@ namespace GUI
             {
                 timer1.Stop();
                 buttonPlayPause.Text = "Play";
+                buttonPlayPause.BackColor = Color.ForestGreen;
             }
             else
             {
@@ -115,7 +121,14 @@ namespace GUI
                 }
                 timer1.Start();
                 buttonPlayPause.Text = "Pause";
+                buttonPlayPause.BackColor = Color.DarkRed;
+
             }
+        }
+
+        private void labelSteerAngle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
