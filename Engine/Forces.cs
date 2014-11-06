@@ -11,17 +11,17 @@ namespace CarPhysicsEngine
             _lengthRear = lengthRear;
         }
 
-        public double FyFront { get; set; }
-        public double FyRear { get; set; }
+        public double TyreForceFront { get; set; }
+        public double TyreForceRear { get; set; }
 
         public double FyTotal()
         {
-            return FyFront + FyRear;
+            return TyreForceFront + TyreForceRear;
         }
 
         public double MzMoment()
         {
-            return (FyFront * _lengthFront) - (FyRear * _lengthRear);
+            return (TyreForceFront * _lengthFront) - (TyreForceRear * _lengthRear);
         }
     }
 }
