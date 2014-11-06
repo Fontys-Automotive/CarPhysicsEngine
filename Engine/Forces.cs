@@ -1,31 +1,27 @@
 namespace CarPhysicsEngine
 {
-	public class Forces
-	{
-		private double a, b;
-		
-		public double TyreForceFront { get; set; } //Front wheel force
-		public double TyreForceRear { get; set; } // Rear wheel force
-		
-		public Forces (double tyreForceFront, double tyreForceRear, double a, double b)
-		{
-			TyreForceFront = tyreForceFront;
-			TyreForceRear = tyreForceRear;
-			this.a = a;
-			this.b = b;
-			
-		}
+    public class Forces
+    {
+        private readonly double _lengthFront;
+        private readonly double _lengthRear;
 
-		public double FyTotal()
-		{
-			return TyreForceFront + TyreForceRear;
-		}
+        public Forces(double lengthFront, double lengthRear)
+        {
+            _lengthFront = lengthFront;
+            _lengthRear = lengthRear;
+        }
 
-		public double MzMoment()
-		{
-			var n1 = TyreForceFront * a;
-			var n2 = TyreForceRear * b;
-			return n1 - n2;
-		}
-	}
+        public double FyFront { get; set; }
+        public double FyRear { get; set; }
+
+        public double FyTotal()
+        {
+            return FyFront + FyRear;
+        }
+
+        public double MzMoment()
+        {
+            return (FyFront * _lengthFront) - (FyRear * _lengthRear);
+        }
+    }
 }
