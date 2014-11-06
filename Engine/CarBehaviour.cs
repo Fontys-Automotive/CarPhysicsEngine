@@ -81,7 +81,7 @@ namespace CarPhysicsEngine
             ForwardVelocity = 80 / 3.6;
             yawFactor = 2;
 
-            _deltaT = 0.002; // 2 ms
+            _deltaT = 0.03; // 30 ms
             _previousMzTotal = _previousFyTotal = _previousYawVelocity = 0;
 
             SteerAngle = 0;
