@@ -22,7 +22,7 @@ namespace GUI
             carBehaviour = new CarBehaviour();
             pathPen = new Pen(Color.Red, 2);
             path = new GraphicsPath();
-            carStartPoint = new Point(0, 150);
+            carStartPoint = new Point(150, 150);
         }
 
         private void onKeyPress(object sender, KeyPressEventArgs e)

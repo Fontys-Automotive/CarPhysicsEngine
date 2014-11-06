@@ -34,17 +34,17 @@ namespace CarPhysicsEngine
 
         private double AlphaFront()
         {
- //           var n1 = (YawVelocity * _lengthFront + LateralVelocity) / _forwardVelocity;
+            var n1 = (YawVelocity * _lengthFront + LateralVelocity) / _forwardVelocity;
 
-            //return SteerAngle - n1;
-            return 0.019;
+            return SteerAngle - n1;
+           // return 0.019;
         }
 
         private double AlphaRear()
         {
             //TODO
-            //return   -((LateralVelocity - YawVelocity * _lengthRear) / _forwardVelocity);
-            return 0.013;
+            return   -((LateralVelocity - YawVelocity * _lengthRear) / _forwardVelocity);
+            //return 0.013;
         }
     }
 }

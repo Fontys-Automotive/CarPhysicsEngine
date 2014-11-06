@@ -87,10 +87,10 @@ namespace CarPhysicsEngine
             _previousMzTotal = _previousFyTotal = _previousYawVelocity = _previousLateralVelocity = 0;
 
             YawAngle = 0;
-            SteerAngle = 0.02;
+            SteerAngle = 0.00;
             XCoordinate = YCoordinate = 0;
 
-            Tyre = new Tyre(lengthFront, lengthRear, ForwardVelocity, Cy1, Cy2, SteerAngle );
+            Tyre = new Tyre(lengthFront, lengthRear, ForwardVelocity, Cy1, Cy2, SteerAngle);
             Forces = new Forces(lengthFront, lengthRear);
             Movement = new Movement(ForwardVelocity, inertiaMoment, mass, _deltaT);
             Position = new Position(ForwardVelocity, _deltaT, YawAngle);
@@ -108,10 +108,7 @@ namespace CarPhysicsEngine
             Forces.TyreForceRear = Tyre.TyreForceRear();
 
             // Initialize the properties in Movement
-            Movement.PreviousFyTotal = _previousFyTotal;
-            Movement.PreviousMzTotal = _previousMzTotal;
-            Movement.PreviousLateralVelocity = Movement.LateralVelocity();
-            Movement.PreviousYawVelocity = _previousYawVelocity;
+            
             var mz = Forces.MzMoment();
             _previousFyTotal = Movement.FyTotal;
             _previousMzTotal = Movement.MzTotal;
@@ -130,6 +127,12 @@ namespace CarPhysicsEngine
                            + Math.Sin(YawAngle * Position.VehicleDisplacementY());
             YCoordinate += Math.Sin(YawAngle) * Position.VehicleDisplacementX()
                            - Math.Cos(YawAngle) * Position.VehicleDisplacementY();
+
+            //Set previous movement values
+            Movement.PreviousFyTotal = _previousFyTotal;
+            Movement.PreviousMzTotal = _previousMzTotal;
+            Movement.PreviousLateralVelocity = Movement.LateralVelocity();
+            Movement.PreviousYawVelocity = _previousYawVelocity;
 
             var newYawAngle = YawAngle + _deltaT * Movement.YawVelocity();
             YawAngle = newYawAngle/* >= -0.6 && newYawAngle <= 0.6 ? newYawAngle : steerAngle*/;
