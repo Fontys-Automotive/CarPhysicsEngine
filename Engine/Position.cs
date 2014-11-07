@@ -21,7 +21,7 @@ namespace CarPhysicsEngine
 
         private double YawVelocityIntegral()
         {
-            return yawAngle+=(YawVelocity - PreviousYawVelocity) * _deltaT;
+            return yawAngle+=YawVelocity * _deltaT;
         }
 
         public double VehicleDisplacementX()

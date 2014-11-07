@@ -132,10 +132,12 @@ namespace CarPhysicsEngine
             Position.LateralVelocity = Movement.LateralVelocity();
 
             // Calculate the new world coordinates for the vehicle
-            XCoordinate += Math.Cos(YawAngle) * Position.VehicleDisplacementX()
-                           + Math.Sin(YawAngle * Position.VehicleDisplacementY());
-            YCoordinate += Math.Sin(YawAngle) * Position.VehicleDisplacementX()
-                           - Math.Cos(YawAngle) * Position.VehicleDisplacementY();
+            XCoordinate += Position.VehicleDisplacementX();
+            //XCoordinate += Math.Cos(YawAngle) * Position.VehicleDisplacementX()
+                           //+ Math.Sin(YawAngle * Position.VehicleDisplacementY());
+            YCoordinate += Position.VehicleDisplacementY();
+                /*Math.Sin(YawAngle) * Position.VehicleDisplacementX()
+                           - Math.Cos(YawAngle) * Position.VehicleDisplacementY();*/
 
             //Set previous movement values
             Movement.PreviousFyTotal = _previousFyTotal;
