@@ -35,11 +35,11 @@ namespace GUI
             switch (e.KeyChar)
             {
                 case 'a':
-                    carBehaviour.SteerAngle -= deltaAngle;
+                    carBehaviour.SteerAngle += deltaAngle;
                     break;
 
                 case 'd':
-                    carBehaviour.SteerAngle += deltaAngle;
+                    carBehaviour.SteerAngle -= deltaAngle;
                     break;
 
             }
@@ -98,10 +98,8 @@ namespace GUI
             timespan = t - startTime;
             labelTimer.Text = timespan.Minutes +  " : " + timespan.Seconds;
 
-            if (timespan.Seconds == 10)
-                timer1.Stop();
 
-            // Refesh panel
+            // Refesh panel for graphics update
             panel.Refresh();
         }
 

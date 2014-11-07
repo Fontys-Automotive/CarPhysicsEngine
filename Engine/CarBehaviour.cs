@@ -114,7 +114,9 @@ namespace CarPhysicsEngine
             _previousYawVelocity = 0; // Initialized to zero because execution hasn't run.
 
             YawAngle = 0;
-            SteerAngle = 0.02;
+
+            //Steerangle has to be set to 0 for initial straight movement
+            SteerAngle = 0.00;
             XCoordinate = YCoordinate = 0;
 
             Tyre = new Tyre(lengthFront, lengthRear, ForwardVelocity, Cy1, Cy2, SteerAngle);

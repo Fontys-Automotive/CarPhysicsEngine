@@ -340,7 +340,7 @@
             // labelForwardVelocity
             // 
             this.labelForwardVelocity.AutoSize = true;
-            this.labelForwardVelocity.Location = new System.Drawing.Point(129, 23);
+            this.labelForwardVelocity.Location = new System.Drawing.Point(131, 24);
             this.labelForwardVelocity.Name = "labelForwardVelocity";
             this.labelForwardVelocity.Size = new System.Drawing.Size(18, 20);
             this.labelForwardVelocity.TabIndex = 0;
