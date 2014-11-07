@@ -64,12 +64,10 @@
             this.labelVehicleDisplacementX = new System.Windows.Forms.Label();
             this.buttonPlayPause = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
-            this.labelRaceCar = new System.Windows.Forms.Label();
             this.groupBoxScreen.SuspendLayout();
             this.groupBoxForces.SuspendLayout();
             this.groupBoxMovement.SuspendLayout();
             this.groupBoxPosition.SuspendLayout();
-            this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelSteerAngle
@@ -77,7 +75,7 @@
             this.labelSteerAngle.AutoSize = true;
             this.labelSteerAngle.Location = new System.Drawing.Point(129, 36);
             this.labelSteerAngle.Name = "labelSteerAngle";
-            this.labelSteerAngle.Size = new System.Drawing.Size(17, 20);
+            this.labelSteerAngle.Size = new System.Drawing.Size(18, 20);
             this.labelSteerAngle.TabIndex = 0;
             this.labelSteerAngle.Text = "0";
             this.labelSteerAngle.Click += new System.EventHandler(this.labelSteerAngle_Click);
@@ -87,7 +85,7 @@
             this.labelSteerAngleDescription.AutoSize = true;
             this.labelSteerAngleDescription.Location = new System.Drawing.Point(9, 36);
             this.labelSteerAngleDescription.Name = "labelSteerAngleDescription";
-            this.labelSteerAngleDescription.Size = new System.Drawing.Size(81, 20);
+            this.labelSteerAngleDescription.Size = new System.Drawing.Size(93, 20);
             this.labelSteerAngleDescription.TabIndex = 1;
             this.labelSteerAngleDescription.Text = "Steer Angle";
             // 
@@ -96,7 +94,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 56);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 20);
+            this.label1.Size = new System.Drawing.Size(20, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "X";
             // 
@@ -105,7 +103,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(9, 76);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(17, 20);
+            this.label2.Size = new System.Drawing.Size(20, 20);
             this.label2.TabIndex = 3;
             this.label2.Text = "Y";
             // 
@@ -114,7 +112,7 @@
             this.labelXCoordinate.AutoSize = true;
             this.labelXCoordinate.Location = new System.Drawing.Point(129, 56);
             this.labelXCoordinate.Name = "labelXCoordinate";
-            this.labelXCoordinate.Size = new System.Drawing.Size(17, 20);
+            this.labelXCoordinate.Size = new System.Drawing.Size(18, 20);
             this.labelXCoordinate.TabIndex = 4;
             this.labelXCoordinate.Text = "0";
             // 
@@ -123,7 +121,7 @@
             this.labelYCoordinate.AutoSize = true;
             this.labelYCoordinate.Location = new System.Drawing.Point(129, 76);
             this.labelYCoordinate.Name = "labelYCoordinate";
-            this.labelYCoordinate.Size = new System.Drawing.Size(17, 20);
+            this.labelYCoordinate.Size = new System.Drawing.Size(18, 20);
             this.labelYCoordinate.TabIndex = 5;
             this.labelYCoordinate.Text = "0";
             // 
@@ -142,7 +140,7 @@
             this.groupBoxScreen.Controls.Add(this.label2);
             this.groupBoxScreen.Controls.Add(this.labelXCoordinate);
             this.groupBoxScreen.Controls.Add(this.labelSteerAngle);
-            this.groupBoxScreen.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBoxScreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBoxScreen.Location = new System.Drawing.Point(16, 12);
             this.groupBoxScreen.Name = "groupBoxScreen";
             this.groupBoxScreen.Size = new System.Drawing.Size(214, 100);
@@ -155,7 +153,7 @@
             this.labelTimer.AutoSize = true;
             this.labelTimer.Location = new System.Drawing.Point(129, 16);
             this.labelTimer.Name = "labelTimer";
-            this.labelTimer.Size = new System.Drawing.Size(17, 20);
+            this.labelTimer.Size = new System.Drawing.Size(18, 20);
             this.labelTimer.TabIndex = 7;
             this.labelTimer.Text = "0";
             // 
@@ -164,7 +162,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(9, 16);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(93, 20);
+            this.label3.Size = new System.Drawing.Size(103, 20);
             this.label3.TabIndex = 6;
             this.label3.Text = "Time elapsed";
             // 
@@ -178,7 +176,7 @@
             this.groupBoxForces.Controls.Add(this.labelFyTotalText);
             this.groupBoxForces.Controls.Add(this.labelFyRear);
             this.groupBoxForces.Controls.Add(this.labelFyFront);
-            this.groupBoxForces.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBoxForces.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBoxForces.Location = new System.Drawing.Point(16, 111);
             this.groupBoxForces.Name = "groupBoxForces";
             this.groupBoxForces.Size = new System.Drawing.Size(214, 105);
@@ -191,7 +189,7 @@
             this.labelMzMoment.AutoSize = true;
             this.labelMzMoment.Location = new System.Drawing.Point(129, 78);
             this.labelMzMoment.Name = "labelMzMoment";
-            this.labelMzMoment.Size = new System.Drawing.Size(17, 20);
+            this.labelMzMoment.Size = new System.Drawing.Size(18, 20);
             this.labelMzMoment.TabIndex = 7;
             this.labelMzMoment.Text = "0";
             // 
@@ -200,7 +198,7 @@
             this.labelMzMomentText.AutoSize = true;
             this.labelMzMomentText.Location = new System.Drawing.Point(9, 78);
             this.labelMzMomentText.Name = "labelMzMomentText";
-            this.labelMzMomentText.Size = new System.Drawing.Size(80, 20);
+            this.labelMzMomentText.Size = new System.Drawing.Size(88, 20);
             this.labelMzMomentText.TabIndex = 6;
             this.labelMzMomentText.Text = "MzMoment";
             // 
@@ -209,7 +207,7 @@
             this.labelFyFrontText.AutoSize = true;
             this.labelFyFrontText.Location = new System.Drawing.Point(9, 18);
             this.labelFyFrontText.Name = "labelFyFrontText";
-            this.labelFyFrontText.Size = new System.Drawing.Size(87, 20);
+            this.labelFyFrontText.Size = new System.Drawing.Size(96, 20);
             this.labelFyFrontText.TabIndex = 1;
             this.labelFyFrontText.Text = "Front wheel ";
             // 
@@ -218,7 +216,7 @@
             this.labelFyRearText.AutoSize = true;
             this.labelFyRearText.Location = new System.Drawing.Point(9, 38);
             this.labelFyRearText.Name = "labelFyRearText";
-            this.labelFyRearText.Size = new System.Drawing.Size(77, 20);
+            this.labelFyRearText.Size = new System.Drawing.Size(89, 20);
             this.labelFyRearText.TabIndex = 2;
             this.labelFyRearText.Text = "Rear wheel";
             // 
@@ -227,7 +225,7 @@
             this.labelFyTotal.AutoSize = true;
             this.labelFyTotal.Location = new System.Drawing.Point(129, 58);
             this.labelFyTotal.Name = "labelFyTotal";
-            this.labelFyTotal.Size = new System.Drawing.Size(17, 20);
+            this.labelFyTotal.Size = new System.Drawing.Size(18, 20);
             this.labelFyTotal.TabIndex = 5;
             this.labelFyTotal.Text = "0";
             // 
@@ -236,7 +234,7 @@
             this.labelFyTotalText.AutoSize = true;
             this.labelFyTotalText.Location = new System.Drawing.Point(9, 58);
             this.labelFyTotalText.Name = "labelFyTotalText";
-            this.labelFyTotalText.Size = new System.Drawing.Size(61, 20);
+            this.labelFyTotalText.Size = new System.Drawing.Size(65, 20);
             this.labelFyTotalText.TabIndex = 3;
             this.labelFyTotalText.Text = "Fy Total";
             // 
@@ -245,7 +243,7 @@
             this.labelFyRear.AutoSize = true;
             this.labelFyRear.Location = new System.Drawing.Point(129, 38);
             this.labelFyRear.Name = "labelFyRear";
-            this.labelFyRear.Size = new System.Drawing.Size(17, 20);
+            this.labelFyRear.Size = new System.Drawing.Size(18, 20);
             this.labelFyRear.TabIndex = 4;
             this.labelFyRear.Text = "0";
             // 
@@ -254,7 +252,7 @@
             this.labelFyFront.AutoSize = true;
             this.labelFyFront.Location = new System.Drawing.Point(129, 18);
             this.labelFyFront.Name = "labelFyFront";
-            this.labelFyFront.Size = new System.Drawing.Size(17, 20);
+            this.labelFyFront.Size = new System.Drawing.Size(18, 20);
             this.labelFyFront.TabIndex = 0;
             this.labelFyFront.Text = "0";
             // 
@@ -268,7 +266,7 @@
             this.groupBoxMovement.Controls.Add(this.label8);
             this.groupBoxMovement.Controls.Add(this.labelYawVelocity);
             this.groupBoxMovement.Controls.Add(this.labelForwardVelocity);
-            this.groupBoxMovement.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBoxMovement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBoxMovement.Location = new System.Drawing.Point(16, 222);
             this.groupBoxMovement.Name = "groupBoxMovement";
             this.groupBoxMovement.Size = new System.Drawing.Size(216, 106);
@@ -281,7 +279,7 @@
             this.labelAcceleration.AutoSize = true;
             this.labelAcceleration.Location = new System.Drawing.Point(129, 83);
             this.labelAcceleration.Name = "labelAcceleration";
-            this.labelAcceleration.Size = new System.Drawing.Size(17, 20);
+            this.labelAcceleration.Size = new System.Drawing.Size(18, 20);
             this.labelAcceleration.TabIndex = 7;
             this.labelAcceleration.Text = "0";
             // 
@@ -290,7 +288,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(9, 83);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 20);
+            this.label4.Size = new System.Drawing.Size(97, 20);
             this.label4.TabIndex = 6;
             this.label4.Text = "Acceleration";
             // 
@@ -299,7 +297,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(9, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(116, 20);
+            this.label5.Size = new System.Drawing.Size(126, 20);
             this.label5.TabIndex = 1;
             this.label5.Text = "Forward Velocity";
             // 
@@ -308,7 +306,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(9, 43);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(90, 20);
+            this.label6.Size = new System.Drawing.Size(99, 20);
             this.label6.TabIndex = 2;
             this.label6.Text = "Yaw Velocity";
             // 
@@ -317,7 +315,7 @@
             this.labelLateralVelocity.AutoSize = true;
             this.labelLateralVelocity.Location = new System.Drawing.Point(129, 63);
             this.labelLateralVelocity.Name = "labelLateralVelocity";
-            this.labelLateralVelocity.Size = new System.Drawing.Size(17, 20);
+            this.labelLateralVelocity.Size = new System.Drawing.Size(18, 20);
             this.labelLateralVelocity.TabIndex = 5;
             this.labelLateralVelocity.Text = "0";
             // 
@@ -326,7 +324,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(9, 63);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(109, 20);
+            this.label8.Size = new System.Drawing.Size(117, 20);
             this.label8.TabIndex = 3;
             this.label8.Text = "Lateral Velocity";
             // 
@@ -335,7 +333,7 @@
             this.labelYawVelocity.AutoSize = true;
             this.labelYawVelocity.Location = new System.Drawing.Point(129, 43);
             this.labelYawVelocity.Name = "labelYawVelocity";
-            this.labelYawVelocity.Size = new System.Drawing.Size(17, 20);
+            this.labelYawVelocity.Size = new System.Drawing.Size(18, 20);
             this.labelYawVelocity.TabIndex = 4;
             this.labelYawVelocity.Text = "0";
             // 
@@ -344,7 +342,7 @@
             this.labelForwardVelocity.AutoSize = true;
             this.labelForwardVelocity.Location = new System.Drawing.Point(129, 23);
             this.labelForwardVelocity.Name = "labelForwardVelocity";
-            this.labelForwardVelocity.Size = new System.Drawing.Size(17, 20);
+            this.labelForwardVelocity.Size = new System.Drawing.Size(18, 20);
             this.labelForwardVelocity.TabIndex = 0;
             this.labelForwardVelocity.Text = "0";
             // 
@@ -354,7 +352,7 @@
             this.groupBoxPosition.Controls.Add(this.label10);
             this.groupBoxPosition.Controls.Add(this.labelVehicleDisplacementY);
             this.groupBoxPosition.Controls.Add(this.labelVehicleDisplacementX);
-            this.groupBoxPosition.Font = new System.Drawing.Font("Roboto Condensed", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBoxPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBoxPosition.Location = new System.Drawing.Point(16, 334);
             this.groupBoxPosition.Name = "groupBoxPosition";
             this.groupBoxPosition.Size = new System.Drawing.Size(216, 86);
@@ -367,7 +365,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(9, 23);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(108, 20);
+            this.label9.Size = new System.Drawing.Size(121, 20);
             this.label9.TabIndex = 1;
             this.label9.Text = "Displacement X";
             // 
@@ -376,7 +374,7 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(9, 54);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(107, 20);
+            this.label10.Size = new System.Drawing.Size(121, 20);
             this.label10.TabIndex = 2;
             this.label10.Text = "Displacement Y";
             // 
@@ -385,7 +383,7 @@
             this.labelVehicleDisplacementY.AutoSize = true;
             this.labelVehicleDisplacementY.Location = new System.Drawing.Point(129, 54);
             this.labelVehicleDisplacementY.Name = "labelVehicleDisplacementY";
-            this.labelVehicleDisplacementY.Size = new System.Drawing.Size(17, 20);
+            this.labelVehicleDisplacementY.Size = new System.Drawing.Size(18, 20);
             this.labelVehicleDisplacementY.TabIndex = 5;
             this.labelVehicleDisplacementY.Text = "0";
             // 
@@ -394,13 +392,13 @@
             this.labelVehicleDisplacementX.AutoSize = true;
             this.labelVehicleDisplacementX.Location = new System.Drawing.Point(129, 23);
             this.labelVehicleDisplacementX.Name = "labelVehicleDisplacementX";
-            this.labelVehicleDisplacementX.Size = new System.Drawing.Size(17, 20);
+            this.labelVehicleDisplacementX.Size = new System.Drawing.Size(18, 20);
             this.labelVehicleDisplacementX.TabIndex = 0;
             this.labelVehicleDisplacementX.Text = "0";
             // 
             // buttonPlayPause
             // 
-            this.buttonPlayPause.Font = new System.Drawing.Font("Roboto Condensed", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonPlayPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonPlayPause.Location = new System.Drawing.Point(16, 426);
             this.buttonPlayPause.Name = "buttonPlayPause";
             this.buttonPlayPause.Size = new System.Drawing.Size(214, 38);
@@ -412,22 +410,11 @@
             // 
             // panel
             // 
-            this.panel.Controls.Add(this.labelRaceCar);
             this.panel.Location = new System.Drawing.Point(236, 12);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(738, 452);
             this.panel.TabIndex = 12;
             this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
-            // 
-            // labelRaceCar
-            // 
-            this.labelRaceCar.AutoSize = true;
-            this.labelRaceCar.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRaceCar.Location = new System.Drawing.Point(18, 429);
-            this.labelRaceCar.Name = "labelRaceCar";
-            this.labelRaceCar.Size = new System.Drawing.Size(83, 20);
-            this.labelRaceCar.TabIndex = 0;
-            this.labelRaceCar.Text = "Race Car!";
             // 
             // Form1
             // 
@@ -451,8 +438,6 @@
             this.groupBoxMovement.PerformLayout();
             this.groupBoxPosition.ResumeLayout(false);
             this.groupBoxPosition.PerformLayout();
-            this.panel.ResumeLayout(false);
-            this.panel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -494,7 +479,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonPlayPause;
         private System.Windows.Forms.Panel panel;
-        private System.Windows.Forms.Label labelRaceCar;
     }
 }
 

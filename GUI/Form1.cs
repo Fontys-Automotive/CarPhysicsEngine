@@ -23,6 +23,9 @@ namespace GUI
             pathPen = new Pen(Color.Red, 2);
             path = new GraphicsPath();
             carStartPoint = new Point(150, 150);
+            timer1.Start();
+            startedOnce = true;
+            startTime = DateTime.Now;
         }
 
         private void onKeyPress(object sender, KeyPressEventArgs e)
@@ -67,10 +70,6 @@ namespace GUI
             var x = (float) carBehaviour.XCoordinate;
             var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
             path.AddEllipse(carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
-            var carX = labelRaceCar.Location.X;
-            var carY = labelRaceCar.Location.Y;
-            labelRaceCar.Location = new Point(carStartPoint.X + (int)x - 5, carStartPoint.Y + (int)y - 30);
-
 
             //SCREEN
             labelSteerAngle.Text = carBehaviour.SteerAngle.ToString("0.000");
@@ -87,7 +86,7 @@ namespace GUI
             labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString("0.0") + " m/s";
             labelYawVelocity.Text = carBehaviour.Movement.YawVelocity().ToString("0.000");
             labelLateralVelocity.Text = carBehaviour.Movement.LateralVelocity().ToString("0.000");
-            labelAcceleration.Text = carBehaviour.Movement.AccelerationY().ToString("0.000");
+            labelAcceleration.Text = carBehaviour.Movement.LateralAcceleration().ToString("0.000");
 
             //POSITION
             labelVehicleDisplacementX.Text = carBehaviour.Position.VehicleDisplacementX().ToString("0.000");
@@ -97,8 +96,10 @@ namespace GUI
             DateTime t = DateTime.Now;
             var timespan = new TimeSpan();
             timespan = t - startTime;
-            labelTimer.Text = timespan.Minutes.ToString() +  " : " + timespan.Seconds.ToString();
+            labelTimer.Text = timespan.Minutes +  " : " + timespan.Seconds;
 
+            if (timespan.Seconds == 10)
+                timer1.Stop();
 
             // Refesh panel
             panel.Refresh();

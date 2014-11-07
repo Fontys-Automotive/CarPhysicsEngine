@@ -18,9 +18,9 @@ namespace CarPhysicsEngine
             SteerAngle = steerAngle;
         }
 
-        public double SteerAngle { get; set; }
-        public double YawVelocity { get; set; }
-        public double LateralVelocity { get; set; }
+        public double SteerAngle { private get; set; }
+        public double YawVelocity { private get; set; }
+        public double LateralVelocity { private get; set; }
 
         public double TyreForceFront()
         {
@@ -37,14 +37,12 @@ namespace CarPhysicsEngine
             var n1 = (YawVelocity * _lengthFront + LateralVelocity) / _forwardVelocity;
 
             return SteerAngle - n1;
-           // return 0.019;
         }
 
         private double AlphaRear()
         {
-            //TODO
-            return   -((LateralVelocity - YawVelocity * _lengthRear) / _forwardVelocity);
-            //return 0.013;
+            // Negating to ensure front and rear forces are being applied in the same direction
+            return -(LateralVelocity - YawVelocity * _lengthRear) / _forwardVelocity;
         }
     }
 }

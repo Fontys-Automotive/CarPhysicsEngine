@@ -33,28 +33,46 @@ namespace CarPhysicsEngine
         private readonly double Cy2; // Tyre stiffness rear [N/rad]
         public readonly double ForwardVelocity; // [m/s]
         private readonly double yawFactor; // steering factor [deg]
-        private double steerAngle; // steering angle in radians
+        private double steerAngle; // steering angle in radians => input
 
-        private readonly double _deltaT; // time-step in seconds
-        private double _previousMzTotal;
-        private double _previousFyTotal;
+        /// <summary>
+        /// Time-step in seconds
+        /// </summary>
+        private readonly double _deltaT;
+
+        /// <summary>
+        /// Stores the yaw velocity of the previous iteration
+        /// </summary>
         private double _previousYawVelocity;
-        private double _previousLateralVelocity;
+
 
         public double YawAngle { get; set; }
-        //Max steering angle is set to about 28 degrees(~0,5 rad)
+
+        /// <summary>
+        /// Input wheel angle in Radians
+        /// </summary>
         public double SteerAngle {
             get { return steerAngle; }
             set
             {
-                if (value <= 0.5 && value >= -0.5)
+                // the max angle of the wheel is +-28 degrees
+                const double angleRadiansLimit = 28 * Math.PI / 180;
+
+                if (value <= angleRadiansLimit && value >= -angleRadiansLimit)
                     steerAngle = value;
             }
         }
+
+        /// <summary>
+        /// Real-world position of car's centre
+        /// </summary>
         public double XCoordinate { get; private set; }
+
+        /// <summary>
+        /// Real-world position of car's centre
+        /// </summary>
         public double YCoordinate { get; private set; }
 
-        // !TODO: Accessors are public for debugging purposes only. Set to private for production 
         public readonly Tyre Tyre;
         public readonly Forces Forces;
         public readonly Movement Movement;
@@ -89,14 +107,14 @@ namespace CarPhysicsEngine
             E2 = -1.003 - 0.537 * dFz2;
             Cy1 = B1 * C1 * D1;
             Cy2 = B2 * C2 * D2;
-            ForwardVelocity = 80 / 3.6;
-            //yawFactor = 2;
+            ForwardVelocity = 80 / 3.6; // 80 km/h => m/s
+            yawFactor = 2;
 
             _deltaT = 0.01; // 10 ms
-            _previousMzTotal = _previousFyTotal = _previousYawVelocity = _previousLateralVelocity = 0;
+            _previousYawVelocity = 0; // Initialized to zero because execution hasn't run.
 
             YawAngle = 0;
-            SteerAngle = 0.00;
+            SteerAngle = 0.02;
             XCoordinate = YCoordinate = 0;
 
             Tyre = new Tyre(lengthFront, lengthRear, ForwardVelocity, Cy1, Cy2, SteerAngle);
@@ -117,53 +135,22 @@ namespace CarPhysicsEngine
             Forces.TyreForceRear = Tyre.TyreForceRear();
 
             // Initialize the properties in Movement
-            
-            var mz = Forces.MzMoment();
-            _previousFyTotal = Movement.FyTotal;
-            _previousMzTotal = Movement.MzTotal;
             Movement.FyTotal = Forces.FyTotal();
             Movement.MzTotal = Forces.MzMoment();
             
-            
-
             // Initialize the properties in Position
-            Position.PreviousYawVelocity = _previousYawVelocity;
             _previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
             Position.LateralVelocity = Movement.LateralVelocity();
 
             // Calculate the new world coordinates for the vehicle
             XCoordinate += Position.VehicleDisplacementX();
-            //XCoordinate += Math.Cos(YawAngle) * Position.VehicleDisplacementX()
-                           //+ Math.Sin(YawAngle * Position.VehicleDisplacementY());
             YCoordinate += Position.VehicleDisplacementY();
-                /*Math.Sin(YawAngle) * Position.VehicleDisplacementX()
-                           - Math.Cos(YawAngle) * Position.VehicleDisplacementY();*/
-
+            
             //Set previous movement values
-            Movement.PreviousFyTotal = _previousFyTotal;
-            Movement.PreviousMzTotal = _previousMzTotal;
             Movement.PreviousLateralVelocity = Movement.LateralVelocity();
             Movement.PreviousYawVelocity = _previousYawVelocity;
 
-            var newYawAngle = YawAngle + _deltaT * Movement.YawVelocity();
-            YawAngle = newYawAngle/* >= -0.6 && newYawAngle <= 0.6 ? newYawAngle : steerAngle*/;
-        }
-
-        public double AccelerationY()
-        {
-            var n1 = Movement.AccelerationY() + (Movement.YawVelocity() * ForwardVelocity);
-            return n1 / gravity;
-        }
-
-        public double YawVelocity()
-        {
-            return Movement.YawVelocity() * (180 / Math.PI);
-        }
-
-        public double SteerAngleDegrees()
-        {
-            var n1 = Math.Atan(Movement.LateralVelocity() / ForwardVelocity);
-            return n1 * (180 / Math.PI);
+            YawAngle += _deltaT * Movement.YawVelocity();
         }
     }
 }

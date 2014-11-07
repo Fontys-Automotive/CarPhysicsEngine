@@ -4,40 +4,44 @@ namespace CarPhysicsEngine
 {
     public class Position
     {
-        public double yawAngle { get; set; }
+        private double YawAngle { get; set; }
         private readonly double _deltaT;
         private readonly double _forwardVelocity;
 
         public Position(double forwardVelocity, double deltaT, double yawAngle)
         {
-            this.yawAngle = yawAngle;
+            YawAngle = yawAngle;
             _forwardVelocity = forwardVelocity;
             _deltaT = deltaT;
         }
 
-        public double LateralVelocity { get; set; }
-        public double YawVelocity { get; set; }
-        public double PreviousYawVelocity { get; set; }
-
+        public double LateralVelocity { private get; set; }
+        public double YawVelocity { private get; set; }
+        
         private double YawVelocityIntegral()
         {
-            return yawAngle+=YawVelocity * _deltaT;
+            return YawAngle+=YawVelocity * _deltaT;
         }
 
         public double VehicleDisplacementX()
         {
-            double n1 = _forwardVelocity * Math.Cos(YawVelocityIntegral());
-            double n2 = LateralVelocity * Math.Sin(YawVelocityIntegral());
-            double n3 = n1 - n2;
+            var u = _forwardVelocity * Math.Cos(YawAngle) - LateralVelocity * Math.Sin(YawAngle);
+            var v = _forwardVelocity * Math.Sin(YawAngle) + LateralVelocity * Math.Cos(YawAngle);
+
+            var m = (u - v) * _deltaT;
+
+            var n1 = _forwardVelocity * Math.Cos(YawVelocityIntegral());
+            var n2 = LateralVelocity * Math.Sin(YawVelocityIntegral());
+            var n3 = n1 - n2;
 
             return n3 * _deltaT;
         }
 
         public double VehicleDisplacementY()
         {
-            double n1 = _forwardVelocity * Math.Sin(YawVelocityIntegral());
-            double n2 = LateralVelocity * Math.Cos(YawVelocityIntegral());
-            double n3 = n1 + n2;
+            var n1 = _forwardVelocity * Math.Sin(YawVelocityIntegral());
+            var n2 = LateralVelocity * Math.Cos(YawVelocityIntegral());
+            var n3 = n1 + n2;
 
             return n3 * _deltaT;
         }
