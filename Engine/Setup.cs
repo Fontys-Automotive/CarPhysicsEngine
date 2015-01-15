@@ -2,19 +2,19 @@
 
 namespace CarPhysicsEngine
 {
-    public class Setup
+    public static class Setup
     {
-        public static readonly double Cw = 0.3; // C2-waarde [-]
-        public static readonly double Rho = 1.29; // Air Density [kg/m^3]
-        public static readonly double A = 2.25; // Frontal Area [m^2]
-        public static readonly double M = 950; // Vehicle Mass [kg]
-        public static readonly double G = 9.81; // Acceleration due to Gravity [m/s^2]
-        public static readonly double Fr = 0.014; // Rolling Resistance Coefficient [-]
-        public static readonly double MuMax = 1.05; // Maximum Friction Coefficient [-]
-        public static readonly double R = 0.3; // Tire Radius [m]
-        public static readonly double J1 = 1.2; // Traagheid ververbrandingsmotor [kgm^2]
-        public static readonly double J2 = 5.4; // Traagheid wielen en aandrijving [kgm^2]
-        public static readonly double SimulationTime = 1180; // [s]
+        public const double Cw = 0.3; // C2-waarde [-]
+        public const double Rho = 1.29; // Air Density [kg/m^3]
+        public const double A = 2.25; // Frontal Area [m^2]
+        public const double M = 950; // Vehicle Mass [kg]
+        public const double G = 9.81; // Acceleration due to Gravity [m/s^2]
+        public const double Fr = 0.014; // Rolling Resistance Coefficient [-]
+        public const double MuMax = 1.05; // Maximum Friction Coefficient [-]
+        public const double R = 0.3; // Tire Radius [m]
+        public const double J1 = 1.2; // Traagheid ververbrandingsmotor [kgm^2]
+        public const double J2 = 5.4; // Traagheid wielen en aandrijving [kgm^2]
+        public const double SimulationTime = 1180; // [s]
 
         public static readonly Dictionary<double, double> GearRatio = new Dictionary<double, double>()
         {
