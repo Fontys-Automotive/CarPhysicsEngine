@@ -5,7 +5,17 @@ using System.Text;
 
 namespace CarPhysicsEngine
 {
-    class Helpers
+    public static class Helpers
     {
+        public static double SaturationDynamic(double lowerBoundary, double upperBoundary, double input)
+        {
+            if (input > upperBoundary)
+                return upperBoundary;
+
+            if (input < lowerBoundary)
+                return lowerBoundary;
+            
+            return input;
+        }
     }
 }

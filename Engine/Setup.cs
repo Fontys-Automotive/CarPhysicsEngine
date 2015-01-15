@@ -15,6 +15,7 @@ namespace CarPhysicsEngine
         public const double J1 = 1.2; // Traagheid ververbrandingsmotor [kgm^2]
         public const double J2 = 5.4; // Traagheid wielen en aandrijving [kgm^2]
         public const double SimulationTime = 1180; // [s]
+        public const double DeltaT = 0.01;
 
         public static readonly Dictionary<double, double> GearRatio = new Dictionary<double, double>()
         {
