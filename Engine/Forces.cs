@@ -2,15 +2,6 @@ namespace CarPhysicsEngine
 {
     public class Forces
     {
-        private readonly double _lengthFront;
-        private readonly double _lengthRear;
-
-        public Forces(double lengthFront, double lengthRear)
-        {
-            _lengthFront = lengthFront;
-            _lengthRear = lengthRear;
-        }
-
         public double TyreForceFront { get; set; }
         public double TyreForceRear { get; set; }
 
@@ -29,7 +20,7 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double MzMoment()
         {
-            return (TyreForceFront * _lengthFront) - (TyreForceRear * _lengthRear);
+            return (TyreForceFront * Setup.LengthFront) - (TyreForceRear * Setup.LengthRear);
         }
     }
 }

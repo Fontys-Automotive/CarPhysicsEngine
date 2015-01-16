@@ -1,21 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CarPhysicsEngine
 {
     public static class Setup
     {
+        // Global
+        public const double M = 1150; // Vehicle Mass [kg]
+        public const double G = 9.81; // Acceleration due to Gravity [m/s^2]
+        public const double DeltaT = 0.01; // Change in time [s]
+
+        // Needed for Turning
+        private const double LengthWheelbase = 2.66; // wheelbase length [m]
+        public const double LengthFront = 1.06; // distance from front axle to centre [m]
+        public const double LengthRear = LengthWheelbase - LengthFront; // distance from rear axle to centre [m]
+        public const double InertiaMoment = 1850; // moment of inertia of vehicle on z-axis [kgm^2]
+        private const double ETA = 0.03; // understeer factor. Plausible max value is 0.04
+        private const double Fz0 = 8000; // Nominal load [N]
+        private const double Fz1 = M * G * LengthRear / LengthWheelbase; // Axle load front [N]
+        private const double Fz2 = M * G * LengthFront / LengthWheelbase; // Axle load read [N]
+        private const double DFz1 = (Fz1 - Fz0) / Fz0;
+        private const double DFz2 = (Fz2 - Fz0) / Fz0;
+        private const double Mu1 = 0.09; // coefficient of friction front [-]
+        private const double Mu2 = 0.09; // coefficient of friction rear [-]
+        private const double D1 = Mu1 * (-0.145 * DFz1 + 0.99) * Fz1; // Peak-factor front [N]
+        private const double D2 = Mu2 * (-0.145 * DFz2 + 0.99) * Fz2; // Peak-factor rear [N]
+        private const double C1 = 1.19; // "vormfactor" front [-]
+        private const double C2 = 1.19; // "vormfactor" rear [-]
+        private static readonly double K1 = 14.95 * Fz0 * Math.Sin(2 * Math.Atan(Fz1 / 2.13 / Fz0));
+        private static readonly double K2 = Fz2 * K1 / (Fz1 - ETA * K1);
+        private static readonly double B1 = K1 / C1 / D1; // Stiffness factor front
+        private static readonly double B2 = K2 / C2 / D2; // Stiffness factor rear
+        public const double E1 = -1.003 - 0.537 * DFz1; // curvature factor front
+        public const double E2 = -1.003 - 0.537 * DFz2; // curvature factor rear
+        public static readonly double Cy1 = B1 * C1 * D1; // Tyre stiffness front [N/rad]
+        public static readonly double Cy2 = B2 * C2 * D2; // Tyre stiffness rear [N/rad]
+
+        // Needed for Acceleration
         public const double Cw = 0.3; // C2-waarde [-]
         public const double Rho = 1.29; // Air Density [kg/m^3]
         public const double A = 2.25; // Frontal Area [m^2]
-        public const double M = 950; // Vehicle Mass [kg]
-        public const double G = 9.81; // Acceleration due to Gravity [m/s^2]
         public const double Fr = 0.014; // Rolling Resistance Coefficient [-]
         public const double MuMax = 1.05; // Maximum Friction Coefficient [-]
         public const double R = 0.3; // Tire Radius [m]
-        public const double J1 = 1.2; // Traagheid ververbrandingsmotor [kgm^2]
-        public const double J2 = 5.4; // Traagheid wielen en aandrijving [kgm^2]
-        public const double SimulationTime = 1180; // [s]
-        public const double DeltaT = 0.01;
 
         public struct EngineTorqueKey
         {
