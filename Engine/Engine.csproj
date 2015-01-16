@@ -41,11 +41,11 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="CarBehaviour.cs" />
-    <Compile Include="Forces.cs" />
-    <Compile Include="Movement.cs" />
-    <Compile Include="Position.cs" />
+    <Compile Include="Turning\Forces.cs" />
+    <Compile Include="Turning\Movement.cs" />
+    <Compile Include="Turning\Position.cs" />
     <Compile Include="Setup.cs" />
-    <Compile Include="Tyre.cs" />
+    <Compile Include="Turning\Tyre.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

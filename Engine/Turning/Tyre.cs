@@ -1,4 +1,4 @@
-namespace CarPhysicsEngine
+namespace CarPhysicsEngine.Turning
 {
     public class Tyre
     {

@@ -1,4 +1,5 @@
 using System;
+using CarPhysicsEngine.Turning;
 
 namespace CarPhysicsEngine
 {
@@ -6,14 +7,12 @@ namespace CarPhysicsEngine
     {
         // Pre-defined variables from voertuigdata.m
         public readonly double ForwardVelocity; // [m/s]
-        private readonly double yawFactor; // steering factor [deg]
         private double steerAngle; // steering angle in radians => input
 
         /// <summary>
         /// Stores the yaw velocity of the previous iteration
         /// </summary>
-        private double _previousYawVelocity;
-
+        private double previousYawVelocity;
 
         public double YawAngle { get; set; }
 
@@ -50,8 +49,7 @@ namespace CarPhysicsEngine
         public CarBehaviour()
         {
             ForwardVelocity = 80 / 3.6; // 80 km/h => m/s
-            yawFactor = 2;
-            _previousYawVelocity = 0; // Initialized to zero because execution hasn't run.
+            previousYawVelocity = 0; // Initialized to zero because execution hasn't run.
 
             YawAngle = 0;
 
@@ -81,7 +79,7 @@ namespace CarPhysicsEngine
             Movement.MzTotal = Forces.MzMoment();
             
             // Initialize the properties in Position
-            _previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
+            previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
             Position.LateralVelocity = Movement.LateralVelocity();
 
             Position.YawVelocityIntegral();
@@ -91,7 +89,7 @@ namespace CarPhysicsEngine
             
             //Set previous movement values
             Movement.PreviousLateralVelocity = Movement.LateralVelocity();
-            Movement.PreviousYawVelocity = _previousYawVelocity;
+            Movement.PreviousYawVelocity = previousYawVelocity;
 
             YawAngle += Setup.DeltaT * Movement.YawVelocity();
         }

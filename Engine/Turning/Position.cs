@@ -1,16 +1,16 @@
 ﻿using System;
 
-namespace CarPhysicsEngine
+namespace CarPhysicsEngine.Turning
 {
     public class Position
     {
-        public double YawAngle { get; set; }
-        private readonly double _forwardVelocity;
+        private double YawAngle { get; set; }
+        private readonly double forwardVelocity;
 
         public Position(double forwardVelocity, double yawAngle)
         {
             YawAngle = yawAngle;
-            _forwardVelocity = forwardVelocity;
+            this.forwardVelocity = forwardVelocity;
         }
 
         public double LateralVelocity { private get; set; }
@@ -32,7 +32,7 @@ namespace CarPhysicsEngine
         public double VehicleDisplacementX()
         {
            
-            var n1 = _forwardVelocity * Math.Cos(YawAngle);
+            var n1 = forwardVelocity * Math.Cos(YawAngle);
             var n2 = LateralVelocity * Math.Sin(YawAngle);
             var n3 = n1 - n2;
 
@@ -44,7 +44,7 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double VehicleDisplacementY()
         {
-            var n1 = _forwardVelocity * Math.Sin(YawAngle);
+            var n1 = forwardVelocity * Math.Sin(YawAngle);
             var n2 = LateralVelocity * Math.Cos(YawAngle);
             var n3 = n1 + n2;
 
