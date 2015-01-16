@@ -17,6 +17,17 @@ namespace CarPhysicsEngine
         public const double SimulationTime = 1180; // [s]
         public const double DeltaT = 0.01;
 
+        public struct EngineTorqueKey
+        {
+            private double rpm, throttlePercentage;
+
+            public EngineTorqueKey(double rpm, double throttlePercentage)
+            {
+                this.rpm = rpm;
+                this.throttlePercentage = throttlePercentage;
+            }
+        }
+
         public static readonly Dictionary<double, double> GearRatio = new Dictionary<double, double>()
         {
             {1, 12},
@@ -35,22 +46,163 @@ namespace CarPhysicsEngine
             {5, 19.44}
         };
 
-        public static readonly Dictionary<string, double> EngineTorque = new Dictionary<string, double>()
+        public static readonly Dictionary<EngineTorqueKey, double> EngineTorque = new Dictionary<EngineTorqueKey, double>()
         {
-            
-            {"1400-0", -18},  {"1400-20", 22}, {"1400-30", 25}, {"1400-40", 28}, {"1400-50", 37}, {"1400-60", 47}, {"1400-70", 56}, {"1400-80", 65}, {"1400-90", 75}, {"1400-100", 84},
-            {"1900-0", -19.5}, {"1900-20", 23}, {"1900-30", 26},{"1900-40", 29},{"1900-50", 39},{"1900-60", 49},{"1900-70", 59},{"1900-80", 68},{"1900-90", 78},{"1900-100", 88},
-            {"2400-0", -21.5}, {"2400-20", 11}, {"2400-30", 22},{"2400-40", 32},{"2400-50", 43},{"2400-60", 54},{"2400-70", 65},{"2400-80", 75},{"2400-90", 86},{"2400-100", 97},
-            {"2900-0", -23.5}, {"2900-20", 11}, {"2900-30", 22},{"2900-40", 33},{"2900-50", 44},{"2900-60", 54},{"2900-70", 65},{"2900-80", 76},{"2900-90", 87},{"2900-100", 98},
-            {"3300-0", -25},   {"3300-20", 11}, {"3300-30", 22},{"3300-40", 33},{"3300-50", 44},{"3300-60", 56},{"3300-70", 67},{"3300-80", 78},{"3300-90", 89},{"3300-100", 100},
-            {"3800-0", -26.5}, {"3800-20", 12}, {"3800-30", 23}, {"3800-40", 35}, {"3800-50", 46}, {"3800-60", 58}, {"3800-70", 69}, {"3800-80", 81}, {"3800-00", 92}, {"3800-100", 104},
-            {"4000-0", -27.5}, {"4000-20", 11}, {"4000-30", 23},{"4000-40", 34},{"4000-50", 45},{"4000-60", 57},{"4000-70", 68},{"4000-80", 79},{"4000-90", 91},{"4000-100", 102},
-            {"4200-0", -28},   {"4200-20", 11}, {"4200-30", 22},{"4200-40", 33},{"4200-50", 44},{"4200-60", 54},{"4200-70", 65},{"4200-80", 76},{"4200-90", 87},{"4200-100", 98},
-            {"4500-0", -29},   {"4500-20", 10}, {"4500-30", 20},{"4500-40", 31},{"4500-50", 41},{"4500-60", 51},{"4500-70", 61},{"4500-80", 72},{"4500-90", 82},{"4500-100", 92},
-            {"5000-0", -31},   {"5000-20", 9}, {"5000-30", 18},{"5000-40", 28},{"5000-50", 37},{"5000-60", 46},{"5000-70", 55},{"5000-80", 65},{"5000-90", 74},{"5000-100", 83},
-            {"5400-0", -32.5}, {"5400-20", 9}, {"5400-30", 17},{"5400-40", 26},{"5400-50", 34},{"5400-60", 43},{"5400-70", 51},{"5400-80", 60},{"5400-90", 68},{"5400-100", 77},
-            {"5800-0", -33.5}, {"5800-20", 8}, {"5800-30", 16},{"5800-40", 24},{"5800-50", 32},{"5800-60", 40},{"5800-70", 48},{"5800-80", 56},{"5800-90", 64},{"5800-100", 72},
-            {"6000-0", -34.5}, {"6000-20", 8}, {"6000-30", 16},{"6000-40", 23},{"6000-50", 31},{"6000-60", 39},{"6000-70", 47},{"6000-80", 54},{"6000-90", 62},{"6000-100", 70},
+            // RPM => 1400
+            { new EngineTorqueKey(1400, 0),  -18 },
+            { new EngineTorqueKey(1400, 20),  22 },
+            { new EngineTorqueKey(1400, 30),  25 },
+            { new EngineTorqueKey(1400, 40),  28 },
+            { new EngineTorqueKey(1400, 50),  37 },
+            { new EngineTorqueKey(1400, 60),  47 },
+            { new EngineTorqueKey(1400, 70),  56 },
+            { new EngineTorqueKey(1400, 80),  65 },
+            { new EngineTorqueKey(1400, 90),  75 },
+            { new EngineTorqueKey(1400, 100), 84 },
+
+            // RPM => 1900
+            { new EngineTorqueKey(1900, 0),  -19.5 },
+            { new EngineTorqueKey(1900, 20),  23 },
+            { new EngineTorqueKey(1900, 30),  26 },
+            { new EngineTorqueKey(1900, 40),  29 },
+            { new EngineTorqueKey(1900, 50),  39 },
+            { new EngineTorqueKey(1900, 60),  49 },
+            { new EngineTorqueKey(1900, 70),  59 },
+            { new EngineTorqueKey(1900, 80),  68 },
+            { new EngineTorqueKey(1900, 90),  78 },
+            { new EngineTorqueKey(1900, 100), 88 },
+
+            // RPM => 2400
+            { new EngineTorqueKey(2400, 0),  -21.5 },
+            { new EngineTorqueKey(2400, 20),  11 },
+            { new EngineTorqueKey(2400, 30),  22 },
+            { new EngineTorqueKey(2400, 40),  32 },
+            { new EngineTorqueKey(2400, 50),  43 },
+            { new EngineTorqueKey(2400, 60),  54 },
+            { new EngineTorqueKey(2400, 70),  65 },
+            { new EngineTorqueKey(2400, 80),  75 },
+            { new EngineTorqueKey(2400, 90),  86 },
+            { new EngineTorqueKey(2400, 100), 97 },
+
+            // RPM => 2900
+            { new EngineTorqueKey(2900, 0),  -23.5 },
+            { new EngineTorqueKey(2900, 20),  11 },
+            { new EngineTorqueKey(2900, 30),  22 },
+            { new EngineTorqueKey(2900, 40),  33 },
+            { new EngineTorqueKey(2900, 50),  44 },
+            { new EngineTorqueKey(2900, 60),  54 },
+            { new EngineTorqueKey(2900, 70),  65 },
+            { new EngineTorqueKey(2900, 80),  76 },
+            { new EngineTorqueKey(2900, 90),  87 },
+            { new EngineTorqueKey(2900, 100), 98 },
+
+            // RPM => 3300
+            { new EngineTorqueKey(3300, 0),  -25 },
+            { new EngineTorqueKey(3300, 20),  11 },
+            { new EngineTorqueKey(3300, 30),  22 },
+            { new EngineTorqueKey(3300, 40),  33 },
+            { new EngineTorqueKey(3300, 50),  44 },
+            { new EngineTorqueKey(3300, 60),  56 },
+            { new EngineTorqueKey(3300, 70),  67 },
+            { new EngineTorqueKey(3300, 80),  78 },
+            { new EngineTorqueKey(3300, 90),  89 },
+            { new EngineTorqueKey(3300, 100), 100 },
+
+            // RPM => 3800
+            { new EngineTorqueKey(3800, 0),  -26.5 },
+            { new EngineTorqueKey(3800, 20),  12 },
+            { new EngineTorqueKey(3800, 30),  23 },
+            { new EngineTorqueKey(3800, 40),  35 },
+            { new EngineTorqueKey(3800, 50),  46 },
+            { new EngineTorqueKey(3800, 60),  58 },
+            { new EngineTorqueKey(3800, 70),  69 },
+            { new EngineTorqueKey(3800, 80),  81 },
+            { new EngineTorqueKey(3800, 90),  92 },
+            { new EngineTorqueKey(3800, 100), 104 },
+
+            // RPM => 4000
+            { new EngineTorqueKey(4000, 0),  -27.5 },
+            { new EngineTorqueKey(4000, 20),  11 },
+            { new EngineTorqueKey(4000, 30),  23 },
+            { new EngineTorqueKey(4000, 40),  34 },
+            { new EngineTorqueKey(4000, 50),  45 },
+            { new EngineTorqueKey(4000, 60),  57 },
+            { new EngineTorqueKey(4000, 70),  68 },
+            { new EngineTorqueKey(4000, 80),  79 },
+            { new EngineTorqueKey(4000, 90),  91 },
+            { new EngineTorqueKey(4000, 100), 102 },
+
+            // RPM => 4200
+            { new EngineTorqueKey(4200, 0),  -28 },
+            { new EngineTorqueKey(4200, 20),  11 },
+            { new EngineTorqueKey(4200, 30),  22 },
+            { new EngineTorqueKey(4200, 40),  33 },
+            { new EngineTorqueKey(4200, 50),  44 },
+            { new EngineTorqueKey(4200, 60),  54 },
+            { new EngineTorqueKey(4200, 70),  65 },
+            { new EngineTorqueKey(4200, 80),  76 },
+            { new EngineTorqueKey(4200, 90),  87 },
+            { new EngineTorqueKey(4200, 100), 98 },
+
+            // RPM => 4500
+            { new EngineTorqueKey(4500, 0),  -29 },
+            { new EngineTorqueKey(4500, 20),  10 },
+            { new EngineTorqueKey(4500, 30),  20 },
+            { new EngineTorqueKey(4500, 40),  31 },
+            { new EngineTorqueKey(4500, 50),  41 },
+            { new EngineTorqueKey(4500, 60),  51 },
+            { new EngineTorqueKey(4500, 70),  61 },
+            { new EngineTorqueKey(4500, 80),  72 },
+            { new EngineTorqueKey(4500, 90),  82 },
+            { new EngineTorqueKey(4500, 100), 92 },
+
+            // RPM => 5000
+            { new EngineTorqueKey(5000, 0),  -31 },
+            { new EngineTorqueKey(5000, 20),  9 },
+            { new EngineTorqueKey(5000, 30),  18 },
+            { new EngineTorqueKey(5000, 40),  28 },
+            { new EngineTorqueKey(5000, 50),  37 },
+            { new EngineTorqueKey(5000, 60),  46 },
+            { new EngineTorqueKey(5000, 70),  55 },
+            { new EngineTorqueKey(5000, 80),  65 },
+            { new EngineTorqueKey(5000, 90),  74 },
+            { new EngineTorqueKey(5000, 100), 83 },
+
+            // RPM => 5400
+            { new EngineTorqueKey(5400, 0),  -32.5 },
+            { new EngineTorqueKey(5400, 20),  9 },
+            { new EngineTorqueKey(5400, 30),  17 },
+            { new EngineTorqueKey(5400, 40),  26 },
+            { new EngineTorqueKey(5400, 50),  34 },
+            { new EngineTorqueKey(5400, 60),  43 },
+            { new EngineTorqueKey(5400, 70),  51 },
+            { new EngineTorqueKey(5400, 80),  60 },
+            { new EngineTorqueKey(5400, 90),  68 },
+            { new EngineTorqueKey(5400, 100), 77 },
+
+            // RPM => 5800
+            { new EngineTorqueKey(5800, 0),  -33.5 },
+            { new EngineTorqueKey(5800, 20),  8 },
+            { new EngineTorqueKey(5800, 30),  16 },
+            { new EngineTorqueKey(5800, 40),  24 },
+            { new EngineTorqueKey(5800, 50),  32 },
+            { new EngineTorqueKey(5800, 60),  40 },
+            { new EngineTorqueKey(5800, 70),  48 },
+            { new EngineTorqueKey(5800, 80),  56 },
+            { new EngineTorqueKey(5800, 90),  64 },
+            { new EngineTorqueKey(5800, 100), 72 },
+
+            // RPM => 6000
+            { new EngineTorqueKey(6000, 0),  -34.5 },
+            { new EngineTorqueKey(6000, 20),  8 },
+            { new EngineTorqueKey(6000, 30),  16 },
+            { new EngineTorqueKey(6000, 40),  23 },
+            { new EngineTorqueKey(6000, 50),  31 },
+            { new EngineTorqueKey(6000, 60),  39 },
+            { new EngineTorqueKey(6000, 70),  47 },
+            { new EngineTorqueKey(6000, 80),  54 },
+            { new EngineTorqueKey(6000, 90),  62 },
+            { new EngineTorqueKey(6000, 100), 70 },
         };
     }
 }
