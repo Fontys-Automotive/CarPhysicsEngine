@@ -144,6 +144,7 @@ namespace CarPhysicsEngine
             _previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
             Position.LateralVelocity = Movement.LateralVelocity();
 
+            Position.YawVelocityIntegral();
             // Calculate the new world coordinates for the vehicle
             XCoordinate += Position.VehicleDisplacementX();
             YCoordinate += Position.VehicleDisplacementY();

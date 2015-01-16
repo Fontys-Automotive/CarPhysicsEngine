@@ -4,7 +4,7 @@ namespace CarPhysicsEngine
 {
     public class Position
     {
-        private double YawAngle { get; set; }
+        public double YawAngle { get; set; }
         private readonly double _deltaT;
         private readonly double _forwardVelocity;
 
@@ -22,9 +22,9 @@ namespace CarPhysicsEngine
         /// Calculates the new YawAngle by adding the yaw change after one time step
         /// </summary>
         /// <returns></returns>
-        private double YawVelocityIntegral()
+        public void YawVelocityIntegral()
         {
-            return YawAngle+=YawVelocity * _deltaT;
+             YawAngle+=YawVelocity * _deltaT;
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace CarPhysicsEngine
         public double VehicleDisplacementX()
         {
            
-            var n1 = _forwardVelocity * Math.Cos(YawVelocityIntegral());
-            var n2 = LateralVelocity * Math.Sin(YawVelocityIntegral());
+            var n1 = _forwardVelocity * Math.Cos(YawAngle);
+            var n2 = LateralVelocity * Math.Sin(YawAngle);
             var n3 = n1 - n2;
 
             return n3 * _deltaT;
@@ -46,8 +46,8 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double VehicleDisplacementY()
         {
-            var n1 = _forwardVelocity * Math.Sin(YawVelocityIntegral());
-            var n2 = LateralVelocity * Math.Cos(YawVelocityIntegral());
+            var n1 = _forwardVelocity * Math.Sin(YawAngle);
+            var n2 = LateralVelocity * Math.Cos(YawAngle);
             var n3 = n1 + n2;
 
             return n3 * _deltaT;
