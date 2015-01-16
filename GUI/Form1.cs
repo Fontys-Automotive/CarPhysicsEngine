@@ -41,6 +41,12 @@ namespace GUI
                 case 'd':
                     carBehaviour.SteerAngle -= deltaAngle;
                     break;
+                case 'w':
+                    carBehaviour.ThrottleInput += 0.1;
+                    break;
+                case 's':
+                    carBehaviour.ThrottleInput -= 0.1;
+                    break;
 
             }
             if (carBehaviour.SteerAngle > 0)

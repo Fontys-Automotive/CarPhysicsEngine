@@ -7,7 +7,8 @@ namespace CarPhysicsEngine.Acceleration
         
         public double DeliveredDrivingPower { private get; set; }
         public double BoundaryDrivingPower { private get; set; }
-
+        public double PreviousForwardVelocity { get; set; }
+        public double CurrentForwardVelocity { get; set; }
         private static double PositiveFriction
         {
             get { return Setup.Cw * Setup.M * Setup.G; }
@@ -26,20 +27,23 @@ namespace CarPhysicsEngine.Acceleration
         public VehicleModel()
         {
             DeliveredDrivingPower = 0;
-            BoundaryDrivingPower = 0;
+            BoundaryDrivingPower = 10000;
         }
         private double AirResistance()
         {
-            return (Math.Pow(ForwardVelocity(), 2) * Setup.Rho * Setup.Cw * Setup.A) / 2;
+            return (Math.Pow(PreviousForwardVelocity, 2) * Setup.Rho * Setup.Cw * Setup.A) / 2;
         }
 
-        public double ForwardVelocity()
+        public void ForwardVelocity()
         {
            var saturationOutput = Helpers.SaturationDynamic(NegativeFriction, PositiveFriction, SumForces());
            var n1 = saturationOutput / Setup.M;
            var velocity = n1 * Setup.DeltaT;
 
-           return velocity;
+            CurrentForwardVelocity = velocity;
+            PreviousForwardVelocity = CurrentForwardVelocity;
+
+
         }
 
         public double SumForces()
@@ -51,7 +55,7 @@ namespace CarPhysicsEngine.Acceleration
 
         public double Displacement()
         {
-            return ForwardVelocity() * Setup.DeltaT;
+            return CurrentForwardVelocity * Setup.DeltaT;
         }
 
     }

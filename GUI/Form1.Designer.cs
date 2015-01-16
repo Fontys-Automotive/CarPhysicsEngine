@@ -51,7 +51,7 @@
             this.groupBoxMovement = new System.Windows.Forms.GroupBox();
             this.labelAcceleration = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lbForwardVelocityText = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.labelLateralVelocity = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -260,7 +260,7 @@
             // 
             this.groupBoxMovement.Controls.Add(this.labelAcceleration);
             this.groupBoxMovement.Controls.Add(this.label4);
-            this.groupBoxMovement.Controls.Add(this.label5);
+            this.groupBoxMovement.Controls.Add(this.lbForwardVelocityText);
             this.groupBoxMovement.Controls.Add(this.label6);
             this.groupBoxMovement.Controls.Add(this.labelLateralVelocity);
             this.groupBoxMovement.Controls.Add(this.label8);
@@ -292,14 +292,14 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Acceleration";
             // 
-            // label5
+            // lbForwardVelocityText
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 23);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 20);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Forward Velocity";
+            this.lbForwardVelocityText.AutoSize = true;
+            this.lbForwardVelocityText.Location = new System.Drawing.Point(9, 23);
+            this.lbForwardVelocityText.Name = "lbForwardVelocityText";
+            this.lbForwardVelocityText.Size = new System.Drawing.Size(126, 20);
+            this.lbForwardVelocityText.TabIndex = 1;
+            this.lbForwardVelocityText.Text = "Forward Velocity";
             // 
             // label6
             // 
@@ -464,7 +464,7 @@
         private System.Windows.Forms.GroupBox groupBoxMovement;
         private System.Windows.Forms.Label labelAcceleration;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lbForwardVelocityText;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label labelLateralVelocity;
         private System.Windows.Forms.Label label8;

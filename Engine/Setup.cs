@@ -66,11 +66,11 @@ namespace CarPhysicsEngine
 
         public static readonly Dictionary<double, double> SwitchingBehaviour = new Dictionary<double, double>()
         {
-            {1, 0},
-            {2, 4.17},
-            {3, 8.89},
-            {4, 13.89},
-            {5, 19.44}
+            {0, 1}, 
+            {4.17, 2},
+            {8.89, 3},
+            {13.89, 4},
+            {19.44, 5}
         };
 
         public static readonly Dictionary<EngineTorqueKey, double> EngineTorque = new Dictionary<EngineTorqueKey, double>()

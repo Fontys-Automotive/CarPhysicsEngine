@@ -5,6 +5,7 @@ namespace CarPhysicsEngine
 {
     public class CarBehaviour
     {
+        public double ThrottleInput { get; set; }
         // Pre-defined variables from voertuigdata.m
         public readonly double ForwardVelocity; // [m/s]
         private double steerAngle; // steering angle in radians => input
@@ -45,6 +46,7 @@ namespace CarPhysicsEngine
         public readonly Forces Forces;
         public readonly Movement Movement;
         public readonly Position Position;
+        public readonly Acceleration.Acceleration Acceleration;
 
         public CarBehaviour()
         {
@@ -61,11 +63,17 @@ namespace CarPhysicsEngine
             Forces = new Forces();
             Movement = new Movement(ForwardVelocity);
             Position = new Position(ForwardVelocity, YawAngle);
+            Acceleration = new Acceleration.Acceleration();
         }
 
         public void  Run()
         {
+
+            Acceleration.ThrottleInput = ThrottleInput;
+            Acceleration.inputForwardVelocity = ForwardVelocity;
+            Acceleration.Run();
             // Initialize the properties in Tyre
+            Tyre.ForwardVelocity = Acceleration.outputForwardVelocity;
             Tyre.SteerAngle = SteerAngle;
             Tyre.LateralVelocity = Movement.LateralVelocity();
             Tyre.YawVelocity = Movement.YawVelocity();
