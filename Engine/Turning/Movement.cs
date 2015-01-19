@@ -11,6 +11,7 @@ namespace CarPhysicsEngine.Turning
 
         public double FyTotal { get; set; }
         public double MzTotal { get; set; }
+        public double DeltaT { private get; set; }
         public double PreviousLateralVelocity { private get; set; }
         public double PreviousYawVelocity { private get; set; }
 
@@ -21,7 +22,7 @@ namespace CarPhysicsEngine.Turning
         /// <returns></returns>
         public double YawVelocity()
         {
-            return PreviousYawVelocity + Setup.DeltaT * (MzTotal / Setup.InertiaMoment);
+            return PreviousYawVelocity + DeltaT * (MzTotal / Setup.InertiaMoment);
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace CarPhysicsEngine.Turning
         /// <returns></returns>
         public double LateralVelocity()
         {
-            return PreviousLateralVelocity + Setup.DeltaT * LateralAcceleration();
+            return PreviousLateralVelocity + DeltaT * LateralAcceleration();
         }
     }
 }
