@@ -15,6 +15,7 @@ namespace CarPhysicsEngine.Turning
 
         public double LateralVelocity { private get; set; }
         public double YawVelocity { private get; set; }
+        public double DeltaT { private get; set; }
         
         /// <summary>
         /// Calculates the new YawAngle by adding the yaw change after one time step
@@ -22,7 +23,7 @@ namespace CarPhysicsEngine.Turning
         /// <returns></returns>
         public void YawVelocityIntegral()
         {
-             YawAngle+=YawVelocity * Setup.DeltaT;
+             YawAngle+=YawVelocity * DeltaT;
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace CarPhysicsEngine.Turning
             var n2 = LateralVelocity * Math.Sin(YawAngle);
             var n3 = n1 - n2;
 
-            return n3 * Setup.DeltaT;
+            return n3 * DeltaT;
         }
         /// <summary>
         /// Calculates the change in Y coordinate after one time step. Added to the current Y position in CarBehaviour.Run()
@@ -48,7 +49,7 @@ namespace CarPhysicsEngine.Turning
             var n2 = LateralVelocity * Math.Cos(YawAngle);
             var n3 = n1 + n2;
 
-            return n3 * Setup.DeltaT;
+            return n3 * DeltaT;
         }
     }
 }

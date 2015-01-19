@@ -10,6 +10,19 @@ namespace CarPhysicsEngine
         public readonly double ForwardVelocity; // [m/s]
         private double steerAngle; // steering angle in radians => input
 
+        private DateTime previousDateTime;
+        private DateTime currentDateTime;
+
+        public double DeltaT
+        {
+            get
+            {
+                var difference = (currentDateTime - previousDateTime);
+                
+                return difference.TotalSeconds;
+            }
+        }
+
         /// <summary>
         /// Stores the yaw velocity of the previous iteration
         /// </summary>
@@ -54,9 +67,10 @@ namespace CarPhysicsEngine
             previousYawVelocity = 0; // Initialized to zero because execution hasn't run.
 
             YawAngle = 0;
+            currentDateTime = previousDateTime = DateTime.Now;
 
             //Steerangle has to be set to 0 for initial straight movement
-            SteerAngle = 0.00;
+            SteerAngle = 0.02;
             XCoordinate = YCoordinate = 0;
 
             Tyre = new Tyre(ForwardVelocity, SteerAngle);
@@ -85,10 +99,12 @@ namespace CarPhysicsEngine
             // Initialize the properties in Movement
             Movement.FyTotal = Forces.FyTotal();
             Movement.MzTotal = Forces.MzMoment();
+            Movement.DeltaT = DeltaT;
             
             // Initialize the properties in Position
             previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
             Position.LateralVelocity = Movement.LateralVelocity();
+            Position.DeltaT = DeltaT;
 
             Position.YawVelocityIntegral();
             // Calculate the new world coordinates for the vehicle
@@ -99,7 +115,10 @@ namespace CarPhysicsEngine
             Movement.PreviousLateralVelocity = Movement.LateralVelocity();
             Movement.PreviousYawVelocity = previousYawVelocity;
 
-            YawAngle += Setup.DeltaT * Movement.YawVelocity();
+            YawAngle += DeltaT * Movement.YawVelocity();
+
+            previousDateTime = currentDateTime;
+            currentDateTime = DateTime.Now;
         }
     }
 }

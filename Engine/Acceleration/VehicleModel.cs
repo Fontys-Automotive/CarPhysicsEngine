@@ -38,12 +38,18 @@ namespace CarPhysicsEngine.Acceleration
         {
            var saturationOutput = Helpers.SaturationDynamic(NegativeFriction, PositiveFriction, SumForces());
            var n1 = saturationOutput / Setup.M;
-           var velocity = n1 * Setup.DeltaT;
+           // !TODO get DeltaT from CarBehaviour
+           // var velocity = n1 * Setup.DeltaT;
 
+<<<<<<< HEAD
             CurrentForwardVelocity = velocity;
             PreviousForwardVelocity = CurrentForwardVelocity;
 
 
+=======
+           // return velocity;
+            return 0;
+>>>>>>> bugfix-deltaT
         }
 
         public double SumForces()
@@ -55,7 +61,13 @@ namespace CarPhysicsEngine.Acceleration
 
         public double Displacement()
         {
+<<<<<<< HEAD
             return CurrentForwardVelocity * Setup.DeltaT;
+=======
+            // !TODO get DeltaT from CarBehaviour
+            // return ForwardVelocity() * Setup.DeltaT;
+            return 0;
+>>>>>>> bugfix-deltaT
         }
 
     }

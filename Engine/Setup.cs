@@ -8,7 +8,6 @@ namespace CarPhysicsEngine
         // Global
         public const double M = 1150; // Vehicle Mass [kg]
         public const double G = 9.81; // Acceleration due to Gravity [m/s^2]
-        public const double DeltaT = 0.01; // Change in time [s]
 
         // Needed for Turning
         private const double LengthWheelbase = 2.66; // wheelbase length [m]
