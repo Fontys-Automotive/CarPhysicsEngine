@@ -9,6 +9,7 @@ namespace CarPhysicsEngine.Acceleration
         public double DeltaT { private get; set; }
 
         private double AirResistance { get; set; }
+        private double RollingResistance { get; set; }
         private double SumForces { get; set; }
 
         public void CalculateForwardVelocity()
@@ -34,9 +35,14 @@ namespace CarPhysicsEngine.Acceleration
             AirResistance = (Math.Pow(CurrentForwardVelocity, 2) * Setup.Rho * Setup.Cw * Setup.A) / 2;
         }
 
+        public void CalculateRollingResistance()
+        {
+            RollingResistance = Setup.Fr * Setup.M * Setup.G;
+        }
+
         public void CalculateSumForces()
         {
-            SumForces = DeliveredDrivingPower - AirResistance;
+            SumForces = DeliveredDrivingPower - AirResistance - RollingResistance;
         }
     }
 }

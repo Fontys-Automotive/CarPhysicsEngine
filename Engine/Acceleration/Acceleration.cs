@@ -37,9 +37,10 @@
             VehicleModel.DeltaT = DeltaT;
             VehicleModel.DeliveredDrivingPower = PowerTrain.DeliveredDrivingPower;
 
-            VehicleModel.CalculateSumForces();
             VehicleModel.CalculateAirResistance();
-            
+            VehicleModel.CalculateRollingResistance();
+            VehicleModel.CalculateSumForces();
+
             VehicleModel.CalculateForwardVelocity();
 
             ForwardVelocityOutput = VehicleModel.CurrentForwardVelocity;
