@@ -85,7 +85,7 @@ namespace CarPhysicsEngine
         {
             previousYawVelocity = 0;
             ForwardVelocity = 0;
-            ThrottleInput = 0;
+            ThrottleInput = 50;
 
             YawAngle = 0;
             SteerAngle = 0;

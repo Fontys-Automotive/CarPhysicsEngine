@@ -29,21 +29,21 @@ namespace CarPhysicsEngine.Acceleration
         /// </summary>
         public void CalculateGear()
         {
-            var lowerLimit = Setup.SwitchingBehaviour.Keys.First();
-            var upperLimit = Setup.SwitchingBehaviour.Keys.Last();
+            var lowerLimit = Setup.Gear.Keys.First();
+            var upperLimit = Setup.Gear.Keys.Last();
 
             if (ForwardVelocityInput <= lowerLimit)
-                Gear = Setup.SwitchingBehaviour[lowerLimit];
+                Gear = Setup.Gear[lowerLimit];
             if (ForwardVelocityInput >= upperLimit)
-                Gear = Setup.SwitchingBehaviour[upperLimit];
+                Gear = Setup.Gear[upperLimit];
 
-            var keys = Setup.SwitchingBehaviour.Keys.ToArray();
+            var keys = Setup.Gear.Keys.ToArray();
 
             for (var i = 0; i < keys.Count() - 1; i++)
             {
                 if (ForwardVelocityInput >= keys[i] && ForwardVelocityInput <= keys[i + 1])
                 {
-                    Gear = Setup.SwitchingBehaviour[keys[i]];
+                    Gear = Setup.Gear[keys[i]];
                     break;
                 }
             }
@@ -91,6 +91,8 @@ namespace CarPhysicsEngine.Acceleration
                 if (throttlePercentage >= possibleThrottlePercentage[i] && throttlePercentage < possibleThrottlePercentage[i + 1])
                     throttlePercentage = possibleThrottlePercentage[i];
             }
+
+            RPM = rpm;
         }
 
         /// <summary>
@@ -108,7 +110,7 @@ namespace CarPhysicsEngine.Acceleration
         /// <returns>Transmission</returns>
         public void CalculateTransmission()
         {
-            Transmission = Setup.GearRatio[Gear];
+            Transmission = Setup.Transmission[Gear];
         }
 
         public void CalculateDeliveredDrivingPower()

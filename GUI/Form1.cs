@@ -79,7 +79,7 @@ namespace GUI
             path.AddEllipse(carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
 
             //SCREEN
-            labelSteerAngle.Text = carBehaviour.SteerAngle.ToString("0.000");
+            labelSteerAngle.Text = carBehaviour.SteerAngle.ToString("0.00");
             labelXCoordinate.Text = carBehaviour.XCoordinate.ToString("0.000");
             labelYCoordinate.Text = carBehaviour.YCoordinate.ToString("0.000");
 
@@ -90,24 +90,24 @@ namespace GUI
             labelMzMoment.Text = carBehaviour.Movement.MzTotal.ToString("0.000");
 
             //MOVEMENT
-            labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString("0.0") + " m/s";
+            labelForwardVelocity.Text = carBehaviour.ForwardVelocity.ToString("0.000");
             labelYawVelocity.Text = carBehaviour.Movement.YawVelocity().ToString("0.000");
             labelLateralVelocity.Text = carBehaviour.Movement.LateralVelocity().ToString("0.000");
             labelAcceleration.Text = carBehaviour.Movement.LateralAcceleration().ToString("0.000");
 
             //ACCELERATION
-            labelFwdAccelerationValue.Text = carBehaviour.Acceleration.ForwardVelocityOutput.ToString("0.0000");
-            labelDeltaTValue.Text = carBehaviour.DeltaT.ToString("0.0000");
-            labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0.00");
-            labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear.ToString("0.000");
-            labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque.ToString("0.000");
+            labelFwdAccelerationValue.Text = carBehaviour.Acceleration.ForwardVelocityOutput.ToString("0.00000");
+            labelDeltaTValue.Text = carBehaviour.DeltaT.ToString("0.00000");
+            labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0");
+            labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear.ToString("0");
+            labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque.ToString("0.0");
             labelRPM.Text = carBehaviour.Acceleration.PowerTrain.RPM.ToString("0.000");
-            labelTransmission.Text = carBehaviour.Acceleration.PowerTrain.Transmission.ToString("0.000");
+            labelTransmission.Text = carBehaviour.Acceleration.PowerTrain.Transmission.ToString("0.00");
 
 
             //POSITION
-            labelVehicleDisplacementX.Text = carBehaviour.Position.VehicleDisplacementX().ToString("0.000");
-            labelVehicleDisplacementY.Text = carBehaviour.Position.VehicleDisplacementY().ToString("0.000");
+            labelVehicleDisplacementX.Text = carBehaviour.Position.VehicleDisplacementX().ToString("0.00000");
+            labelVehicleDisplacementY.Text = carBehaviour.Position.VehicleDisplacementY().ToString("0.00000");
 
             //UPDATE TIMER DISPLAY
             DateTime t = DateTime.Now;

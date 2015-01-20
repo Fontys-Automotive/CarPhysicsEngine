@@ -55,7 +55,7 @@ namespace CarPhysicsEngine
         }
 
         // MATLAB Model => Transmission Lookup Table
-        public static readonly Dictionary<double, double> GearRatio = new Dictionary<double, double>()
+        public static readonly Dictionary<double, double> Transmission = new Dictionary<double, double>()
         {
             {1, 12},
             {2, 7.5},
@@ -65,7 +65,7 @@ namespace CarPhysicsEngine
         };
 
         // MATLAB Model => Acceleration Lookup Table
-        public static readonly Dictionary<double, double> SwitchingBehaviour = new Dictionary<double, double>()
+        public static readonly Dictionary<double, double> Gear = new Dictionary<double, double>()
         {
             {0, 1}, 
             {4.17, 2},
