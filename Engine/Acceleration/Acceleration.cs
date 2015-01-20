@@ -22,7 +22,7 @@
             powerTrain.ThrottleInput = ThrottleInput;
 
             vehicleModel.CurrentForwardVelocity = powerTrain.ForwardVelocity();
-            vehicleModel.DeliveredDrivingPower = powerTrain.BoundaryDrivingPower();
+            vehicleModel.DeliveredDrivingPower = powerTrain.DeliveredDrivingPower();
             vehicleModel.DeltaT = DeltaT;
 
             vehicleModel.ForwardVelocity();

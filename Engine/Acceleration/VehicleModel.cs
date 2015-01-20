@@ -12,7 +12,7 @@ namespace CarPhysicsEngine.Acceleration
 
         private static double PositiveFriction
         {
-            get { return Setup.Cw * Setup.M * Setup.G; }
+            get { return Setup.MuMax * Setup.M * Setup.G; }
         }
 
         private static double NegativeFriction
@@ -42,7 +42,7 @@ namespace CarPhysicsEngine.Acceleration
 
         private double SumForces()
         {
-            return DeliveredDrivingPower - AirResistance() - RollingResistance;
+            return DeliveredDrivingPower - (AirResistance() + RollingResistance);
         }
     }
 }

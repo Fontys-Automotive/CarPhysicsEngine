@@ -59,7 +59,7 @@ namespace CarPhysicsEngine.Acceleration
         /// </summary>
         private void SetInputVelocityAndThrottle()
         {
-            rpm = ForwardVelocityInput;
+            rpm = ForwardVelocity();
             throttlePercentage = ThrottleInput;
 
             var possibleRPM = new double[] { 1400, 1900, 2400, 2900, 3300, 3800, 4000, 4200, 4500, 5000, 5400, 5800, 6000 };
@@ -104,7 +104,7 @@ namespace CarPhysicsEngine.Acceleration
             return Setup.GearRatio[Gear()];
         }
 
-        public double BoundaryDrivingPower()
+        public double DeliveredDrivingPower()
         {
             return (Torque() * Transmission()) / Setup.R;
         }

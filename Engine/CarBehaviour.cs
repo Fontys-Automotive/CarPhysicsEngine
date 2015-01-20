@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using CarPhysicsEngine.Turning;
 
 namespace CarPhysicsEngine
@@ -29,7 +30,7 @@ namespace CarPhysicsEngine
         {
             get
             {
-                return 0.01;
+                //return 0.01;
                 var difference = (currentDateTime - previousDateTime);
                 return difference.TotalSeconds;
             }
@@ -76,7 +77,7 @@ namespace CarPhysicsEngine
         {
             previousYawVelocity = 0;
             ForwardVelocity = 0;
-            ThrottleInput = 100;
+            ThrottleInput = 0;
 
             YawAngle = 0;
             SteerAngle = 0;
@@ -98,7 +99,9 @@ namespace CarPhysicsEngine
             CalculateAcceleration();
 
             if (ForwardVelocity != 0)
+            {
                 CalculateTurning();
+            }
 
             previousDateTime = currentDateTime;
             currentDateTime = DateTime.Now;
@@ -110,7 +113,7 @@ namespace CarPhysicsEngine
             Acceleration.ForwardVelocityInput = ForwardVelocity;
             Acceleration.DeltaT = DeltaT;
             Acceleration.Run();
-            ForwardVelocity = Acceleration.OutputForwardVelocity;
+            ForwardVelocity -= Acceleration.OutputForwardVelocity;
         }
 
         private void CalculateTurning()
