@@ -28,7 +28,7 @@ namespace CarPhysicsEngine
         {
             get
             {
-                return 0.01;
+                //return 0.01;
                 var difference = (currentDateTime - previousDateTime);
                 return difference.TotalSeconds;
             }

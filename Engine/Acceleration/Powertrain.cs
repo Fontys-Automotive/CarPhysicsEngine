@@ -42,7 +42,6 @@ namespace CarPhysicsEngine.Acceleration
             throw new NotImplementedException();
         }
 
-        public double tq = 0;
         /// <summary>
         ///     Output of Maximum Torque Lookup Table in MATLAB Model
         /// </summary>
@@ -51,10 +50,8 @@ namespace CarPhysicsEngine.Acceleration
             SetInputVelocityAndThrottle();
             
             var engineTorqueKey = new Setup.EngineTorqueKey(rpm, throttlePercentage);
-            
 
-            tq = Setup.EngineTorque[engineTorqueKey];
-            return tq;
+            return Setup.EngineTorque[engineTorqueKey];
         }
 
         /// <summary>
@@ -89,19 +86,14 @@ namespace CarPhysicsEngine.Acceleration
             }
         }
 
-        public double fv = 0;
-
         /// <summary>
         ///     Output Forward Velocity (new)
         /// </summary>
         /// <returns></returns>
         public double CalculateRPM()
         {
-            fv = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission();
-            return fv;
+            return ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission();;
         }
-
-        public double transmission = 0;
 
         /// <summary>
         ///     Output of Transmission Lookup Table in MATLAB Model
@@ -109,17 +101,12 @@ namespace CarPhysicsEngine.Acceleration
         /// <returns>Transmission</returns>
         private double Transmission()
         {
-
-            transmission = Setup.GearRatio[Gear()];
-            return transmission;
+            return Setup.GearRatio[Gear()];
         }
-
-        public double ddp = 0;
 
         public double DeliveredDrivingPower()
         {
-            ddp = (Torque() * Transmission()) / Setup.R;
-            return ddp;
+            return (Torque() * Transmission()) / Setup.R;
         }
     }
 }

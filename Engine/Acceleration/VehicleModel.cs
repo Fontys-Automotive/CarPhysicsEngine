@@ -17,7 +17,6 @@ namespace CarPhysicsEngine.Acceleration
             var n1 = saturationOutput / Setup.M;
 
             CurrentForwardVelocity = n1 * DeltaT;
-
         }
 
         private static double PositiveFriction
@@ -43,15 +42,6 @@ namespace CarPhysicsEngine.Acceleration
         private double SumForces()
         {
             return DeliveredDrivingPower - (AirResistance() + RollingResistance);
-
-            if (CurrentForwardVelocity != 0)
-            {
-                return DeliveredDrivingPower - (AirResistance() + RollingResistance);
-            }
-            else
-            {
-                return DeliveredDrivingPower;
-            }
         }
     }
 }
