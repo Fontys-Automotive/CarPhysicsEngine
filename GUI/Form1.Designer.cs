@@ -37,8 +37,12 @@
             this.labelYCoordinate = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBoxScreen = new System.Windows.Forms.GroupBox();
+            this.labelThrottleInput = new System.Windows.Forms.Label();
             this.labelTimer = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.labelDeltaTValue = new System.Windows.Forms.Label();
+            this.labelDeltaT = new System.Windows.Forms.Label();
             this.groupBoxForces = new System.Windows.Forms.GroupBox();
             this.labelMzMoment = new System.Windows.Forms.Label();
             this.labelMzMomentText = new System.Windows.Forms.Label();
@@ -65,12 +69,16 @@
             this.buttonPlayPause = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.labelThrottleInput = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.labelDeltaTValue = new System.Windows.Forms.Label();
-            this.labelDeltaT = new System.Windows.Forms.Label();
             this.labelFwdAccelerationValue = new System.Windows.Forms.Label();
             this.labelFwdAcceleration = new System.Windows.Forms.Label();
+            this.labelGearValue = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.labelTorque = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.labelRPM = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.labelTransmission = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBoxScreen.SuspendLayout();
             this.groupBoxForces.SuspendLayout();
             this.groupBoxMovement.SuspendLayout();
@@ -159,6 +167,15 @@
             this.groupBoxScreen.TabStop = false;
             this.groupBoxScreen.Text = "Screen";
             // 
+            // labelThrottleInput
+            // 
+            this.labelThrottleInput.Location = new System.Drawing.Point(137, 67);
+            this.labelThrottleInput.Name = "labelThrottleInput";
+            this.labelThrottleInput.Size = new System.Drawing.Size(71, 21);
+            this.labelThrottleInput.TabIndex = 11;
+            this.labelThrottleInput.Text = "0";
+            this.labelThrottleInput.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // labelTimer
             // 
             this.labelTimer.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -169,6 +186,15 @@
             this.labelTimer.Text = "0";
             this.labelTimer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 67);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(104, 21);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Throttle Input";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -177,6 +203,24 @@
             this.label3.Size = new System.Drawing.Size(101, 21);
             this.label3.TabIndex = 6;
             this.label3.Text = "Time elapsed";
+            // 
+            // labelDeltaTValue
+            // 
+            this.labelDeltaTValue.Location = new System.Drawing.Point(137, 46);
+            this.labelDeltaTValue.Name = "labelDeltaTValue";
+            this.labelDeltaTValue.Size = new System.Drawing.Size(71, 21);
+            this.labelDeltaTValue.TabIndex = 9;
+            this.labelDeltaTValue.Text = "0";
+            this.labelDeltaTValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelDeltaT
+            // 
+            this.labelDeltaT.AutoSize = true;
+            this.labelDeltaT.Location = new System.Drawing.Point(6, 46);
+            this.labelDeltaT.Name = "labelDeltaT";
+            this.labelDeltaT.Size = new System.Drawing.Size(62, 21);
+            this.labelDeltaT.TabIndex = 8;
+            this.labelDeltaT.Text = "Delta T ";
             // 
             // groupBoxForces
             // 
@@ -430,51 +474,23 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.labelTransmission);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.labelRPM);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.labelTorque);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.labelGearValue);
+            this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.labelFwdAccelerationValue);
             this.groupBox1.Controls.Add(this.labelFwdAcceleration);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 516);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(216, 69);
+            this.groupBox1.Size = new System.Drawing.Size(216, 144);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Acceleration";
-            // 
-            // labelThrottleInput
-            // 
-            this.labelThrottleInput.Location = new System.Drawing.Point(137, 67);
-            this.labelThrottleInput.Name = "labelThrottleInput";
-            this.labelThrottleInput.Size = new System.Drawing.Size(71, 21);
-            this.labelThrottleInput.TabIndex = 11;
-            this.labelThrottleInput.Text = "0";
-            this.labelThrottleInput.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 67);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(104, 21);
-            this.label7.TabIndex = 10;
-            this.label7.Text = "Throttle Input";
-            // 
-            // labelDeltaTValue
-            // 
-            this.labelDeltaTValue.Location = new System.Drawing.Point(137, 46);
-            this.labelDeltaTValue.Name = "labelDeltaTValue";
-            this.labelDeltaTValue.Size = new System.Drawing.Size(71, 21);
-            this.labelDeltaTValue.TabIndex = 9;
-            this.labelDeltaTValue.Text = "0";
-            this.labelDeltaTValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelDeltaT
-            // 
-            this.labelDeltaT.AutoSize = true;
-            this.labelDeltaT.Location = new System.Drawing.Point(6, 46);
-            this.labelDeltaT.Name = "labelDeltaT";
-            this.labelDeltaT.Size = new System.Drawing.Size(62, 21);
-            this.labelDeltaT.TabIndex = 8;
-            this.labelDeltaT.Text = "Delta T ";
             // 
             // labelFwdAccelerationValue
             // 
@@ -493,6 +509,78 @@
             this.labelFwdAcceleration.Size = new System.Drawing.Size(128, 21);
             this.labelFwdAcceleration.TabIndex = 6;
             this.labelFwdAcceleration.Text = "Fwd Acceleration";
+            // 
+            // labelGearValue
+            // 
+            this.labelGearValue.Location = new System.Drawing.Point(137, 46);
+            this.labelGearValue.Name = "labelGearValue";
+            this.labelGearValue.Size = new System.Drawing.Size(73, 20);
+            this.labelGearValue.TabIndex = 9;
+            this.labelGearValue.Text = "0";
+            this.labelGearValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 46);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(43, 21);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "Gear";
+            // 
+            // labelTorque
+            // 
+            this.labelTorque.Location = new System.Drawing.Point(137, 67);
+            this.labelTorque.Name = "labelTorque";
+            this.labelTorque.Size = new System.Drawing.Size(73, 20);
+            this.labelTorque.TabIndex = 11;
+            this.labelTorque.Text = "0";
+            this.labelTorque.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 67);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(59, 21);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Torque";
+            // 
+            // labelRPM
+            // 
+            this.labelRPM.Location = new System.Drawing.Point(137, 88);
+            this.labelRPM.Name = "labelRPM";
+            this.labelRPM.Size = new System.Drawing.Size(73, 20);
+            this.labelRPM.TabIndex = 13;
+            this.labelRPM.Text = "0";
+            this.labelRPM.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 88);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(43, 21);
+            this.label14.TabIndex = 12;
+            this.label14.Text = "RPM";
+            // 
+            // labelTransmission
+            // 
+            this.labelTransmission.Location = new System.Drawing.Point(137, 109);
+            this.labelTransmission.Name = "labelTransmission";
+            this.labelTransmission.Size = new System.Drawing.Size(73, 20);
+            this.labelTransmission.TabIndex = 15;
+            this.labelTransmission.Text = "0";
+            this.labelTransmission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 109);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(102, 21);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "Transmission";
             // 
             // Form1
             // 
@@ -567,6 +655,14 @@
         private System.Windows.Forms.Label labelDeltaT;
         private System.Windows.Forms.Label labelThrottleInput;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label labelTorque;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label labelGearValue;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label labelRPM;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label labelTransmission;
+        private System.Windows.Forms.Label label16;
     }
 }
 

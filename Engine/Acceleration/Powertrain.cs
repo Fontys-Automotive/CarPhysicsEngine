@@ -21,7 +21,7 @@ namespace CarPhysicsEngine.Acceleration
         /// <summary>
         ///     Output of Acceleration Lookup Table in MATLAB Model
         /// </summary>
-        private double Gear()
+        public double Gear()
         {
             var lowerLimit = Setup.SwitchingBehaviour.Keys.First();
             var upperLimit = Setup.SwitchingBehaviour.Keys.Last();
@@ -45,7 +45,7 @@ namespace CarPhysicsEngine.Acceleration
         /// <summary>
         ///     Output of Maximum Torque Lookup Table in MATLAB Model
         /// </summary>
-        private double Torque()
+        public double Torque()
         {
             SetInputVelocityAndThrottle();
             
@@ -99,7 +99,7 @@ namespace CarPhysicsEngine.Acceleration
         ///     Output of Transmission Lookup Table in MATLAB Model
         /// </summary>
         /// <returns>Transmission</returns>
-        private double Transmission()
+        public double Transmission()
         {
             return Setup.GearRatio[Gear()];
         }

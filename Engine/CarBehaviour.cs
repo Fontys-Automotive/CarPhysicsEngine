@@ -121,7 +121,7 @@ namespace CarPhysicsEngine
             Acceleration.ForwardVelocityInput = ForwardVelocity;
             Acceleration.DeltaT = DeltaT;
             Acceleration.Run();
-            ForwardVelocity = Acceleration.OutputForwardVelocity;
+            ForwardVelocity = Acceleration.ForwardVelocityOutput;
         }
 
         private void CalculateTurning()
