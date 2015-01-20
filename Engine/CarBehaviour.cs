@@ -5,7 +5,17 @@ namespace CarPhysicsEngine
 {
     public class CarBehaviour
     {
-        public double ThrottleInput { get; set; }
+        private double throttleInput;
+
+        public double ThrottleInput
+        {
+            get { return throttleInput; }
+            set
+            {
+                if (value >= 0 && value <= 100)
+                    throttleInput = value;
+            }
+        }
 
         /// <summary>
         ///     Real-world position of car's centre
@@ -75,7 +85,7 @@ namespace CarPhysicsEngine
         {
             previousYawVelocity = 0;
             ForwardVelocity = 0;
-            ThrottleInput = 100;
+            ThrottleInput = 0;
 
             YawAngle = 0;
             SteerAngle = 0;
