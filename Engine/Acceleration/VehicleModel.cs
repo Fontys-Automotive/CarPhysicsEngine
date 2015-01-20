@@ -6,9 +6,10 @@ namespace CarPhysicsEngine.Acceleration
     {
         
         public double DeliveredDrivingPower { private get; set; }
-        public double BoundaryDrivingPower { private get; set; }
-        public double PreviousForwardVelocity { get; set; }
+        private double PreviousForwardVelocity { get; set; }
         public double CurrentForwardVelocity { get; set; }
+        public double DeltaT { private get; set; }
+
         private static double PositiveFriction
         {
             get { return Setup.Cw * Setup.M * Setup.G; }
@@ -24,11 +25,6 @@ namespace CarPhysicsEngine.Acceleration
             get { return Setup.Fr * Setup.M * Setup.G; }
         }
 
-        public VehicleModel()
-        {
-            DeliveredDrivingPower = 0;
-            BoundaryDrivingPower = 10000;
-        }
         private double AirResistance()
         {
             return (Math.Pow(PreviousForwardVelocity, 2) * Setup.Rho * Setup.Cw * Setup.A) / 2;
@@ -36,39 +32,17 @@ namespace CarPhysicsEngine.Acceleration
 
         public void ForwardVelocity()
         {
-           var saturationOutput = Helpers.SaturationDynamic(NegativeFriction, PositiveFriction, SumForces());
-           var n1 = saturationOutput / Setup.M;
-           // !TODO get DeltaT from CarBehaviour
-           // var velocity = n1 * Setup.DeltaT;
-
-<<<<<<< HEAD
-            CurrentForwardVelocity = velocity;
             PreviousForwardVelocity = CurrentForwardVelocity;
 
+            var saturationOutput = Helpers.SaturationDynamic(NegativeFriction, PositiveFriction, SumForces());
+            var n1 = saturationOutput / Setup.M;
 
-=======
-           // return velocity;
-            return 0;
->>>>>>> bugfix-deltaT
+            CurrentForwardVelocity = n1 * DeltaT;
         }
 
-        public double SumForces()
+        private double SumForces()
         {
-            var drivingPower = Helpers.SaturationDynamic(-10000, BoundaryDrivingPower, DeliveredDrivingPower);
-            return drivingPower - (AirResistance() + RollingResistance);
-
+            return DeliveredDrivingPower - AirResistance() - RollingResistance;
         }
-
-        public double Displacement()
-        {
-<<<<<<< HEAD
-            return CurrentForwardVelocity * Setup.DeltaT;
-=======
-            // !TODO get DeltaT from CarBehaviour
-            // return ForwardVelocity() * Setup.DeltaT;
-            return 0;
->>>>>>> bugfix-deltaT
-        }
-
     }
 }

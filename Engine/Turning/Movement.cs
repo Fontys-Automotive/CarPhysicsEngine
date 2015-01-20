@@ -2,12 +2,7 @@ namespace CarPhysicsEngine.Turning
 {
     public class Movement
     {
-        private readonly double _forwardVelocity;
-
-        public Movement(double forwardVelocity)
-        {
-            _forwardVelocity = forwardVelocity;
-        }
+        public double ForwardVelocity { private get; set; }
 
         public double FyTotal { get; set; }
         public double MzTotal { get; set; }
@@ -31,7 +26,7 @@ namespace CarPhysicsEngine.Turning
         /// </summary>
         public double LateralAcceleration()
         {
-            return (FyTotal / Setup.M) - (YawVelocity() * _forwardVelocity);
+            return (FyTotal / Setup.M) - (YawVelocity() * ForwardVelocity);
         }
 
         /// <summary>

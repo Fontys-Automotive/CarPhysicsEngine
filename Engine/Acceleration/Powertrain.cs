@@ -1,55 +1,112 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace CarPhysicsEngine.Acceleration
 {
     public class Powertrain
     {
-        public double ForwardVelocityInput { get; set; }
-        public double ForwardVelocityOutput { get; set; }
+        /// <summary>
+        ///     Forward Velocity at Start of Iteration
+        /// </summary>
+        public double ForwardVelocityInput { private get; set; }
 
-        public double Gear { get; set; }
-        public double GearRatio { get; set; }
+        /// <summary>
+        ///     Throttle Input from pedals
+        /// </summary>
+        public double ThrottleInput { private get; set; }
 
-        public double TorqueInput { get; set; }
-        public double TorqueOutput { get; set; }
+        private double rpm;
+        private double throttlePercentage;
 
-        public double ThrottleInput { get; set; }
-        public double DrivingPowerOutput { get; set; }
-
-        public void CalculateGear()
+        /// <summary>
+        ///     Output of Acceleration Lookup Table in MATLAB Model
+        /// </summary>
+        private double Gear()
         {
-            for (int i = 0; i < Setup.SwitchingBehaviour.Count; i++)
+            var lowerLimit = Setup.SwitchingBehaviour.Keys.First();
+            var upperLimit = Setup.SwitchingBehaviour.Keys.Last();
+
+            if (ForwardVelocityInput <= lowerLimit)
+                return Setup.SwitchingBehaviour[lowerLimit];
+            if (ForwardVelocityInput >= upperLimit)
+                return Setup.SwitchingBehaviour[upperLimit];
+
+            var keys = Setup.SwitchingBehaviour.Keys.ToArray();
+
+            for (var i = 0; i < keys.Count() - 1; i++)
             {
-                if (ForwardVelocityInput >= Setup.SwitchingBehaviour.Keys.ElementAt(i) && ForwardVelocityInput < Setup.SwitchingBehaviour.Keys.ElementAt(i + 1))
-                {
-                    Gear = Setup.SwitchingBehaviour[Setup.SwitchingBehaviour.Keys.ElementAt(i)];
-                }
+                if (ForwardVelocityInput >= keys[i] && ForwardVelocityInput <= keys[i + 1])
+                    return Setup.SwitchingBehaviour[keys[i]];
+            }
+            
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     Output of Maximum Torque Lookup Table in MATLAB Model
+        /// </summary>
+        private double Torque()
+        {
+            SetInputVelocityAndThrottle();
+            
+            var engineTorqueKey = new Setup.EngineTorqueKey(rpm, throttlePercentage);
+            
+            return Setup.EngineTorque[engineTorqueKey];
+        }
+
+        /// <summary>
+        ///     !TODO HACK!
+        /// </summary>
+        private void SetInputVelocityAndThrottle()
+        {
+            rpm = ForwardVelocityInput;
+            throttlePercentage = ThrottleInput;
+
+            var possibleRPM = new double[] { 1400, 1900, 2400, 2900, 3300, 3800, 4000, 4200, 4500, 5000, 5400, 5800, 6000 };
+            var possibleThrottlePercentage = new double[] { 0, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+
+            if (rpm <= possibleRPM[0])
+                rpm = possibleRPM[0];
+            if (rpm >= possibleRPM[possibleRPM.Count() - 1])
+                rpm = possibleRPM[possibleRPM.Count() - 1];
+            for (var i = 0; i < possibleRPM.Count() - 1; i++)
+            {
+                if (rpm >= possibleRPM[i] && rpm < possibleRPM[i + 1])
+                    rpm = possibleRPM[i];
+            }
+
+            if (throttlePercentage <= possibleThrottlePercentage[0])
+                throttlePercentage = possibleThrottlePercentage[0];
+            if (throttlePercentage >= possibleThrottlePercentage[possibleThrottlePercentage.Count() - 1])
+                throttlePercentage = possibleThrottlePercentage[possibleThrottlePercentage.Count() - 1];
+            for (var i = 0; i < possibleThrottlePercentage.Count() - 1; i++)
+            {
+                if (throttlePercentage >= possibleThrottlePercentage[i] && throttlePercentage < possibleThrottlePercentage[i + 1])
+                    throttlePercentage = possibleThrottlePercentage[i];
             }
         }
-        public void CalculateTransmission()
+
+        /// <summary>
+        ///     Output Forward Velocity (new)
+        /// </summary>
+        /// <returns></returns>
+        public double ForwardVelocity()
         {
-            GearRatio = Setup.GearRatio[Gear];
+            return ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission();
         }
 
-        public void CalculateTorqueInput()
+        /// <summary>
+        ///     Output of Transmission Lookup Table in MATLAB Model
+        /// </summary>
+        /// <returns>Transmission</returns>
+        private double Transmission()
         {
-            var wheelTurn = ForwardVelocityInput * (60 / (2 * Math.PI * Setup.R));
-            TorqueInput = wheelTurn * GearRatio;
+            return Setup.GearRatio[Gear()];
         }
 
-        public void CalculateDrivingPower()
+        public double BoundaryDrivingPower()
         {
-            for (int i = 0; i < Setup.EngineTorque.Count; i++)
-            {
-                if (ForwardVelocityInput >= Setup.EngineTorque.Keys.ElementAt(i) && ForwardVelocityInput < Setup.EngineTorque.Keys.ElementAt(i + 1))
-                {
-                    Gear = Setup.EngineTorque[Setup.EngineTorque.Keys.ElementAt(i)];
-                }
-            }
-            TorqueOutput = Setup.EngineTorque[new Setup.EngineTorqueKey(TorqueInput, ThrottleInput)];
-            DrivingPowerOutput = TorqueOutput / Setup.R;
+            return (Torque() * Transmission()) / Setup.R;
         }
     }
 }

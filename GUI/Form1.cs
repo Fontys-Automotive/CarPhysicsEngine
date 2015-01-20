@@ -42,10 +42,10 @@ namespace GUI
                     carBehaviour.SteerAngle -= deltaAngle;
                     break;
                 case 'w':
-                    carBehaviour.ThrottleInput += 0.1;
+                    carBehaviour.ThrottleInput += 10;
                     break;
                 case 's':
-                    carBehaviour.ThrottleInput -= 0.1;
+                    carBehaviour.ThrottleInput -= 10;
                     break;
 
             }
@@ -103,9 +103,6 @@ namespace GUI
             var timespan = new TimeSpan();
             timespan = t - startTime;
             labelTimer.Text = timespan.Minutes +  " : " + timespan.Seconds;
-
-            if (timespan.Minutes == 1)
-                timer1.Stop();
 
             // Refesh panel for graphics update
             panel.Refresh();

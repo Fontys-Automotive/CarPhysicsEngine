@@ -45,15 +45,16 @@ namespace CarPhysicsEngine
 
         public struct EngineTorqueKey
         {
-            private double rpm, throttlePercentage;
+            public double RPM, ThrottlePercentage;
 
             public EngineTorqueKey(double rpm, double throttlePercentage)
             {
-                this.rpm = rpm;
-                this.throttlePercentage = throttlePercentage;
+                RPM = rpm;
+                ThrottlePercentage = throttlePercentage;
             }
         }
 
+        // MATLAB Model => Transmission Lookup Table
         public static readonly Dictionary<double, double> GearRatio = new Dictionary<double, double>()
         {
             {1, 12},
@@ -63,6 +64,7 @@ namespace CarPhysicsEngine
             {5, 3.75}
         };
 
+        // MATLAB Model => Acceleration Lookup Table
         public static readonly Dictionary<double, double> SwitchingBehaviour = new Dictionary<double, double>()
         {
             {0, 1}, 
@@ -72,6 +74,7 @@ namespace CarPhysicsEngine
             {19.44, 5}
         };
 
+        // MATLAB Model => Maximum Torque Lookup Table
         public static readonly Dictionary<EngineTorqueKey, double> EngineTorque = new Dictionary<EngineTorqueKey, double>()
         {
             // RPM => 1400

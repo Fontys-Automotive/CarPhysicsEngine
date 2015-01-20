@@ -2,13 +2,7 @@ namespace CarPhysicsEngine.Turning
 {
     public class Tyre
     {
-        private readonly double _forwardVelocity;
-
-        public Tyre(double forwardVelocity, double steerAngle)
-        {
-            _forwardVelocity = forwardVelocity;
-            SteerAngle = steerAngle;
-        }
+        public double ForwardVelocity { private get; set; }
 
         public double SteerAngle { private get; set; }
         public double YawVelocity { private get; set; }
@@ -40,7 +34,7 @@ namespace CarPhysicsEngine.Turning
         /// <returns></returns>
         private double AlphaFront()
         {
-            var n1 = (YawVelocity * Setup.LengthFront + LateralVelocity) / _forwardVelocity;
+            var n1 = (YawVelocity * Setup.LengthFront + LateralVelocity) / ForwardVelocity;
 
             return SteerAngle - n1;
         }
@@ -52,7 +46,7 @@ namespace CarPhysicsEngine.Turning
         private double AlphaRear()
         {
             // Negating to ensure front and rear forces are being applied in the same direction
-            return -(LateralVelocity - YawVelocity * Setup.LengthRear) / _forwardVelocity;
+            return -(LateralVelocity - YawVelocity * Setup.LengthRear) / ForwardVelocity;
         }
     }
 }

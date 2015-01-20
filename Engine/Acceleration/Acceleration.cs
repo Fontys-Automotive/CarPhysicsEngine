@@ -2,34 +2,32 @@
 {
     public class Acceleration
     {
-        private VehicleModel vehicleModel;
-        private Powertrain powerTrain;
-        public double ThrottleInput { get; set; }
-        public double inputForwardVelocity { get; set; }
-        public double outputForwardVelocity { get; set; }
+        private readonly VehicleModel vehicleModel;
+        private readonly Powertrain powerTrain;
+
+        public double ThrottleInput { private get; set; }
+        public double ForwardVelocityInput { private get; set; }
+        public double OutputForwardVelocity { get; private set; }
+        public double DeltaT { private get; set; }
+
         public Acceleration()
         {
-            vehicleModel=new VehicleModel();
-            powerTrain=new Powertrain();
-            ThrottleInput = 0;
+            vehicleModel = new VehicleModel();
+            powerTrain = new Powertrain();
         }
 
         public void Run()
         {
-            powerTrain.ForwardVelocityInput = inputForwardVelocity;
+            powerTrain.ForwardVelocityInput = ForwardVelocityInput;
             powerTrain.ThrottleInput = ThrottleInput;
-            powerTrain.CalculateGear();
-            powerTrain.CalculateTransmission();
-            powerTrain.CalculateTorqueInput();
-            powerTrain.CalculateDrivingPower();
 
-            vehicleModel.DeliveredDrivingPower = powerTrain.DrivingPowerOutput;
+            vehicleModel.CurrentForwardVelocity = powerTrain.ForwardVelocity();
+            vehicleModel.DeliveredDrivingPower = powerTrain.BoundaryDrivingPower();
+            vehicleModel.DeltaT = DeltaT;
+
             vehicleModel.ForwardVelocity();
 
-            outputForwardVelocity = vehicleModel.CurrentForwardVelocity;
-
-
-
+            OutputForwardVelocity = vehicleModel.CurrentForwardVelocity;
         }
     }
 }

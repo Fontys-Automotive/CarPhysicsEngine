@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using CarPhysicsEngine.Turning;
 
 namespace CarPhysicsEngine
@@ -6,34 +7,54 @@ namespace CarPhysicsEngine
     public class CarBehaviour
     {
         public double ThrottleInput { get; set; }
-        // Pre-defined variables from voertuigdata.m
-        public readonly double ForwardVelocity; // [m/s]
-        private double steerAngle; // steering angle in radians => input
 
+        /// <summary>
+        ///     Real-world position of car's centre
+        /// </summary>
+        public double XCoordinate { get; private set; }
+
+        /// <summary>
+        ///     Real-world position of car's centre
+        /// </summary>
+        public double YCoordinate { get; private set; }
+
+        // Use to calculate DeltaT
         private DateTime previousDateTime;
         private DateTime currentDateTime;
 
-        public double DeltaT
+        /// <summary>
+        ///     Change in time between frames [seconds]
+        /// </summary>
+        private double DeltaT
         {
             get
             {
+                return 0.01;
                 var difference = (currentDateTime - previousDateTime);
-                
                 return difference.TotalSeconds;
             }
         }
 
         /// <summary>
-        /// Stores the yaw velocity of the previous iteration
+        ///     Current Forward Velocity [m/s]
+        /// </summary>
+        public double ForwardVelocity { get; private set; }
+
+        /// <summary>
+        ///     Stores the yaw velocity of the previous iteration
         /// </summary>
         private double previousYawVelocity;
 
         public double YawAngle { get; set; }
 
+        // steering angle in radians => input
+        private double steerAngle;
+
         /// <summary>
-        /// Input wheel angle in Radians
+        ///     Input wheel angle  [radians]
         /// </summary>
-        public double SteerAngle {
+        public double SteerAngle 
+        {
             get { return steerAngle; }
             set
             {
@@ -45,16 +66,6 @@ namespace CarPhysicsEngine
             }
         }
 
-        /// <summary>
-        /// Real-world position of car's centre
-        /// </summary>
-        public double XCoordinate { get; private set; }
-
-        /// <summary>
-        /// Real-world position of car's centre
-        /// </summary>
-        public double YCoordinate { get; private set; }
-
         public readonly Tyre Tyre;
         public readonly Forces Forces;
         public readonly Movement Movement;
@@ -63,31 +74,49 @@ namespace CarPhysicsEngine
 
         public CarBehaviour()
         {
-            ForwardVelocity = 80 / 3.6; // 80 km/h => m/s
-            previousYawVelocity = 0; // Initialized to zero because execution hasn't run.
+            previousYawVelocity = 0;
+            ForwardVelocity = 0;
+            ThrottleInput = 100;
 
             YawAngle = 0;
+            SteerAngle = 0;
+
             currentDateTime = previousDateTime = DateTime.Now;
 
-            //Steerangle has to be set to 0 for initial straight movement
-            SteerAngle = 0.02;
             XCoordinate = YCoordinate = 0;
 
-            Tyre = new Tyre(ForwardVelocity, SteerAngle);
+            Tyre = new Tyre();
             Forces = new Forces();
-            Movement = new Movement(ForwardVelocity);
-            Position = new Position(ForwardVelocity, YawAngle);
+            Movement = new Movement();
+            Position = new Position();
             Acceleration = new Acceleration.Acceleration();
         }
 
         public void  Run()
         {
+            // Acceleration is run before Turning because we need forward velocity
+            CalculateAcceleration();
 
+            if (ForwardVelocity != 0)
+                CalculateTurning();
+
+            previousDateTime = currentDateTime;
+            currentDateTime = DateTime.Now;
+        }
+
+        private void CalculateAcceleration()
+        {
             Acceleration.ThrottleInput = ThrottleInput;
-            Acceleration.inputForwardVelocity = ForwardVelocity;
+            Acceleration.ForwardVelocityInput = ForwardVelocity;
+            Acceleration.DeltaT = DeltaT;
             Acceleration.Run();
+            ForwardVelocity = Acceleration.OutputForwardVelocity;
+        }
+
+        private void CalculateTurning()
+        {
             // Initialize the properties in Tyre
-            Tyre.ForwardVelocity = Acceleration.outputForwardVelocity;
+            Tyre.ForwardVelocity = ForwardVelocity;
             Tyre.SteerAngle = SteerAngle;
             Tyre.LateralVelocity = Movement.LateralVelocity();
             Tyre.YawVelocity = Movement.YawVelocity();
@@ -100,25 +129,25 @@ namespace CarPhysicsEngine
             Movement.FyTotal = Forces.FyTotal();
             Movement.MzTotal = Forces.MzMoment();
             Movement.DeltaT = DeltaT;
-            
+            Movement.ForwardVelocity = ForwardVelocity;
+
             // Initialize the properties in Position
             previousYawVelocity = Position.YawVelocity = Movement.YawVelocity();
             Position.LateralVelocity = Movement.LateralVelocity();
             Position.DeltaT = DeltaT;
+            Position.ForwardVelocity = ForwardVelocity;
+            Position.YawAngle = YawAngle;
 
             Position.YawVelocityIntegral();
             // Calculate the new world coordinates for the vehicle
             XCoordinate += Position.VehicleDisplacementX();
             YCoordinate += Position.VehicleDisplacementY();
-            
+
             //Set previous movement values
             Movement.PreviousLateralVelocity = Movement.LateralVelocity();
             Movement.PreviousYawVelocity = previousYawVelocity;
 
             YawAngle += DeltaT * Movement.YawVelocity();
-
-            previousDateTime = currentDateTime;
-            currentDateTime = DateTime.Now;
         }
     }
 }
