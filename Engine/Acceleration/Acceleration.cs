@@ -14,19 +14,32 @@
         {
             VehicleModel = new VehicleModel();
             PowerTrain = new Powertrain();
-
-            VehicleModel.CurrentForwardVelocity = 0;
         }
 
+        /// <summary>
+        ///     Run the Acceleration model
+        /// 
+        ///     All function calls have been listed here to simplify application flow.
+        /// </summary>
         public void Run()
         {
-            PowerTrain.ForwardVelocityInput = ForwardVelocityInput;
+            // Powertrain
             PowerTrain.ThrottleInput = ThrottleInput;
+            PowerTrain.ForwardVelocityInput = ForwardVelocityInput;
 
+            PowerTrain.CalculateGear();
+            PowerTrain.CalculateTransmission();
+            PowerTrain.CalculateRPM();
+            PowerTrain.CalculateTorque();
+            PowerTrain.CalculateDeliveredDrivingPower();
+
+            // Vehicle Model
             VehicleModel.DeltaT = DeltaT;
+            VehicleModel.DeliveredDrivingPower = PowerTrain.DeliveredDrivingPower;
 
-            VehicleModel.DeliveredDrivingPower = PowerTrain.DeliveredDrivingPower();
-            VehicleModel.ForwardVelocity();
+            VehicleModel.CalculateAirResistance();
+            VehicleModel.CalculateSumForces();
+            VehicleModel.CalculateForwardVelocity();
 
             ForwardVelocityOutput = VehicleModel.CurrentForwardVelocity;
         }

@@ -9,11 +9,14 @@ namespace CarPhysicsEngine.Acceleration
         public double CurrentForwardVelocity { get; set; }
         public double DeltaT { private get; set; }
 
-        public void ForwardVelocity()
+        private double AirResistance { get; set; }
+        private double SumForces { get; set; }
+
+        public void CalculateForwardVelocity()
         {
             PreviousForwardVelocity = CurrentForwardVelocity;
 
-            var saturationOutput = Helpers.SaturationDynamic(NegativeFriction, PositiveFriction, SumForces());
+            var saturationOutput = Helpers.SaturationDynamic(NegativeFriction, PositiveFriction, SumForces);
             var n1 = saturationOutput / Setup.M;
 
             CurrentForwardVelocity = n1 * DeltaT;
@@ -29,19 +32,14 @@ namespace CarPhysicsEngine.Acceleration
             get { return PositiveFriction * -1; }
         }
 
-        private static double RollingResistance
+        public void CalculateAirResistance()
         {
-            get { return /*Setup.Fr * Setup.M * Setup.G;*/ 0; }
+            AirResistance = (Math.Pow(PreviousForwardVelocity, 2) * Setup.Rho * Setup.Cw * Setup.A) / 2;
         }
 
-        private double AirResistance()
+        public void CalculateSumForces()
         {
-            return (Math.Pow(PreviousForwardVelocity, 2) * Setup.Rho * Setup.Cw * Setup.A) / 2;
-        }
-
-        private double SumForces()
-        {
-            return DeliveredDrivingPower - (AirResistance() + RollingResistance);
+            SumForces = DeliveredDrivingPower - AirResistance;
         }
     }
 }

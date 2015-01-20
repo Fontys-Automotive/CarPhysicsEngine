@@ -99,10 +99,10 @@ namespace GUI
             labelFwdAccelerationValue.Text = carBehaviour.Acceleration.ForwardVelocityOutput.ToString("0.0000");
             labelDeltaTValue.Text = carBehaviour.DeltaT.ToString("0.0000");
             labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0.00");
-            labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear().ToString("0.000");
-            labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque().ToString("0.000");
-            labelRPM.Text = carBehaviour.Acceleration.PowerTrain.CalculateRPM().ToString("0.000");
-            labelTransmission.Text = carBehaviour.Acceleration.PowerTrain.Transmission().ToString("0.000");
+            labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear.ToString("0.000");
+            labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque.ToString("0.000");
+            labelRPM.Text = carBehaviour.Acceleration.PowerTrain.RPM.ToString("0.000");
+            labelTransmission.Text = carBehaviour.Acceleration.PowerTrain.Transmission.ToString("0.000");
 
 
             //POSITION

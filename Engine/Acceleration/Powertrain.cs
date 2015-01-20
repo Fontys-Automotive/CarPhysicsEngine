@@ -15,43 +15,50 @@ namespace CarPhysicsEngine.Acceleration
         /// </summary>
         public double ThrottleInput { private get; set; }
 
+        public double Gear { get; private set; }
+        public double Torque { get; private set; }
+        public double RPM { get; private set; }
+        public double Transmission { get; private set; }
+        public double DeliveredDrivingPower { get; private set; }
+
         private double rpm;
         private double throttlePercentage;
 
         /// <summary>
         ///     Output of Acceleration Lookup Table in MATLAB Model
         /// </summary>
-        public double Gear()
+        public void CalculateGear()
         {
             var lowerLimit = Setup.SwitchingBehaviour.Keys.First();
             var upperLimit = Setup.SwitchingBehaviour.Keys.Last();
 
             if (ForwardVelocityInput <= lowerLimit)
-                return Setup.SwitchingBehaviour[lowerLimit];
+                Gear = Setup.SwitchingBehaviour[lowerLimit];
             if (ForwardVelocityInput >= upperLimit)
-                return Setup.SwitchingBehaviour[upperLimit];
+                Gear = Setup.SwitchingBehaviour[upperLimit];
 
             var keys = Setup.SwitchingBehaviour.Keys.ToArray();
 
             for (var i = 0; i < keys.Count() - 1; i++)
             {
                 if (ForwardVelocityInput >= keys[i] && ForwardVelocityInput <= keys[i + 1])
-                    return Setup.SwitchingBehaviour[keys[i]];
+                {
+                    Gear = Setup.SwitchingBehaviour[keys[i]];
+                    break;
+                }
             }
-            
-            throw new NotImplementedException();
         }
 
         /// <summary>
         ///     Output of Maximum Torque Lookup Table in MATLAB Model
         /// </summary>
-        public double Torque()
+        public void CalculateTorque()
         {
             SetInputVelocityAndThrottle();
             
             var engineTorqueKey = new Setup.EngineTorqueKey(rpm, throttlePercentage);
 
-            return Setup.EngineTorque[engineTorqueKey];
+            Torque = Setup.EngineTorque[engineTorqueKey];
         }
 
         /// <summary>
@@ -59,7 +66,7 @@ namespace CarPhysicsEngine.Acceleration
         /// </summary>
         private void SetInputVelocityAndThrottle()
         {
-            rpm = CalculateRPM();
+            rpm = RPM;
             throttlePercentage = ThrottleInput;
 
             var possibleRPM = new double[] { 1400, 1900, 2400, 2900, 3300, 3800, 4000, 4200, 4500, 5000, 5400, 5800, 6000 };
@@ -90,23 +97,23 @@ namespace CarPhysicsEngine.Acceleration
         ///     Output Forward Velocity (new)
         /// </summary>
         /// <returns></returns>
-        public double CalculateRPM()
+        public void CalculateRPM()
         {
-            return ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission();;
+            RPM = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission;
         }
 
         /// <summary>
         ///     Output of Transmission Lookup Table in MATLAB Model
         /// </summary>
         /// <returns>Transmission</returns>
-        public double Transmission()
+        public void CalculateTransmission()
         {
-            return Setup.GearRatio[Gear()];
+            Transmission = Setup.GearRatio[Gear];
         }
 
-        public double DeliveredDrivingPower()
+        public void CalculateDeliveredDrivingPower()
         {
-            return (Torque() * Transmission()) / Setup.R;
+            DeliveredDrivingPower =  (Torque * Transmission) / Setup.R;
         }
     }
 }
