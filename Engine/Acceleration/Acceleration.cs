@@ -14,6 +14,8 @@
         {
             vehicleModel = new VehicleModel();
             powerTrain = new Powertrain();
+
+            vehicleModel.CurrentForwardVelocity = 0;
         }
 
         public void Run()
@@ -21,10 +23,9 @@
             powerTrain.ForwardVelocityInput = ForwardVelocityInput;
             powerTrain.ThrottleInput = ThrottleInput;
 
-            vehicleModel.CurrentForwardVelocity = powerTrain.ForwardVelocity();
-            vehicleModel.DeliveredDrivingPower = powerTrain.DeliveredDrivingPower();
             vehicleModel.DeltaT = DeltaT;
 
+            vehicleModel.DeliveredDrivingPower = powerTrain.DeliveredDrivingPower();
             vehicleModel.ForwardVelocity();
 
             OutputForwardVelocity = vehicleModel.CurrentForwardVelocity;

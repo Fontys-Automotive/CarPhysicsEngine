@@ -42,6 +42,7 @@ namespace CarPhysicsEngine.Acceleration
             throw new NotImplementedException();
         }
 
+        public double tq = 0;
         /// <summary>
         ///     Output of Maximum Torque Lookup Table in MATLAB Model
         /// </summary>
@@ -51,7 +52,9 @@ namespace CarPhysicsEngine.Acceleration
             
             var engineTorqueKey = new Setup.EngineTorqueKey(rpm, throttlePercentage);
             
-            return Setup.EngineTorque[engineTorqueKey];
+
+            tq = Setup.EngineTorque[engineTorqueKey];
+            return tq;
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace CarPhysicsEngine.Acceleration
         /// </summary>
         private void SetInputVelocityAndThrottle()
         {
-            rpm = ForwardVelocity();
+            rpm = CalculateRPM();
             throttlePercentage = ThrottleInput;
 
             var possibleRPM = new double[] { 1400, 1900, 2400, 2900, 3300, 3800, 4000, 4200, 4500, 5000, 5400, 5800, 6000 };
@@ -86,14 +89,19 @@ namespace CarPhysicsEngine.Acceleration
             }
         }
 
+        public double fv = 0;
+
         /// <summary>
         ///     Output Forward Velocity (new)
         /// </summary>
         /// <returns></returns>
-        public double ForwardVelocity()
+        public double CalculateRPM()
         {
-            return ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission();
+            fv = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission();
+            return fv;
         }
+
+        public double transmission = 0;
 
         /// <summary>
         ///     Output of Transmission Lookup Table in MATLAB Model
@@ -101,12 +109,17 @@ namespace CarPhysicsEngine.Acceleration
         /// <returns>Transmission</returns>
         private double Transmission()
         {
-            return Setup.GearRatio[Gear()];
+
+            transmission = Setup.GearRatio[Gear()];
+            return transmission;
         }
+
+        public double ddp = 0;
 
         public double DeliveredDrivingPower()
         {
-            return (Torque() * Transmission()) / Setup.R;
+            ddp = (Torque() * Transmission()) / Setup.R;
+            return ddp;
         }
     }
 }

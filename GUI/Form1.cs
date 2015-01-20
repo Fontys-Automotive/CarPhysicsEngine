@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CarPhysicsEngine;
+using CarPhysicsEngine.Acceleration;
 
 namespace GUI
 {
@@ -94,6 +95,11 @@ namespace GUI
             labelLateralVelocity.Text = carBehaviour.Movement.LateralVelocity().ToString("0.000");
             labelAcceleration.Text = carBehaviour.Movement.LateralAcceleration().ToString("0.000");
 
+            //ACCELERATION
+            labelFwdAccelerationValue.Text = carBehaviour.Acceleration.OutputForwardVelocity.ToString("0.0000");
+            labelDeltaTValue.Text = carBehaviour.DeltaT.ToString("0.0000");
+            labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0.00");
+
             //POSITION
             labelVehicleDisplacementX.Text = carBehaviour.Position.VehicleDisplacementX().ToString("0.000");
             labelVehicleDisplacementY.Text = carBehaviour.Position.VehicleDisplacementY().ToString("0.000");
@@ -131,6 +137,11 @@ namespace GUI
         }
 
         private void labelSteerAngle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
         {
 
         }

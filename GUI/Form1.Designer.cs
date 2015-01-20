@@ -64,10 +64,18 @@
             this.labelVehicleDisplacementX = new System.Windows.Forms.Label();
             this.buttonPlayPause = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.labelFwdAccelerationValue = new System.Windows.Forms.Label();
+            this.labelFwdAcceleration = new System.Windows.Forms.Label();
+            this.labelDeltaT = new System.Windows.Forms.Label();
+            this.labelDeltaTValue = new System.Windows.Forms.Label();
+            this.labelThrottleInput = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBoxScreen.SuspendLayout();
             this.groupBoxForces.SuspendLayout();
             this.groupBoxMovement.SuspendLayout();
             this.groupBoxPosition.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelSteerAngle
@@ -269,7 +277,7 @@
             this.groupBoxMovement.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupBoxMovement.Location = new System.Drawing.Point(16, 222);
             this.groupBoxMovement.Name = "groupBoxMovement";
-            this.groupBoxMovement.Size = new System.Drawing.Size(216, 106);
+            this.groupBoxMovement.Size = new System.Drawing.Size(216, 107);
             this.groupBoxMovement.TabIndex = 9;
             this.groupBoxMovement.TabStop = false;
             this.groupBoxMovement.Text = "Movement";
@@ -353,9 +361,9 @@
             this.groupBoxPosition.Controls.Add(this.labelVehicleDisplacementY);
             this.groupBoxPosition.Controls.Add(this.labelVehicleDisplacementX);
             this.groupBoxPosition.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.groupBoxPosition.Location = new System.Drawing.Point(16, 334);
+            this.groupBoxPosition.Location = new System.Drawing.Point(16, 465);
             this.groupBoxPosition.Name = "groupBoxPosition";
-            this.groupBoxPosition.Size = new System.Drawing.Size(216, 86);
+            this.groupBoxPosition.Size = new System.Drawing.Size(216, 80);
             this.groupBoxPosition.TabIndex = 10;
             this.groupBoxPosition.TabStop = false;
             this.groupBoxPosition.Text = "Vehicle position";
@@ -399,7 +407,7 @@
             // buttonPlayPause
             // 
             this.buttonPlayPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonPlayPause.Location = new System.Drawing.Point(16, 426);
+            this.buttonPlayPause.Location = new System.Drawing.Point(16, 551);
             this.buttonPlayPause.Name = "buttonPlayPause";
             this.buttonPlayPause.Size = new System.Drawing.Size(214, 38);
             this.buttonPlayPause.TabIndex = 11;
@@ -412,15 +420,87 @@
             // 
             this.panel.Location = new System.Drawing.Point(236, 12);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(738, 452);
+            this.panel.Size = new System.Drawing.Size(738, 547);
             this.panel.TabIndex = 12;
             this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.labelThrottleInput);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.labelDeltaTValue);
+            this.groupBox1.Controls.Add(this.labelDeltaT);
+            this.groupBox1.Controls.Add(this.labelFwdAccelerationValue);
+            this.groupBox1.Controls.Add(this.labelFwdAcceleration);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.groupBox1.Location = new System.Drawing.Point(16, 335);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(216, 114);
+            this.groupBox1.TabIndex = 10;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Acceleration";
+            // 
+            // labelFwdAccelerationValue
+            // 
+            this.labelFwdAccelerationValue.AutoSize = true;
+            this.labelFwdAccelerationValue.Location = new System.Drawing.Point(146, 25);
+            this.labelFwdAccelerationValue.Name = "labelFwdAccelerationValue";
+            this.labelFwdAccelerationValue.Size = new System.Drawing.Size(18, 20);
+            this.labelFwdAccelerationValue.TabIndex = 7;
+            this.labelFwdAccelerationValue.Text = "0";
+            // 
+            // labelFwdAcceleration
+            // 
+            this.labelFwdAcceleration.AutoSize = true;
+            this.labelFwdAcceleration.Location = new System.Drawing.Point(9, 25);
+            this.labelFwdAcceleration.Name = "labelFwdAcceleration";
+            this.labelFwdAcceleration.Size = new System.Drawing.Size(131, 20);
+            this.labelFwdAcceleration.TabIndex = 6;
+            this.labelFwdAcceleration.Text = "Fwd Acceleration";
+            this.labelFwdAcceleration.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // labelDeltaT
+            // 
+            this.labelDeltaT.AutoSize = true;
+            this.labelDeltaT.Location = new System.Drawing.Point(9, 56);
+            this.labelDeltaT.Name = "labelDeltaT";
+            this.labelDeltaT.Size = new System.Drawing.Size(72, 20);
+            this.labelDeltaT.TabIndex = 8;
+            this.labelDeltaT.Text = "Delta T : ";
+            // 
+            // labelDeltaTValue
+            // 
+            this.labelDeltaTValue.AutoSize = true;
+            this.labelDeltaTValue.Location = new System.Drawing.Point(146, 56);
+            this.labelDeltaTValue.Name = "labelDeltaTValue";
+            this.labelDeltaTValue.Size = new System.Drawing.Size(18, 20);
+            this.labelDeltaTValue.TabIndex = 9;
+            this.labelDeltaTValue.Text = "0";
+            // 
+            // labelThrottleInput
+            // 
+            this.labelThrottleInput.AutoSize = true;
+            this.labelThrottleInput.Location = new System.Drawing.Point(146, 91);
+            this.labelThrottleInput.Name = "labelThrottleInput";
+            this.labelThrottleInput.Size = new System.Drawing.Size(18, 20);
+            this.labelThrottleInput.TabIndex = 11;
+            this.labelThrottleInput.Text = "0";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 91);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(104, 20);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Throttle Input";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 472);
+            this.ClientSize = new System.Drawing.Size(980, 601);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.buttonPlayPause);
             this.Controls.Add(this.groupBoxPosition);
@@ -438,6 +518,8 @@
             this.groupBoxMovement.PerformLayout();
             this.groupBoxPosition.ResumeLayout(false);
             this.groupBoxPosition.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -479,6 +561,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonPlayPause;
         private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label labelFwdAccelerationValue;
+        private System.Windows.Forms.Label labelFwdAcceleration;
+        private System.Windows.Forms.Label labelDeltaTValue;
+        private System.Windows.Forms.Label labelDeltaT;
+        private System.Windows.Forms.Label labelThrottleInput;
+        private System.Windows.Forms.Label label7;
     }
 }
 
