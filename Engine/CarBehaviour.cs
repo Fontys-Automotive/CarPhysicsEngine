@@ -1,5 +1,4 @@
 using System;
-using CarPhysicsEngine.Acceleration;
 using CarPhysicsEngine.Turning;
 
 namespace CarPhysicsEngine
