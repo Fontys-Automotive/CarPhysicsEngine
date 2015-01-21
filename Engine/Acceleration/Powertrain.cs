@@ -66,8 +66,10 @@ namespace CarPhysicsEngine.Acceleration
         /// </summary>
         private void SetRpmAndThrottle()
         {
+            // Save the Throttle Input locally because we can't change the pedal press
             throttlePercentage = ThrottleInput;
 
+            // Get list of possible RPM and Throttle Percentage values
             var possibleRpm = new List<double>();
             var possibleThrottle = new List<double>();
 
@@ -80,7 +82,7 @@ namespace CarPhysicsEngine.Acceleration
             possibleRpm = possibleRpm.Distinct().ToList();
             possibleThrottle = possibleThrottle.Distinct().ToList();
 
-
+            // Round up/down the RPM to match Lookup Table
             if (Rpm <= possibleRpm.First())
                 Rpm = possibleRpm.First();
             if (Rpm >= possibleRpm.Last())
@@ -91,6 +93,7 @@ namespace CarPhysicsEngine.Acceleration
                     Rpm = possibleRpm[i];
             }
 
+            // Round up/down the throttlePercentage to match Lookup Table
             if (throttlePercentage <= possibleThrottle.First())
                 throttlePercentage = possibleThrottle.First();
             if (throttlePercentage >= possibleThrottle.Last())
