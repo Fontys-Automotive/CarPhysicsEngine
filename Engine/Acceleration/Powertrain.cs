@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CarPhysicsEngine.Acceleration
@@ -17,11 +18,10 @@ namespace CarPhysicsEngine.Acceleration
 
         public double Gear { get; private set; }
         public double Torque { get; private set; }
-        public double RPM { get; private set; }
+        public double Rpm { get; private set; }
         public double Transmission { get; private set; }
         public double DeliveredDrivingPower { get; private set; }
-
-        private double rpm;
+        
         private double throttlePercentage;
 
         /// <summary>
@@ -54,54 +54,61 @@ namespace CarPhysicsEngine.Acceleration
         /// </summary>
         public void CalculateTorque()
         {
-            SetInputVelocityAndThrottle();
+            SetRpmAndThrottle();
             
-            var engineTorqueKey = new Setup.EngineTorqueKey(rpm, throttlePercentage);
+            var engineTorqueKey = new Setup.EngineTorqueKey(Rpm, throttlePercentage);
 
             Torque = Setup.EngineTorque[engineTorqueKey];
         }
 
         /// <summary>
-        ///     !TODO HACK!
+        ///     Set appropriate RPM and Throttle Percentage values based on Lookup Table
         /// </summary>
-        private void SetInputVelocityAndThrottle()
+        private void SetRpmAndThrottle()
         {
-            rpm = RPM;
             throttlePercentage = ThrottleInput;
 
-            var possibleRPM = new double[] { 1400, 1900, 2400, 2900, 3300, 3800, 4000, 4200, 4500, 5000, 5400, 5800, 6000 };
-            var possibleThrottlePercentage = new double[] { 0, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+            var possibleRpm = new List<double>();
+            var possibleThrottle = new List<double>();
 
-            if (rpm <= possibleRPM[0])
-                rpm = possibleRPM[0];
-            if (rpm >= possibleRPM[possibleRPM.Count() - 1])
-                rpm = possibleRPM[possibleRPM.Count() - 1];
-            for (var i = 0; i < possibleRPM.Count() - 1; i++)
+            foreach (var key in Setup.EngineTorque.Keys)
             {
-                if (rpm >= possibleRPM[i] && rpm < possibleRPM[i + 1])
-                    rpm = possibleRPM[i];
+                possibleRpm.Add(key.RPM);
+                possibleThrottle.Add(key.ThrottlePercentage);
             }
 
-            if (throttlePercentage <= possibleThrottlePercentage[0])
-                throttlePercentage = possibleThrottlePercentage[0];
-            if (throttlePercentage >= possibleThrottlePercentage[possibleThrottlePercentage.Count() - 1])
-                throttlePercentage = possibleThrottlePercentage[possibleThrottlePercentage.Count() - 1];
-            for (var i = 0; i < possibleThrottlePercentage.Count() - 1; i++)
+            possibleRpm = possibleRpm.Distinct().ToList();
+            possibleThrottle = possibleThrottle.Distinct().ToList();
+
+
+            if (Rpm <= possibleRpm.First())
+                Rpm = possibleRpm.First();
+            if (Rpm >= possibleRpm.Last())
+                Rpm = possibleRpm.Last();
+            for (var i = 0; i < possibleRpm.Count() - 1; i++)
             {
-                if (throttlePercentage >= possibleThrottlePercentage[i] && throttlePercentage < possibleThrottlePercentage[i + 1])
-                    throttlePercentage = possibleThrottlePercentage[i];
+                if (Rpm >= possibleRpm[i] && Rpm < possibleRpm[i + 1])
+                    Rpm = possibleRpm[i];
             }
 
-            RPM = rpm;
+            if (throttlePercentage <= possibleThrottle.First())
+                throttlePercentage = possibleThrottle.First();
+            if (throttlePercentage >= possibleThrottle.Last())
+                throttlePercentage = possibleThrottle.Last();
+            for (var i = 0; i < possibleThrottle.Count() - 1; i++)
+            {
+                if (throttlePercentage >= possibleThrottle[i] && throttlePercentage < possibleThrottle[i + 1])
+                    throttlePercentage = possibleThrottle[i];
+            }
         }
 
         /// <summary>
         ///     Output Forward Velocity (new)
         /// </summary>
         /// <returns></returns>
-        public void CalculateRPM()
+        public void CalculateRpm()
         {
-            RPM = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission;
+            Rpm = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission;
         }
 
         /// <summary>

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CarPhysicsEngine;
-using CarPhysicsEngine.Acceleration;
 
 namespace GUI
 {
@@ -101,7 +99,7 @@ namespace GUI
             labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0");
             labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear.ToString("0");
             labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque.ToString("0.0");
-            labelRPM.Text = carBehaviour.Acceleration.PowerTrain.RPM.ToString("0.000");
+            labelRPM.Text = carBehaviour.Acceleration.PowerTrain.Rpm.ToString("0.000");
             labelTransmission.Text = carBehaviour.Acceleration.PowerTrain.Transmission.ToString("0.00");
 
 
