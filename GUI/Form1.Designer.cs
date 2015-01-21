@@ -69,16 +69,16 @@
             this.buttonPlayPause = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.labelFwdAccelerationValue = new System.Windows.Forms.Label();
-            this.labelFwdAcceleration = new System.Windows.Forms.Label();
-            this.labelGearValue = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.labelTorque = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.labelRPM = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.labelTransmission = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.labelRPM = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.labelTorque = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.labelGearValue = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.labelFwdAccelerationValue = new System.Windows.Forms.Label();
+            this.labelFwdAcceleration = new System.Windows.Forms.Label();
             this.groupBoxScreen.SuspendLayout();
             this.groupBoxForces.SuspendLayout();
             this.groupBoxMovement.SuspendLayout();
@@ -492,59 +492,23 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Acceleration";
             // 
-            // labelFwdAccelerationValue
+            // labelTransmission
             // 
-            this.labelFwdAccelerationValue.Location = new System.Drawing.Point(137, 25);
-            this.labelFwdAccelerationValue.Name = "labelFwdAccelerationValue";
-            this.labelFwdAccelerationValue.Size = new System.Drawing.Size(73, 20);
-            this.labelFwdAccelerationValue.TabIndex = 7;
-            this.labelFwdAccelerationValue.Text = "0";
-            this.labelFwdAccelerationValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelTransmission.Location = new System.Drawing.Point(137, 109);
+            this.labelTransmission.Name = "labelTransmission";
+            this.labelTransmission.Size = new System.Drawing.Size(73, 20);
+            this.labelTransmission.TabIndex = 15;
+            this.labelTransmission.Text = "0";
+            this.labelTransmission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // labelFwdAcceleration
+            // label16
             // 
-            this.labelFwdAcceleration.AutoSize = true;
-            this.labelFwdAcceleration.Location = new System.Drawing.Point(6, 25);
-            this.labelFwdAcceleration.Name = "labelFwdAcceleration";
-            this.labelFwdAcceleration.Size = new System.Drawing.Size(128, 21);
-            this.labelFwdAcceleration.TabIndex = 6;
-            this.labelFwdAcceleration.Text = "Fwd Acceleration";
-            // 
-            // labelGearValue
-            // 
-            this.labelGearValue.Location = new System.Drawing.Point(137, 46);
-            this.labelGearValue.Name = "labelGearValue";
-            this.labelGearValue.Size = new System.Drawing.Size(73, 20);
-            this.labelGearValue.TabIndex = 9;
-            this.labelGearValue.Text = "0";
-            this.labelGearValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 46);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(43, 21);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Gear";
-            // 
-            // labelTorque
-            // 
-            this.labelTorque.Location = new System.Drawing.Point(137, 67);
-            this.labelTorque.Name = "labelTorque";
-            this.labelTorque.Size = new System.Drawing.Size(73, 20);
-            this.labelTorque.TabIndex = 11;
-            this.labelTorque.Text = "0";
-            this.labelTorque.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 67);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(59, 21);
-            this.label12.TabIndex = 10;
-            this.label12.Text = "Torque";
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 109);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(102, 21);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "Transmission";
             // 
             // labelRPM
             // 
@@ -564,23 +528,59 @@
             this.label14.TabIndex = 12;
             this.label14.Text = "RPM";
             // 
-            // labelTransmission
+            // labelTorque
             // 
-            this.labelTransmission.Location = new System.Drawing.Point(137, 109);
-            this.labelTransmission.Name = "labelTransmission";
-            this.labelTransmission.Size = new System.Drawing.Size(73, 20);
-            this.labelTransmission.TabIndex = 15;
-            this.labelTransmission.Text = "0";
-            this.labelTransmission.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.labelTorque.Location = new System.Drawing.Point(137, 67);
+            this.labelTorque.Name = "labelTorque";
+            this.labelTorque.Size = new System.Drawing.Size(73, 20);
+            this.labelTorque.TabIndex = 11;
+            this.labelTorque.Text = "0";
+            this.labelTorque.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label16
+            // label12
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 109);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(102, 21);
-            this.label16.TabIndex = 14;
-            this.label16.Text = "Transmission";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 67);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(59, 21);
+            this.label12.TabIndex = 10;
+            this.label12.Text = "Torque";
+            // 
+            // labelGearValue
+            // 
+            this.labelGearValue.Location = new System.Drawing.Point(137, 46);
+            this.labelGearValue.Name = "labelGearValue";
+            this.labelGearValue.Size = new System.Drawing.Size(73, 20);
+            this.labelGearValue.TabIndex = 9;
+            this.labelGearValue.Text = "0";
+            this.labelGearValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 46);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(43, 21);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "Gear";
+            // 
+            // labelFwdAccelerationValue
+            // 
+            this.labelFwdAccelerationValue.Location = new System.Drawing.Point(137, 25);
+            this.labelFwdAccelerationValue.Name = "labelFwdAccelerationValue";
+            this.labelFwdAccelerationValue.Size = new System.Drawing.Size(73, 20);
+            this.labelFwdAccelerationValue.TabIndex = 7;
+            this.labelFwdAccelerationValue.Text = "0";
+            this.labelFwdAccelerationValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelFwdAcceleration
+            // 
+            this.labelFwdAcceleration.AutoSize = true;
+            this.labelFwdAcceleration.Location = new System.Drawing.Point(6, 25);
+            this.labelFwdAcceleration.Name = "labelFwdAcceleration";
+            this.labelFwdAcceleration.Size = new System.Drawing.Size(128, 21);
+            this.labelFwdAcceleration.TabIndex = 6;
+            this.labelFwdAcceleration.Text = "Fwd Acceleration";
             // 
             // Form1
             // 

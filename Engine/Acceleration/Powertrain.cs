@@ -50,6 +50,24 @@ namespace CarPhysicsEngine.Acceleration
         }
 
         /// <summary>
+        ///     Output of Transmission Lookup Table in MATLAB Model
+        /// </summary>
+        /// <returns>Transmission</returns>
+        public void CalculateTransmission()
+        {
+            Transmission = Setup.Transmission[Gear];
+        }
+
+        /// <summary>
+        ///     Output Forward Velocity (new)
+        /// </summary>
+        /// <returns></returns>
+        public void CalculateRpm()
+        {
+            Rpm = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission;
+        }
+
+        /// <summary>
         ///     Output of Maximum Torque Lookup Table in MATLAB Model
         /// </summary>
         public void CalculateTorque()
@@ -58,7 +76,9 @@ namespace CarPhysicsEngine.Acceleration
             
             var engineTorqueKey = new Setup.EngineTorqueKey(Rpm, throttlePercentage);
 
-            Torque = Setup.EngineTorque[engineTorqueKey];
+            //Torque = Setup.EngineTorque[engineTorqueKey];
+            /*if (ForwardVelocityInput <= 0 && ThrottleInput == 0)
+                Torque = 0;*/
         }
 
         /// <summary>
@@ -82,46 +102,56 @@ namespace CarPhysicsEngine.Acceleration
             possibleRpm = possibleRpm.Distinct().ToList();
             possibleThrottle = possibleThrottle.Distinct().ToList();
 
-            // Round up/down the RPM to match Lookup Table
-            if (Rpm <= possibleRpm.First())
-                Rpm = possibleRpm.First();
-            if (Rpm >= possibleRpm.Last())
-                Rpm = possibleRpm.Last();
-            for (var i = 0; i < possibleRpm.Count() - 1; i++)
-            {
-                if (Rpm >= possibleRpm[i] && Rpm < possibleRpm[i + 1])
-                    Rpm = possibleRpm[i];
-            }
+            Rpm = Helpers.SaturationDynamic(possibleRpm.First(), possibleRpm.Last(), Rpm);
+            throttlePercentage = Helpers.SaturationDynamic(possibleThrottle.First(), possibleThrottle.Last(), throttlePercentage);
 
-            // Round up/down the throttlePercentage to match Lookup Table
-            if (throttlePercentage <= possibleThrottle.First())
-                throttlePercentage = possibleThrottle.First();
-            if (throttlePercentage >= possibleThrottle.Last())
-                throttlePercentage = possibleThrottle.Last();
+            // - calculate upper and lower, RPM and throttle values
+            // - calculate step for rpm at upper/lower throttle
+            double lowerRpm, upperRpm, lowerThrottle, upperThrottle;
+            lowerRpm = upperRpm = lowerThrottle = upperThrottle = 0;
+
+            
+
+            // ======= 
+            
+            // Get upper and lower throttle
             for (var i = 0; i < possibleThrottle.Count() - 1; i++)
             {
                 if (throttlePercentage >= possibleThrottle[i] && throttlePercentage < possibleThrottle[i + 1])
-                    throttlePercentage = possibleThrottle[i];
+                {
+                    lowerThrottle = possibleThrottle[i];
+                    upperThrottle = possibleThrottle[i + 1];
+                }
             }
+            
+            // Get upper and lower RPM
+            for (var i = 0; i < possibleRpm.Count() - 1; i++)
+            {
+                if (Rpm >= possibleRpm[i] && Rpm < possibleRpm[i + 1])
+                {
+                    lowerRpm = possibleRpm[i];
+                    upperRpm = possibleRpm[i + 1];
+                    break;
+                }
+            }
+
+            var torqueLowerRpmLowerThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerRpm, lowerThrottle)];
+            var torqueLowerRpmUpperThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerRpm, upperThrottle)];
+            var torqueUpperRpmLowerThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(upperRpm, lowerThrottle)];
+            var torqueUpperRpmUpperThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(upperRpm, upperThrottle)];
+
+            var rpmStepLowerThrottle = (torqueUpperRpmLowerThrottle - torqueLowerRpmLowerThrottle) / (upperRpm - lowerRpm);
+            var rpmStepUpperThrottle = (torqueUpperRpmUpperThrottle - torqueLowerRpmUpperThrottle) / (upperRpm - lowerRpm);
+
+            var throttleStepLowerRpm = (torqueLowerRpmUpperThrottle - torqueLowerRpmLowerThrottle) / (upperThrottle - lowerThrottle);
+            var throttleStepUpperRpm = (torqueUpperRpmUpperThrottle - torqueUpperRpmLowerThrottle) / (upperThrottle - lowerThrottle);
+
+            var n1 = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerRpm,lowerThrottle)]+ (Rpm - lowerRpm) * rpmStepLowerThrottle;
+            var n2 = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerRpm, lowerThrottle)]+(throttlePercentage - lowerThrottle) * throttleStepLowerRpm;
+            var avg = (n1 + n2) / 2;
+            Torque = avg;
         }
 
-        /// <summary>
-        ///     Output Forward Velocity (new)
-        /// </summary>
-        /// <returns></returns>
-        public void CalculateRpm()
-        {
-            Rpm = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission;
-        }
-
-        /// <summary>
-        ///     Output of Transmission Lookup Table in MATLAB Model
-        /// </summary>
-        /// <returns>Transmission</returns>
-        public void CalculateTransmission()
-        {
-            Transmission = Setup.Transmission[Gear];
-        }
 
         public void CalculateDeliveredDrivingPower()
         {

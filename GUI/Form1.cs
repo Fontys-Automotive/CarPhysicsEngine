@@ -111,8 +111,9 @@ namespace GUI
             TimeSpan timespan = DateTime.Now - startTime;
             labelTimer.Text = timespan.Minutes +  " : " + timespan.Seconds;
 
-            if (timespan.Seconds == 10)
+            /*if (timespan.Seconds == 10)
                 timer1.Stop();
+             */
 
             // Refesh panel for graphics update
             panel.Refresh();

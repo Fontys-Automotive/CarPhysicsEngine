@@ -1,4 +1,5 @@
-using System;   
+using System;
+using CarPhysicsEngine.Acceleration;
 using CarPhysicsEngine.Turning;
 
 namespace CarPhysicsEngine
@@ -99,6 +100,7 @@ namespace CarPhysicsEngine
             Movement = new Movement();
             Position = new Position();
             Acceleration = new Acceleration.Acceleration();
+            
         }
 
         public void  Run()
