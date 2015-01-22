@@ -108,18 +108,7 @@ namespace CarPhysicsEngine.Acceleration
             // If Max RPM
             if (Rpm == possibleRpm.Last())
             {
-                upperThrottleBreakpoint = possibleThrottle.Find(x => throttlePercentage < x);
-                lowerThrottleBreakpoint = possibleThrottle[possibleThrottle.IndexOf(upperThrottleBreakpoint) - 1];
-
-                var torqueForUpperThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(Rpm, upperThrottleBreakpoint)];
-                var torqueForLowerThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(Rpm, lowerThrottleBreakpoint)];
-
-                var torqueStep = (torqueForUpperThrottle - torqueForLowerThrottle) /
-                                 (upperThrottleBreakpoint - lowerThrottleBreakpoint);
-
-                torqueDifference = throttlePercentage - lowerThrottleBreakpoint;
-
-                Torque = torqueForLowerThrottle + torqueDifference * torqueStep;
+                CalculateTorqueForConstantRpmOrThrottle(possibleThrottle, Rpm, throttlePercentage, true);
 
                 return;
 
@@ -128,18 +117,7 @@ namespace CarPhysicsEngine.Acceleration
             // If Max Throttle
             if (throttlePercentage == possibleThrottle.Last())
             {
-                upperRpmBreakpoint = possibleRpm.Find(x => Rpm < x);
-                lowerRpmBreakpoint = possibleRpm[possibleRpm.IndexOf(upperRpmBreakpoint) - 1];
-
-                var torqueForUpperRpm = Setup.EngineTorque[new Setup.EngineTorqueKey(upperRpmBreakpoint, throttlePercentage)];
-                var torqueForLowerRpm = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerRpmBreakpoint, throttlePercentage)];
-
-                var torqueStep = (torqueForUpperRpm - torqueForLowerRpm) /
-                                 (upperRpmBreakpoint - lowerRpmBreakpoint);
-
-                torqueDifference = Rpm - lowerRpmBreakpoint;
-
-                Torque = torqueForLowerRpm + torqueDifference * torqueStep;
+                CalculateTorqueForConstantRpmOrThrottle(possibleRpm, throttlePercentage, Rpm, false);
 
                 return;
             }
@@ -158,14 +136,14 @@ namespace CarPhysicsEngine.Acceleration
 
             // Calculate RPM and Throttle Step
             var torqueStepForThrottle = (torqueForLowerRpmUpperThrottle - torqueForLowerRpmLowerThrottle) /
-                                     (upperThrottleBreakpoint - lowerThrottleBreakpoint);
+                                     ((upperThrottleBreakpoint - lowerThrottleBreakpoint) * Setup.PrecisionFactor);
             var torqueStepForRpm = (torqueForUpperRpmLowerThrottle - torqueForLowerRpmLowerThrottle) /
                                         (upperRpmBreakpoint - lowerRpmBreakpoint);
 
             
             torqueDifference = (Rpm - lowerRpmBreakpoint) * torqueStepForRpm +
-                                   (throttlePercentage - lowerThrottleBreakpoint) * torqueStepForThrottle;
-
+                                   ((throttlePercentage - lowerThrottleBreakpoint) * Setup.PrecisionFactor) * torqueStepForThrottle;
+            
             Torque = torqueForLowerRpmLowerThrottle + torqueDifference;
         }
 
@@ -173,6 +151,39 @@ namespace CarPhysicsEngine.Acceleration
         public void CalculateDeliveredDrivingPower()
         {
             DeliveredDrivingPower =  (Torque * Transmission) / Setup.R;
+        }
+
+        /// <summary>
+        ///     Calculates the Torque for a variable RPM / Throttle at a constant corresponding RPM/Throttle
+        /// </summary>
+        /// <param name="possibleValues">List of possible RPM/Throttle Percentages</param>
+        /// <param name="constant">RPM or Throttle that is constant</param>
+        /// <param name="variable">RPM or Throttle that can change</param>
+        /// <param name="isRpm">If constant is RPM</param>
+        private void CalculateTorqueForConstantRpmOrThrottle(List<double> possibleValues, double constant, double variable, bool isRpm)
+        {
+            var upperBreakpoint = possibleValues.Find(x => variable < x);
+            var lowerBreakpoint = possibleValues[possibleValues.IndexOf(upperBreakpoint) - 1];
+
+            double torqueForUpperVariable, torqueForLowerVariable;
+
+            if (isRpm)
+            {
+                torqueForUpperVariable = Setup.EngineTorque[new Setup.EngineTorqueKey(constant, upperBreakpoint)];
+                torqueForLowerVariable = Setup.EngineTorque[new Setup.EngineTorqueKey(constant, lowerBreakpoint)];
+            }
+            else
+            {
+                torqueForUpperVariable = Setup.EngineTorque[new Setup.EngineTorqueKey(upperBreakpoint, constant)];
+                torqueForLowerVariable = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerBreakpoint, constant)];
+            }
+
+            var torqueStep = (torqueForUpperVariable - torqueForLowerVariable) /
+                             ((upperBreakpoint - lowerBreakpoint) * Setup.PrecisionFactor);
+
+            var torqueDifference = (variable - lowerBreakpoint) * Setup.PrecisionFactor;
+
+            Torque = torqueForLowerVariable + torqueDifference * torqueStep;
         }
     }
 }

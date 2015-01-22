@@ -97,7 +97,7 @@ namespace GUI
             labelDeltaTValue.Text = carBehaviour.DeltaT.ToString("0.00000");
             labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0");
             labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear.ToString("0");
-            labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque.ToString("0.0");
+            labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque.ToString("0.00000");
             labelRPM.Text = carBehaviour.Acceleration.PowerTrain.Rpm.ToString("0.000");
             labelTransmission.Text = carBehaviour.Acceleration.PowerTrain.Transmission.ToString("0.00");
 

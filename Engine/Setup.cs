@@ -42,6 +42,7 @@ namespace CarPhysicsEngine
         public const double Fr = 0.014; // Rolling Resistance Coefficient [-]
         public const double MuMax = 1.05; // Maximum Friction Coefficient [-]
         public const double R = 0.3; // Tire Radius [m]
+        public const double PrecisionFactor = 50; // Makes more steps in throttle interpolation
 
         public struct EngineTorqueKey
         {
