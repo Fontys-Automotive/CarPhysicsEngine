@@ -46,6 +46,12 @@ namespace GUI
                 case 's':
                     carBehaviour.ThrottleInput -= 10;
                     break;
+                case 'q':
+                    carBehaviour.BrakeInput -= 10;
+                    break;
+                case 'e':
+                    carBehaviour.BrakeInput += 10;
+                    break;
 
             }
             if (carBehaviour.SteerAngle > 0)
@@ -77,6 +83,9 @@ namespace GUI
 
             //SCREEN
             labelSteerAngle.Text = carBehaviour.SteerAngle.ToString("0.00");
+            labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0");
+            labelBrakeInput.Text = carBehaviour.BrakeInput.ToString("0.00");
+
             labelXCoordinate.Text = carBehaviour.XCoordinate.ToString("0.000");
             labelYCoordinate.Text = carBehaviour.YCoordinate.ToString("0.000");
 
@@ -94,8 +103,8 @@ namespace GUI
 
             //ACCELERATION
             labelFwdAccelerationValue.Text = carBehaviour.Acceleration.VehicleModel.ForwardAcceleration.ToString("0.00000");
+            labelBrakeForce.Text = carBehaviour.Acceleration.VehicleModel.BrakeForce.ToString("0.00000");
             labelDeltaTValue.Text = carBehaviour.DeltaT.ToString("0.00000");
-            labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0");
             labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear.ToString("0");
             labelTorque.Text = carBehaviour.Acceleration.PowerTrain.Torque.ToString("0.00000");
             labelRPM.Text = carBehaviour.Acceleration.PowerTrain.Rpm.ToString("0.000");
@@ -110,8 +119,8 @@ namespace GUI
             TimeSpan timespan = DateTime.Now - startTime;
             labelTimer.Text = timespan.Minutes +  " : " + timespan.Seconds;
 
-            //if (timespan.Seconds == 10)
-            //    timer1.Stop();
+           /* if (timespan.Seconds == 20)
+                timer1.Stop();*/
              
 
             // Refesh panel for graphics update

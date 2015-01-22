@@ -79,6 +79,10 @@
             this.label11 = new System.Windows.Forms.Label();
             this.labelFwdAccelerationValue = new System.Windows.Forms.Label();
             this.labelFwdAcceleration = new System.Windows.Forms.Label();
+            this.labelBrakeInput = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.labelBrakeForce = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.groupBoxScreen.SuspendLayout();
             this.groupBoxForces.SuspendLayout();
             this.groupBoxMovement.SuspendLayout();
@@ -88,7 +92,7 @@
             // 
             // labelSteerAngle
             // 
-            this.labelSteerAngle.Location = new System.Drawing.Point(137, 88);
+            this.labelSteerAngle.Location = new System.Drawing.Point(137, 109);
             this.labelSteerAngle.Name = "labelSteerAngle";
             this.labelSteerAngle.Size = new System.Drawing.Size(71, 21);
             this.labelSteerAngle.TabIndex = 0;
@@ -98,7 +102,7 @@
             // labelSteerAngleDescription
             // 
             this.labelSteerAngleDescription.AutoSize = true;
-            this.labelSteerAngleDescription.Location = new System.Drawing.Point(6, 88);
+            this.labelSteerAngleDescription.Location = new System.Drawing.Point(6, 109);
             this.labelSteerAngleDescription.Name = "labelSteerAngleDescription";
             this.labelSteerAngleDescription.Size = new System.Drawing.Size(90, 21);
             this.labelSteerAngleDescription.TabIndex = 1;
@@ -107,7 +111,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 109);
+            this.label1.Location = new System.Drawing.Point(6, 130);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(19, 21);
             this.label1.TabIndex = 2;
@@ -116,7 +120,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 130);
+            this.label2.Location = new System.Drawing.Point(6, 151);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(19, 21);
             this.label2.TabIndex = 3;
@@ -124,7 +128,7 @@
             // 
             // labelXCoordinate
             // 
-            this.labelXCoordinate.Location = new System.Drawing.Point(137, 109);
+            this.labelXCoordinate.Location = new System.Drawing.Point(137, 130);
             this.labelXCoordinate.Name = "labelXCoordinate";
             this.labelXCoordinate.Size = new System.Drawing.Size(71, 21);
             this.labelXCoordinate.TabIndex = 4;
@@ -133,7 +137,7 @@
             // 
             // labelYCoordinate
             // 
-            this.labelYCoordinate.Location = new System.Drawing.Point(137, 130);
+            this.labelYCoordinate.Location = new System.Drawing.Point(137, 151);
             this.labelYCoordinate.Name = "labelYCoordinate";
             this.labelYCoordinate.Size = new System.Drawing.Size(71, 21);
             this.labelYCoordinate.TabIndex = 5;
@@ -147,6 +151,8 @@
             // 
             // groupBoxScreen
             // 
+            this.groupBoxScreen.Controls.Add(this.labelBrakeInput);
+            this.groupBoxScreen.Controls.Add(this.label13);
             this.groupBoxScreen.Controls.Add(this.labelThrottleInput);
             this.groupBoxScreen.Controls.Add(this.labelTimer);
             this.groupBoxScreen.Controls.Add(this.label7);
@@ -162,7 +168,7 @@
             this.groupBoxScreen.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxScreen.Location = new System.Drawing.Point(12, 12);
             this.groupBoxScreen.Name = "groupBoxScreen";
-            this.groupBoxScreen.Size = new System.Drawing.Size(214, 158);
+            this.groupBoxScreen.Size = new System.Drawing.Size(214, 179);
             this.groupBoxScreen.TabIndex = 7;
             this.groupBoxScreen.TabStop = false;
             this.groupBoxScreen.Text = "Screen";
@@ -179,7 +185,7 @@
             // labelTimer
             // 
             this.labelTimer.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.labelTimer.Location = new System.Drawing.Point(133, 25);
+            this.labelTimer.Location = new System.Drawing.Point(132, 25);
             this.labelTimer.Name = "labelTimer";
             this.labelTimer.Size = new System.Drawing.Size(75, 21);
             this.labelTimer.TabIndex = 7;
@@ -233,7 +239,7 @@
             this.groupBoxForces.Controls.Add(this.labelFyRear);
             this.groupBoxForces.Controls.Add(this.labelFyFront);
             this.groupBoxForces.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxForces.Location = new System.Drawing.Point(12, 176);
+            this.groupBoxForces.Location = new System.Drawing.Point(12, 197);
             this.groupBoxForces.Name = "groupBoxForces";
             this.groupBoxForces.Size = new System.Drawing.Size(214, 120);
             this.groupBoxForces.TabIndex = 8;
@@ -323,7 +329,7 @@
             this.groupBoxMovement.Controls.Add(this.labelYawVelocity);
             this.groupBoxMovement.Controls.Add(this.labelForwardVelocity);
             this.groupBoxMovement.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxMovement.Location = new System.Drawing.Point(12, 302);
+            this.groupBoxMovement.Location = new System.Drawing.Point(12, 323);
             this.groupBoxMovement.Name = "groupBoxMovement";
             this.groupBoxMovement.Size = new System.Drawing.Size(216, 122);
             this.groupBoxMovement.TabIndex = 9;
@@ -409,7 +415,7 @@
             this.groupBoxPosition.Controls.Add(this.labelVehicleDisplacementY);
             this.groupBoxPosition.Controls.Add(this.labelVehicleDisplacementX);
             this.groupBoxPosition.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBoxPosition.Location = new System.Drawing.Point(12, 430);
+            this.groupBoxPosition.Location = new System.Drawing.Point(12, 451);
             this.groupBoxPosition.Name = "groupBoxPosition";
             this.groupBoxPosition.Size = new System.Drawing.Size(216, 80);
             this.groupBoxPosition.TabIndex = 10;
@@ -455,9 +461,9 @@
             // buttonPlayPause
             // 
             this.buttonPlayPause.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonPlayPause.Location = new System.Drawing.Point(12, 666);
+            this.buttonPlayPause.Location = new System.Drawing.Point(12, 707);
             this.buttonPlayPause.Name = "buttonPlayPause";
-            this.buttonPlayPause.Size = new System.Drawing.Size(220, 38);
+            this.buttonPlayPause.Size = new System.Drawing.Size(216, 38);
             this.buttonPlayPause.TabIndex = 11;
             this.buttonPlayPause.Text = "Play";
             this.buttonPlayPause.UseVisualStyleBackColor = true;
@@ -468,12 +474,14 @@
             // 
             this.panel.Location = new System.Drawing.Point(238, 12);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(897, 692);
+            this.panel.Size = new System.Drawing.Size(897, 733);
             this.panel.TabIndex = 12;
             this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.labelBrakeForce);
+            this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.labelTransmission);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.labelRPM);
@@ -485,16 +493,16 @@
             this.groupBox1.Controls.Add(this.labelFwdAccelerationValue);
             this.groupBox1.Controls.Add(this.labelFwdAcceleration);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(12, 516);
+            this.groupBox1.Location = new System.Drawing.Point(12, 537);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(216, 144);
+            this.groupBox1.Size = new System.Drawing.Size(216, 164);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Acceleration";
             // 
             // labelTransmission
             // 
-            this.labelTransmission.Location = new System.Drawing.Point(137, 109);
+            this.labelTransmission.Location = new System.Drawing.Point(137, 130);
             this.labelTransmission.Name = "labelTransmission";
             this.labelTransmission.Size = new System.Drawing.Size(73, 20);
             this.labelTransmission.TabIndex = 15;
@@ -504,7 +512,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 109);
+            this.label16.Location = new System.Drawing.Point(6, 130);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(102, 21);
             this.label16.TabIndex = 14;
@@ -512,7 +520,7 @@
             // 
             // labelRPM
             // 
-            this.labelRPM.Location = new System.Drawing.Point(137, 88);
+            this.labelRPM.Location = new System.Drawing.Point(137, 109);
             this.labelRPM.Name = "labelRPM";
             this.labelRPM.Size = new System.Drawing.Size(73, 20);
             this.labelRPM.TabIndex = 13;
@@ -522,7 +530,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 88);
+            this.label14.Location = new System.Drawing.Point(6, 109);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(43, 21);
             this.label14.TabIndex = 12;
@@ -530,7 +538,7 @@
             // 
             // labelTorque
             // 
-            this.labelTorque.Location = new System.Drawing.Point(137, 67);
+            this.labelTorque.Location = new System.Drawing.Point(137, 88);
             this.labelTorque.Name = "labelTorque";
             this.labelTorque.Size = new System.Drawing.Size(73, 20);
             this.labelTorque.TabIndex = 11;
@@ -540,7 +548,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 67);
+            this.label12.Location = new System.Drawing.Point(6, 88);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(59, 21);
             this.label12.TabIndex = 10;
@@ -548,7 +556,7 @@
             // 
             // labelGearValue
             // 
-            this.labelGearValue.Location = new System.Drawing.Point(137, 46);
+            this.labelGearValue.Location = new System.Drawing.Point(137, 67);
             this.labelGearValue.Name = "labelGearValue";
             this.labelGearValue.Size = new System.Drawing.Size(73, 20);
             this.labelGearValue.TabIndex = 9;
@@ -558,7 +566,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 46);
+            this.label11.Location = new System.Drawing.Point(6, 67);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(43, 21);
             this.label11.TabIndex = 8;
@@ -582,11 +590,47 @@
             this.labelFwdAcceleration.TabIndex = 6;
             this.labelFwdAcceleration.Text = "Fwd Acceleration";
             // 
+            // labelBrakeInput
+            // 
+            this.labelBrakeInput.Location = new System.Drawing.Point(137, 88);
+            this.labelBrakeInput.Name = "labelBrakeInput";
+            this.labelBrakeInput.Size = new System.Drawing.Size(71, 21);
+            this.labelBrakeInput.TabIndex = 13;
+            this.labelBrakeInput.Text = "0";
+            this.labelBrakeInput.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 88);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(89, 21);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Brake Input";
+            // 
+            // labelBrakeForce
+            // 
+            this.labelBrakeForce.Location = new System.Drawing.Point(137, 46);
+            this.labelBrakeForce.Name = "labelBrakeForce";
+            this.labelBrakeForce.Size = new System.Drawing.Size(73, 20);
+            this.labelBrakeForce.TabIndex = 17;
+            this.labelBrakeForce.Text = "0";
+            this.labelBrakeForce.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 46);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(91, 21);
+            this.label17.TabIndex = 16;
+            this.label17.Text = "Brake Force";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1147, 716);
+            this.ClientSize = new System.Drawing.Size(1144, 757);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.buttonPlayPause);
@@ -663,6 +707,10 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label labelTransmission;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label labelBrakeInput;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label labelBrakeForce;
+        private System.Windows.Forms.Label label17;
     }
 }
 

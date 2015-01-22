@@ -6,6 +6,7 @@
         public readonly Powertrain PowerTrain;
 
         public double ThrottleInput { private get; set; }
+        public double BrakeInput { private get; set; }
         public double ForwardVelocityInput { private get; set; }
         public double ForwardVelocityOutput { get; private set; }
         public double DeltaT { private get; set; }
@@ -25,7 +26,9 @@
         {
             // Powertrain
             PowerTrain.ThrottleInput = ThrottleInput;
+
             PowerTrain.ForwardVelocityInput = ForwardVelocityInput;
+            VehicleModel.CurrentForwardVelocity = ForwardVelocityInput;
 
             PowerTrain.CalculateGear();
             PowerTrain.CalculateTransmission();
@@ -34,11 +37,13 @@
             PowerTrain.CalculateDeliveredDrivingPower();
 
             // Vehicle Model
+            VehicleModel.BrakeInput = BrakeInput;
             VehicleModel.DeltaT = DeltaT;
             VehicleModel.DeliveredDrivingPower = PowerTrain.DeliveredDrivingPower;
 
             VehicleModel.CalculateAirResistance();
             VehicleModel.CalculateRollingResistance();
+            VehicleModel.CalculateBraking();
             VehicleModel.CalculateSumForces();
 
             VehicleModel.CalculateForwardVelocity();

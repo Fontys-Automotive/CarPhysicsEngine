@@ -17,6 +17,18 @@ namespace CarPhysicsEngine
             }
         }
 
+        private double brakeInput;
+
+        public double BrakeInput
+        {
+            get { return brakeInput; }
+            set
+            {
+                if (value >= 0 && value <= 100)
+                    brakeInput = value;
+            }
+        }
+
         /// <summary>
         ///     Real-world position of car's centre
         /// </summary>
@@ -86,6 +98,7 @@ namespace CarPhysicsEngine
             previousYawVelocity = 0;
             ForwardVelocity = 0;
             ThrottleInput = 0;
+            BrakeInput = 0;
 
             YawAngle = 0;
             SteerAngle = 0;
@@ -119,6 +132,7 @@ namespace CarPhysicsEngine
         private void CalculateAcceleration()
         {
             Acceleration.ThrottleInput = ThrottleInput;
+            Acceleration.BrakeInput = BrakeInput;
             Acceleration.ForwardVelocityInput = ForwardVelocity;
             Acceleration.DeltaT = DeltaT;
             Acceleration.Run();

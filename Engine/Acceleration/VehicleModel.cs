@@ -5,9 +5,11 @@ namespace CarPhysicsEngine.Acceleration
     public class VehicleModel
     {
         public double DeliveredDrivingPower { private get; set; }
-        public double CurrentForwardVelocity { get; private set; }
+        public double CurrentForwardVelocity { get; set; }
         public double DeltaT { private get; set; }
+        public double BrakeInput { private get; set; }
         public double ForwardAcceleration { get; private set; }
+        public double BrakeForce { get; set; }
 
         private double AirResistance { get; set; }
         private double RollingResistance { get; set; }
@@ -41,9 +43,19 @@ namespace CarPhysicsEngine.Acceleration
             RollingResistance = Setup.Fr * Setup.M * Setup.G;
         }
 
+        public void CalculateBraking()
+        {
+            const double saturationLimit = 5.0 / 15.0;
+            var n1 = (BrakeInput) * 42.1 / Setup.R;
+            var n2 = CurrentForwardVelocity / Setup.R;
+            var n3 = Helpers.SaturationDynamic(-saturationLimit, saturationLimit, n2);
+
+            BrakeForce = n1 * n3;
+        }
+
         public void CalculateSumForces()
         {
-            SumForces = DeliveredDrivingPower - AirResistance - RollingResistance;
+            SumForces = DeliveredDrivingPower - (AirResistance + RollingResistance + BrakeForce);
         }
     }
 }
