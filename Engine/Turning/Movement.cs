@@ -1,22 +1,12 @@
-namespace CarPhysicsEngine
+namespace CarPhysicsEngine.Turning
 {
     public class Movement
     {
-        private readonly double _deltaT;
-        private readonly double _forwardVelocity;
-        private readonly double _inertiaMoment;
-        private readonly double _mass;
-
-        public Movement(double forwardVelocity, double inertiaMoment, double mass, double deltaT)
-        {
-            _forwardVelocity = forwardVelocity;
-            _inertiaMoment = inertiaMoment;
-            _mass = mass;
-            _deltaT = deltaT;
-        }
+        public double ForwardVelocity { private get; set; }
 
         public double FyTotal { get; set; }
         public double MzTotal { get; set; }
+        public double DeltaT { private get; set; }
         public double PreviousLateralVelocity { private get; set; }
         public double PreviousYawVelocity { private get; set; }
 
@@ -27,7 +17,7 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double YawVelocity()
         {
-            return PreviousYawVelocity + _deltaT * (MzTotal / _inertiaMoment);
+            return PreviousYawVelocity + DeltaT * (MzTotal / Setup.InertiaMoment);
         }
 
         /// <summary>
@@ -36,7 +26,7 @@ namespace CarPhysicsEngine
         /// </summary>
         public double LateralAcceleration()
         {
-            return (FyTotal / _mass) - (YawVelocity() * _forwardVelocity);
+            return (FyTotal / Setup.M) - (YawVelocity() * ForwardVelocity);
         }
 
         /// <summary>
@@ -45,7 +35,7 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double LateralVelocity()
         {
-            return PreviousLateralVelocity + _deltaT * LateralAcceleration();
+            return PreviousLateralVelocity + DeltaT * LateralAcceleration();
         }
     }
 }

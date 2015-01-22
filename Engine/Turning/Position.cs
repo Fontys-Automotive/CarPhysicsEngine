@@ -1,30 +1,23 @@
 ﻿using System;
 
-namespace CarPhysicsEngine
+namespace CarPhysicsEngine.Turning
 {
     public class Position
     {
-        private double YawAngle { get; set; }
-        private readonly double _deltaT;
-        private readonly double _forwardVelocity;
-
-        public Position(double forwardVelocity, double deltaT, double yawAngle)
-        {
-            YawAngle = yawAngle;
-            _forwardVelocity = forwardVelocity;
-            _deltaT = deltaT;
-        }
+        public double YawAngle { private get; set; }
+        public double ForwardVelocity { private get; set; }
 
         public double LateralVelocity { private get; set; }
         public double YawVelocity { private get; set; }
+        public double DeltaT { private get; set; }
         
         /// <summary>
         /// Calculates the new YawAngle by adding the yaw change after one time step
         /// </summary>
         /// <returns></returns>
-        private double YawVelocityIntegral()
+        public void YawVelocityIntegral()
         {
-            return YawAngle+=YawVelocity * _deltaT;
+             YawAngle+=YawVelocity * DeltaT;
         }
 
         /// <summary>
@@ -34,11 +27,11 @@ namespace CarPhysicsEngine
         public double VehicleDisplacementX()
         {
            
-            var n1 = _forwardVelocity * Math.Cos(YawVelocityIntegral());
-            var n2 = LateralVelocity * Math.Sin(YawVelocityIntegral());
+            var n1 = ForwardVelocity * Math.Cos(YawAngle);
+            var n2 = LateralVelocity * Math.Sin(YawAngle);
             var n3 = n1 - n2;
 
-            return n3 * _deltaT;
+            return n3 * DeltaT;
         }
         /// <summary>
         /// Calculates the change in Y coordinate after one time step. Added to the current Y position in CarBehaviour.Run()
@@ -46,11 +39,11 @@ namespace CarPhysicsEngine
         /// <returns></returns>
         public double VehicleDisplacementY()
         {
-            var n1 = _forwardVelocity * Math.Sin(YawVelocityIntegral());
-            var n2 = LateralVelocity * Math.Cos(YawVelocityIntegral());
+            var n1 = ForwardVelocity * Math.Sin(YawAngle);
+            var n2 = LateralVelocity * Math.Cos(YawAngle);
             var n3 = n1 + n2;
 
-            return n3 * _deltaT;
+            return n3 * DeltaT;
         }
     }
 }
