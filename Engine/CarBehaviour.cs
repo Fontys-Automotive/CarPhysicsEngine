@@ -68,7 +68,7 @@ namespace CarPhysicsEngine
             set
             {
                 // the max angle of the wheel is +-28 degrees
-                const double angleRadiansLimit = 28 * Math.PI / 180;
+                const double angleRadiansLimit = (720 / 17) * Math.PI / 180;
 
                 if (value <= angleRadiansLimit && value >= -angleRadiansLimit)
                     steerAngle = value;

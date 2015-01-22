@@ -70,7 +70,6 @@ namespace GUI
         private void timer1_Tick(object sender, EventArgs e)
         {
             carBehaviour.Run();
-            
 
             var x = (float) carBehaviour.XCoordinate;
             var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
@@ -94,7 +93,7 @@ namespace GUI
             labelAcceleration.Text = carBehaviour.Movement.LateralAcceleration().ToString("0.000");
 
             //ACCELERATION
-            labelFwdAccelerationValue.Text = carBehaviour.Acceleration.ForwardVelocityOutput.ToString("0.00000");
+            labelFwdAccelerationValue.Text = carBehaviour.Acceleration.VehicleModel.ForwardAcceleration.ToString("0.00000");
             labelDeltaTValue.Text = carBehaviour.DeltaT.ToString("0.00000");
             labelThrottleInput.Text = carBehaviour.ThrottleInput.ToString("0");
             labelGearValue.Text = carBehaviour.Acceleration.PowerTrain.Gear.ToString("0");
@@ -111,9 +110,9 @@ namespace GUI
             TimeSpan timespan = DateTime.Now - startTime;
             labelTimer.Text = timespan.Minutes +  " : " + timespan.Seconds;
 
-            /*if (timespan.Seconds == 10)
-                timer1.Stop();
-             */
+            //if (timespan.Seconds == 10)
+            //    timer1.Stop();
+             
 
             // Refesh panel for graphics update
             panel.Refresh();

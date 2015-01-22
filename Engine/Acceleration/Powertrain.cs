@@ -64,7 +64,7 @@ namespace CarPhysicsEngine.Acceleration
         /// <returns></returns>
         public void CalculateRpm()
         {
-            Rpm = ForwardVelocityInput * 60 / (2 * Math.PI * Setup.R) * Transmission;
+            Rpm = ForwardVelocityInput * (60 / (2 * Math.PI * Setup.R)) * Transmission;
         }
 
         /// <summary>
@@ -96,7 +96,6 @@ namespace CarPhysicsEngine.Acceleration
             // - calculate upper and lower, RPM and throttle values
             // - calculate step for rpm at upper/lower throttle
             double lowerRpmBreakpoint, upperRpmBreakpoint, lowerThrottleBreakpoint, upperThrottleBreakpoint, torqueDifference;
-            lowerRpmBreakpoint = upperRpmBreakpoint = lowerThrottleBreakpoint = upperThrottleBreakpoint = torqueDifference = 0;
 
             // If Max RPM and Max Throttle
             if (Rpm == possibleRpm.Last() && throttlePercentage == possibleThrottle.Last())
@@ -156,7 +155,6 @@ namespace CarPhysicsEngine.Acceleration
             var torqueForLowerRpmLowerThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerRpmBreakpoint, lowerThrottleBreakpoint)];
             var torqueForLowerRpmUpperThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(lowerRpmBreakpoint, upperThrottleBreakpoint)];
             var torqueForUpperRpmLowerThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(upperRpmBreakpoint, lowerThrottleBreakpoint)];
-            var torqueForUpperRpmUpperThrottle = Setup.EngineTorque[new Setup.EngineTorqueKey(upperRpmBreakpoint, upperThrottleBreakpoint)];
 
             // Calculate RPM and Throttle Step
             var torqueStepForThrottle = (torqueForLowerRpmUpperThrottle - torqueForLowerRpmLowerThrottle) /

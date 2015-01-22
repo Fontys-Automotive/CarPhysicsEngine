@@ -7,6 +7,7 @@ namespace CarPhysicsEngine.Acceleration
         public double DeliveredDrivingPower { private get; set; }
         public double CurrentForwardVelocity { get; private set; }
         public double DeltaT { private get; set; }
+        public double ForwardAcceleration { get; private set; }
 
         private double AirResistance { get; set; }
         private double RollingResistance { get; set; }
@@ -15,9 +16,9 @@ namespace CarPhysicsEngine.Acceleration
         public void CalculateForwardVelocity()
         {
             var saturationOutput = Helpers.SaturationDynamic(NegativeFriction, PositiveFriction, SumForces);
-            var n1 = saturationOutput / Setup.M;
+            ForwardAcceleration = saturationOutput / Setup.M;
 
-            CurrentForwardVelocity += n1 * DeltaT;
+            CurrentForwardVelocity += ForwardAcceleration * DeltaT;
         }
 
         private static double PositiveFriction

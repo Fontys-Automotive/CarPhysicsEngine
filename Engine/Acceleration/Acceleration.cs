@@ -2,7 +2,7 @@
 {
     public class Acceleration
     {
-        private readonly VehicleModel vehicleModel;
+        public readonly VehicleModel VehicleModel;
         public readonly Powertrain PowerTrain;
 
         public double ThrottleInput { private get; set; }
@@ -12,7 +12,7 @@
 
         public Acceleration()
         {
-            vehicleModel = new VehicleModel();
+            VehicleModel = new VehicleModel();
             PowerTrain = new Powertrain();
         }
 
@@ -34,16 +34,16 @@
             PowerTrain.CalculateDeliveredDrivingPower();
 
             // Vehicle Model
-            vehicleModel.DeltaT = DeltaT;
-            vehicleModel.DeliveredDrivingPower = PowerTrain.DeliveredDrivingPower;
+            VehicleModel.DeltaT = DeltaT;
+            VehicleModel.DeliveredDrivingPower = PowerTrain.DeliveredDrivingPower;
 
-            vehicleModel.CalculateAirResistance();
-            vehicleModel.CalculateRollingResistance();
-            vehicleModel.CalculateSumForces();
+            VehicleModel.CalculateAirResistance();
+            VehicleModel.CalculateRollingResistance();
+            VehicleModel.CalculateSumForces();
 
-            vehicleModel.CalculateForwardVelocity();
+            VehicleModel.CalculateForwardVelocity();
 
-            ForwardVelocityOutput = vehicleModel.CurrentForwardVelocity;
+            ForwardVelocityOutput = VehicleModel.CurrentForwardVelocity;
         }
     }
 }
