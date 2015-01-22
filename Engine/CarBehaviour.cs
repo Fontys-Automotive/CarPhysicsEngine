@@ -5,29 +5,40 @@ namespace CarPhysicsEngine
 {
     public class CarBehaviour
     {
-        private double throttleInput;
-
+        /// <summary>
+        ///     Percentage input from throttle pedal (0 - 100)
+        /// </summary>
         public double ThrottleInput
         {
             get { return throttleInput; }
-            set
-            {
-                if (value >= 0 && value <= 100)
-                    throttleInput = value;
-            }
+            set { throttleInput = Helpers.SaturationDynamic(0, 100, value); }
         }
+        private double throttleInput;
 
-        private double brakeInput;
-
+        /// <summary>
+        ///     Percentage input from brake pedal (0 - 100)
+        /// </summary>
         public double BrakeInput
         {
             get { return brakeInput; }
+            set { brakeInput = Helpers.SaturationDynamic(0, 100, value); }
+        }
+        private double brakeInput;
+
+        /// <summary>
+        ///     Input from steering wheel  [angle-radians]
+        /// </summary>
+        public double SteerAngle
+        {
+            get { return steerAngle; }
             set
             {
-                if (value >= 0 && value <= 100)
-                    brakeInput = value;
+                const double angleRadiansLimit = 0.733038285837618D; // (720/17) * (π/180)
+
+                steerAngle = Helpers.SaturationDynamic(- angleRadiansLimit, angleRadiansLimit, value);
             }
         }
+        private double steerAngle;
 
         /// <summary>
         ///     Real-world position of car's centre
@@ -39,22 +50,15 @@ namespace CarPhysicsEngine
         /// </summary>
         public double YCoordinate { get; private set; }
 
-        // Use to calculate DeltaT
-        private DateTime previousDateTime;
-        private DateTime currentDateTime;
-
         /// <summary>
         ///     Change in time between frames [seconds]
         /// </summary>
         public double DeltaT
         {
-            get
-            {
-                //return 0.01;
-                var difference = (currentDateTime - previousDateTime);
-                return difference.TotalSeconds;
-            }
+            get { return (currentDateTime - previousDateTime).TotalSeconds; }
         }
+        private DateTime previousDateTime;
+        private DateTime currentDateTime;
 
         /// <summary>
         ///     Current Forward Velocity [m/s]
@@ -67,25 +71,6 @@ namespace CarPhysicsEngine
         private double previousYawVelocity;
 
         private double YawAngle { get; set; }
-
-        // steering angle in radians => input
-        private double steerAngle;
-
-        /// <summary>
-        ///     Input wheel angle  [radians]
-        /// </summary>
-        public double SteerAngle 
-        {
-            get { return steerAngle; }
-            set
-            {
-                // (720 / 17) * (π/180)
-                const double angleRadiansLimit = 0.733038285837618D;
-
-                if (value <= angleRadiansLimit && value >= -angleRadiansLimit)
-                    steerAngle = value;
-            }
-        }
 
         private readonly Tyre tyre;
         public readonly Forces Forces;
@@ -112,7 +97,6 @@ namespace CarPhysicsEngine
             Movement = new Movement();
             Position = new Position();
             Acceleration = new Acceleration.Acceleration();
-            
         }
 
         public void  Run()
