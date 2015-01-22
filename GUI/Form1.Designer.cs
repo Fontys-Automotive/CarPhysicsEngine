@@ -35,8 +35,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.labelXCoordinate = new System.Windows.Forms.Label();
             this.labelYCoordinate = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.groupBoxScreen = new System.Windows.Forms.GroupBox();
+            this.labelBrakeInput = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.labelThrottleInput = new System.Windows.Forms.Label();
             this.labelTimer = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -69,6 +71,8 @@
             this.buttonPlayPause = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.labelBrakeForce = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.labelTransmission = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.labelRPM = new System.Windows.Forms.Label();
@@ -79,10 +83,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.labelFwdAccelerationValue = new System.Windows.Forms.Label();
             this.labelFwdAcceleration = new System.Windows.Forms.Label();
-            this.labelBrakeInput = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.labelBrakeForce = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.groupBoxScreen.SuspendLayout();
             this.groupBoxForces.SuspendLayout();
             this.groupBoxMovement.SuspendLayout();
@@ -144,10 +144,10 @@
             this.labelYCoordinate.Text = "0";
             this.labelYCoordinate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // timer1
+            // timer
             // 
-            this.timer1.Interval = 10;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer.Interval = 10;
+            this.timer.Tick += new System.EventHandler(this.TimerTick);
             // 
             // groupBoxScreen
             // 
@@ -172,6 +172,24 @@
             this.groupBoxScreen.TabIndex = 7;
             this.groupBoxScreen.TabStop = false;
             this.groupBoxScreen.Text = "Screen";
+            // 
+            // labelBrakeInput
+            // 
+            this.labelBrakeInput.Location = new System.Drawing.Point(137, 88);
+            this.labelBrakeInput.Name = "labelBrakeInput";
+            this.labelBrakeInput.Size = new System.Drawing.Size(71, 21);
+            this.labelBrakeInput.TabIndex = 13;
+            this.labelBrakeInput.Text = "0";
+            this.labelBrakeInput.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 88);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(89, 21);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Brake Input";
             // 
             // labelThrottleInput
             // 
@@ -467,7 +485,7 @@
             this.buttonPlayPause.TabIndex = 11;
             this.buttonPlayPause.Text = "Play";
             this.buttonPlayPause.UseVisualStyleBackColor = true;
-            this.buttonPlayPause.Click += new System.EventHandler(this.buttonPlayPause_Click);
+            this.buttonPlayPause.Click += new System.EventHandler(this.ButtonPlayPauseClick);
             this.buttonPlayPause.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPress);
             // 
             // panel
@@ -476,7 +494,7 @@
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(897, 733);
             this.panel.TabIndex = 12;
-            this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_Paint);
+            this.panel.Paint += new System.Windows.Forms.PaintEventHandler(this.PanelPaint);
             // 
             // groupBox1
             // 
@@ -499,6 +517,24 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Acceleration";
+            // 
+            // labelBrakeForce
+            // 
+            this.labelBrakeForce.Location = new System.Drawing.Point(137, 46);
+            this.labelBrakeForce.Name = "labelBrakeForce";
+            this.labelBrakeForce.Size = new System.Drawing.Size(73, 20);
+            this.labelBrakeForce.TabIndex = 17;
+            this.labelBrakeForce.Text = "0";
+            this.labelBrakeForce.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 46);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(91, 21);
+            this.label17.TabIndex = 16;
+            this.label17.Text = "Brake Force";
             // 
             // labelTransmission
             // 
@@ -590,42 +626,6 @@
             this.labelFwdAcceleration.TabIndex = 6;
             this.labelFwdAcceleration.Text = "Fwd Acceleration";
             // 
-            // labelBrakeInput
-            // 
-            this.labelBrakeInput.Location = new System.Drawing.Point(137, 88);
-            this.labelBrakeInput.Name = "labelBrakeInput";
-            this.labelBrakeInput.Size = new System.Drawing.Size(71, 21);
-            this.labelBrakeInput.TabIndex = 13;
-            this.labelBrakeInput.Text = "0";
-            this.labelBrakeInput.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 88);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(89, 21);
-            this.label13.TabIndex = 12;
-            this.label13.Text = "Brake Input";
-            // 
-            // labelBrakeForce
-            // 
-            this.labelBrakeForce.Location = new System.Drawing.Point(137, 46);
-            this.labelBrakeForce.Name = "labelBrakeForce";
-            this.labelBrakeForce.Size = new System.Drawing.Size(73, 20);
-            this.labelBrakeForce.TabIndex = 17;
-            this.labelBrakeForce.Text = "0";
-            this.labelBrakeForce.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(6, 46);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(91, 21);
-            this.label17.TabIndex = 16;
-            this.label17.Text = "Brake Force";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -663,7 +663,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label labelXCoordinate;
         private System.Windows.Forms.Label labelYCoordinate;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.GroupBox groupBoxScreen;
         private System.Windows.Forms.GroupBox groupBoxForces;
         private System.Windows.Forms.Label labelMzMoment;
