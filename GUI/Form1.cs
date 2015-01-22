@@ -27,7 +27,7 @@ namespace GUI
             startTime = DateTime.Now;
         }
 
-        private void onKeyPress(object sender, KeyPressEventArgs e)
+        private void OnKeyPress(object sender, KeyPressEventArgs e)
         {
             const double deltaAngle = 0.02;
 
@@ -116,8 +116,8 @@ namespace GUI
             labelVehicleDisplacementY.Text = carBehaviour.Position.VehicleDisplacementY().ToString("0.00000");
 
             //UPDATE TIMER DISPLAY
-            TimeSpan timespan = DateTime.Now - startTime;
-            labelTimer.Text = timespan.Minutes +  " : " + timespan.Seconds;
+            var timespan = DateTime.Now - startTime;
+            labelTimer.Text = timespan.Minutes +  @" : " + timespan.Seconds;
 
            /* if (timespan.Seconds == 20)
                 timer1.Stop();*/
@@ -132,7 +132,7 @@ namespace GUI
             if (timer1.Enabled)
             {
                 timer1.Stop();
-                buttonPlayPause.Text = "Play";
+                buttonPlayPause.Text = @"Play";
                 buttonPlayPause.BackColor = Color.ForestGreen;
             }
             else
@@ -143,7 +143,7 @@ namespace GUI
                     startTime = DateTime.Now;
                 }
                 timer1.Start();
-                buttonPlayPause.Text = "Pause";
+                buttonPlayPause.Text = @"Pause";
                 buttonPlayPause.BackColor = Color.DarkRed;
 
             }

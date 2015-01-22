@@ -4,7 +4,7 @@ namespace CarPhysicsEngine.Turning
     {
         public double ForwardVelocity { private get; set; }
 
-        public double FyTotal { get; set; }
+        public double FyTotal { private get; set; }
         public double MzTotal { get; set; }
         public double DeltaT { private get; set; }
         public double PreviousLateralVelocity { private get; set; }

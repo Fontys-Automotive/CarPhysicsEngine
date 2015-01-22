@@ -14,7 +14,7 @@ namespace CarPhysicsEngine
         public const double LengthFront = 1.06; // distance from front axle to centre [m]
         public const double LengthRear = LengthWheelbase - LengthFront; // distance from rear axle to centre [m]
         public const double InertiaMoment = 1850; // moment of inertia of vehicle on z-axis [kgm^2]
-        private const double ETA = 0.03; // understeer factor. Plausible max value is 0.04
+        private const double Eta = 0.03; // understeer factor. Plausible max value is 0.04
         private const double Fz0 = 8000; // Nominal load [N]
         private const double Fz1 = M * G * LengthRear / LengthWheelbase; // Axle load front [N]
         private const double Fz2 = M * G * LengthFront / LengthWheelbase; // Axle load read [N]
@@ -27,11 +27,9 @@ namespace CarPhysicsEngine
         private const double C1 = 1.19; // "vormfactor" front [-]
         private const double C2 = 1.19; // "vormfactor" rear [-]
         private static readonly double K1 = 14.95 * Fz0 * Math.Sin(2 * Math.Atan(Fz1 / 2.13 / Fz0));
-        private static readonly double K2 = Fz2 * K1 / (Fz1 - ETA * K1);
+        private static readonly double K2 = Fz2 * K1 / (Fz1 - Eta * K1);
         private static readonly double B1 = K1 / C1 / D1; // Stiffness factor front
         private static readonly double B2 = K2 / C2 / D2; // Stiffness factor rear
-        public const double E1 = -1.003 - 0.537 * DFz1; // curvature factor front
-        public const double E2 = -1.003 - 0.537 * DFz2; // curvature factor rear
         public static readonly double Cy1 = B1 * C1 * D1; // Tyre stiffness front [N/rad]
         public static readonly double Cy2 = B2 * C2 * D2; // Tyre stiffness rear [N/rad]
 
@@ -46,11 +44,11 @@ namespace CarPhysicsEngine
 
         public struct EngineTorqueKey
         {
-            public double RPM, ThrottlePercentage;
+            public readonly double Rpm, ThrottlePercentage;
 
             public EngineTorqueKey(double rpm, double throttlePercentage)
             {
-                RPM = rpm;
+                Rpm = rpm;
                 ThrottlePercentage = throttlePercentage;
             }
         }

@@ -468,7 +468,7 @@
             this.buttonPlayPause.Text = "Play";
             this.buttonPlayPause.UseVisualStyleBackColor = true;
             this.buttonPlayPause.Click += new System.EventHandler(this.buttonPlayPause_Click);
-            this.buttonPlayPause.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.onKeyPress);
+            this.buttonPlayPause.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPress);
             // 
             // panel
             // 
@@ -640,7 +640,7 @@
             this.Controls.Add(this.groupBoxScreen);
             this.Name = "Form1";
             this.Text = "DriveSim Physics Engine Test";
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.onKeyPress);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnKeyPress);
             this.groupBoxScreen.ResumeLayout(false);
             this.groupBoxScreen.PerformLayout();
             this.groupBoxForces.ResumeLayout(false);

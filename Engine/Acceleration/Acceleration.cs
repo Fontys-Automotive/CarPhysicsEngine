@@ -8,7 +8,6 @@
         public double ThrottleInput { private get; set; }
         public double BrakeInput { private get; set; }
         public double ForwardVelocityInput { private get; set; }
-        public double ForwardVelocityOutput { get; private set; }
         public double DeltaT { private get; set; }
 
         public Acceleration()
@@ -22,7 +21,8 @@
         /// 
         ///     All function calls have been listed here to simplify application flow.
         /// </summary>
-        public void Run()
+        /// <returns>Forward Velocity</returns>
+        public double Run()
         {
             // Powertrain
             PowerTrain.ThrottleInput = ThrottleInput;
@@ -48,7 +48,7 @@
 
             VehicleModel.CalculateForwardVelocity();
 
-            ForwardVelocityOutput = VehicleModel.CurrentForwardVelocity;
+            return VehicleModel.CurrentForwardVelocity;
         }
     }
 }

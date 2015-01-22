@@ -9,7 +9,7 @@ namespace CarPhysicsEngine.Acceleration
         public double DeltaT { private get; set; }
         public double BrakeInput { private get; set; }
         public double ForwardAcceleration { get; private set; }
-        public double BrakeForce { get; set; }
+        public double BrakeForce { get; private set; }
 
         private double AirResistance { get; set; }
         private double RollingResistance { get; set; }

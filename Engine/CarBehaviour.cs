@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using CarPhysicsEngine.Turning;
 
 namespace CarPhysicsEngine
@@ -66,7 +66,7 @@ namespace CarPhysicsEngine
         /// </summary>
         private double previousYawVelocity;
 
-        public double YawAngle { get; set; }
+        private double YawAngle { get; set; }
 
         // steering angle in radians => input
         private double steerAngle;
@@ -79,15 +79,15 @@ namespace CarPhysicsEngine
             get { return steerAngle; }
             set
             {
-                // the max angle of the wheel is +-28 degrees
-                const double angleRadiansLimit = (720 / 17) * Math.PI / 180;
+                // (720 / 17) * (π/180)
+                const double angleRadiansLimit = 0.733038285837618D;
 
                 if (value <= angleRadiansLimit && value >= -angleRadiansLimit)
                     steerAngle = value;
             }
         }
 
-        public readonly Tyre Tyre;
+        private readonly Tyre tyre;
         public readonly Forces Forces;
         public readonly Movement Movement;
         public readonly Position Position;
@@ -107,7 +107,7 @@ namespace CarPhysicsEngine
 
             XCoordinate = YCoordinate = 0;
 
-            Tyre = new Tyre();
+            tyre = new Tyre();
             Forces = new Forces();
             Movement = new Movement();
             Position = new Position();
@@ -120,7 +120,8 @@ namespace CarPhysicsEngine
             // Acceleration is run before Turning because we need forward velocity
             CalculateAcceleration();
 
-            if (ForwardVelocity != 0)
+            // Forward Velocity needs to be greater than 0 to compute Alpha Front/Rear
+            if (!ForwardVelocity.Equals(0))
             {
                 CalculateTurning();
             }
@@ -135,21 +136,21 @@ namespace CarPhysicsEngine
             Acceleration.BrakeInput = BrakeInput;
             Acceleration.ForwardVelocityInput = ForwardVelocity;
             Acceleration.DeltaT = DeltaT;
-            Acceleration.Run();
-            ForwardVelocity = Acceleration.ForwardVelocityOutput;
+
+            ForwardVelocity = Acceleration.Run();
         }
 
         private void CalculateTurning()
         {
             // Initialize the properties in Tyre
-            Tyre.ForwardVelocity = ForwardVelocity;
-            Tyre.SteerAngle = SteerAngle;
-            Tyre.LateralVelocity = Movement.LateralVelocity();
-            Tyre.YawVelocity = Movement.YawVelocity();
+            tyre.ForwardVelocity = ForwardVelocity;
+            tyre.SteerAngle = SteerAngle;
+            tyre.LateralVelocity = Movement.LateralVelocity();
+            tyre.YawVelocity = Movement.YawVelocity();
 
             // Initialize the properties in Forces
-            Forces.TyreForceFront = Tyre.TyreForceFront();
-            Forces.TyreForceRear = Tyre.TyreForceRear();
+            Forces.TyreForceFront = tyre.TyreForceFront();
+            Forces.TyreForceRear = tyre.TyreForceRear();
 
             // Initialize the properties in Movement
             Movement.FyTotal = Forces.FyTotal();

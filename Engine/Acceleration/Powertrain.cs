@@ -79,7 +79,7 @@ namespace CarPhysicsEngine.Acceleration
 
             foreach (var key in Setup.EngineTorque.Keys)
             {
-                possibleRpm.Add(key.RPM);
+                possibleRpm.Add(key.Rpm);
                 possibleThrottle.Add(key.ThrottlePercentage);
             }
 
@@ -92,7 +92,7 @@ namespace CarPhysicsEngine.Acceleration
             throttlePercentage = Helpers.SaturationDynamic(possibleThrottle.First(), possibleThrottle.Last(), throttlePercentage);
 
             // If Max RPM and Max Throttle
-            if (Rpm == possibleRpm.Last() && throttlePercentage == possibleThrottle.Last())
+            if (Rpm.Equals(possibleRpm.Last()) && throttlePercentage.Equals(possibleThrottle.Last()))
             {
                 Torque = Setup.EngineTorque[new Setup.EngineTorqueKey(Rpm, throttlePercentage)];
 
@@ -100,7 +100,7 @@ namespace CarPhysicsEngine.Acceleration
             }
 
             // If Max RPM
-            if (Rpm == possibleRpm.Last())
+            if (Rpm.Equals(possibleRpm.Last()))
             {
                 CalculateTorqueForConstantRpmOrThrottle(possibleThrottle, Rpm, throttlePercentage, isRpm: true);
 
@@ -109,7 +109,7 @@ namespace CarPhysicsEngine.Acceleration
             }
 
             // If Max Throttle
-            if (throttlePercentage == possibleThrottle.Last())
+            if (throttlePercentage.Equals(possibleThrottle.Last()))
             {
                 CalculateTorqueForConstantRpmOrThrottle(possibleRpm, throttlePercentage, Rpm, isRpm: false);
 
