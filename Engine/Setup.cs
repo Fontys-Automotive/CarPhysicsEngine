@@ -32,6 +32,10 @@ namespace CarPhysicsEngine
         private static readonly double B2 = K2 / C2 / D2; // Stiffness factor rear
         public static readonly double Cy1 = B1 * C1 * D1; // Tyre stiffness front [N/rad]
         public static readonly double Cy2 = B2 * C2 * D2; // Tyre stiffness rear [N/rad]
+        public const double B = 11.1787;
+        public const double C = 1.19;
+        public const double D = 6180.6;
+        public const double E = -0.9215;
 
         // Needed for Acceleration
         public const double Cw = 0.3; // C2-waarde [-]
