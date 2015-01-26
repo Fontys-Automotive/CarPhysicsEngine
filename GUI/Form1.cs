@@ -71,7 +71,7 @@ namespace GUI
         private void PanelPaint(object sender, PaintEventArgs e)
         {
             var x = (float) carBehaviour.XCoordinate;
-            var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
+            var y = (float) carBehaviour.YCoordinate;
             
             var pen = new Pen(Color.Black, 5);
 
@@ -84,7 +84,7 @@ namespace GUI
             carBehaviour.Run();
 
             var x = (float) carBehaviour.XCoordinate;
-            var y = -(float) carBehaviour.YCoordinate; // negative to invert axis
+            var y = (float) carBehaviour.YCoordinate;
             path.AddEllipse(carStartPoint.X + x, carStartPoint.Y + y, 5, 5);
 
             //SCREEN
