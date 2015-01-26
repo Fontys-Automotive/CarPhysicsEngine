@@ -37,35 +37,43 @@ namespace GUI
             {
                 // Steer Right
                 case 'a':
+                case 'A':
                     carBehaviour.SteerAngle += deltaAngle;
                     break;
 
                 // Steer Left
                 case 'd':
+                case 'D':
                     carBehaviour.SteerAngle -= deltaAngle;
                     break;
 
                 // Increase Throttle
                 case 'w':
+                case 'W':
                     carBehaviour.ThrottleInput += deltaThrottle;
                     break;
 
                 // Decrease Throttle
                 case 's':
+                case 'S':
                     carBehaviour.ThrottleInput -= deltaThrottle;
                     break;
 
                 // Increase Braking
                 case 'q':
+                case 'Q':
                     carBehaviour.BrakeInput -= deltaBrake;
                     break;
 
                 // Decrease Braking
                 case 'e':
+                case 'E':
                     carBehaviour.BrakeInput += deltaBrake;
                     break;
+                
                 // Toggle Reverse Gear
                 case 'g':
+                case 'G':
                     carBehaviour.reverseGear = !carBehaviour.reverseGear;
                     break;
 
