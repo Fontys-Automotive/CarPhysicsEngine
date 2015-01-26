@@ -41,6 +41,11 @@ namespace CarPhysicsEngine
         private double steerAngle;
 
         /// <summary>
+        ///     If reverse gear has been initiated
+        /// </summary>
+        public bool reverseGear { get; set; }
+
+        /// <summary>
         ///     Real-world position of car's centre
         /// </summary>
         public double XCoordinate { get; private set; }
@@ -150,9 +155,19 @@ namespace CarPhysicsEngine
             Position.YawAngle = YawAngle;
 
             Position.YawVelocityIntegral();
+
             // Calculate the new world coordinates for the vehicle
-            XCoordinate += Position.VehicleDisplacementX();
-            YCoordinate += Position.VehicleDisplacementY();
+            if (!reverseGear)
+            {
+                XCoordinate += Position.VehicleDisplacementX();
+                YCoordinate += Position.VehicleDisplacementY();
+            }
+            else
+            {
+                // If reverse gear has been initiated, reverse position
+                XCoordinate -= Position.VehicleDisplacementX();
+                YCoordinate -= Position.VehicleDisplacementY();
+            }
 
             //Set previous movement values
             Movement.PreviousLateralVelocity = Movement.LateralVelocity();

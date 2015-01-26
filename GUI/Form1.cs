@@ -64,6 +64,10 @@ namespace GUI
                 case 'e':
                     carBehaviour.BrakeInput += deltaBrake;
                     break;
+                // Toggle Reverse Gear
+                case 'g':
+                    carBehaviour.reverseGear = !carBehaviour.reverseGear;
+                    break;
 
             }
         }
